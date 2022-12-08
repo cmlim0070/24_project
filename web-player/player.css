@@ -1,0 +1,23 @@
+
+p {
+    color: aliceblue;
+}
+
+body {
+    height: 100%;
+    background-color: rgb(2, 7, 21);
+    overflow: hidden;
+    display: flex;
+    justify-content: center
+  }
+
+.player-room{
+    background-color: rgb(167, 167, 167);
+    height: 500px;
+    width: 500px;
+    color: aliceblue;
+}
+
+.sample-text{
+
+}
