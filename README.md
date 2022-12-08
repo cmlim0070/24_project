@@ -5,6 +5,8 @@
 
 스타트 시연 영상 유튜브 링크 주소 : https://youtu.be/YM9b9UfQ6_k
 
+프로토타입 링크 : https://www.figma.com/proto/0lQelKl44MLlpqbLfhGxjX/Untitled?node-id=64%3A2&scaling=min-zoom&page-id=0%3A1
+
 ## DDSP Timbre transfer colab demo
 
 <a href="https://colab.research.google.com/drive/1mXKViJAEU5c_JcCWGuP4MdtUvckGQFie?usp=sharing" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
