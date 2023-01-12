@@ -21,3 +21,8 @@ body {
 .sample-text{
 
 }
+
+#window {
+    display: block;
+    margin: auto;
+}

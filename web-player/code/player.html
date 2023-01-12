@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../style/player.css" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>캐릭캐릭뮤직체인지</title>
+  </head>
+  <body>
+    <!--ASMR music list-->
+    <audio
+      id="school"
+      autoplay
+      loop
+      src="../assets/school.mp3"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="rain"
+      autoplay
+      loop
+      src="../assets/rain.mp3"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="wave"
+      autoplay
+      loop
+      src="../assets/wave.mp3"
+      type="audio/mpeg"
+    ></audio>
+
+    <!--inside of player room-->
+    <div class="player-room">
+      <div class="sample-text">플레이어 도트 그래픽 영역</div>
+      <img src="../assets/window1.png" id="window" width="25%" height="25%" />
+
+      <!--창문 click 시 창문 그래픽 및 ASMR 음원 변경-->
+      <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script type="text/javascript">
+        $(function () {
+          let num = 0;
+          let imageName = ["1", "2", "3", "4"];
+          var audio1 = document.getElementById("school");
+          var audio2 = document.getElementById("rain");
+          var audio3 = document.getElementById("wave");
+          $("#window").click(function () {
+            if (num == 0) {
+              audio3.pause();
+              audio2.pause();
+              audio1.play();
+              num++;
+            } else if (num == 1) {
+              audio1.pause();
+              audio3.pause();
+              audio2.play();
+              num++;
+            } else if (num == 2) {
+              audio1.pause();
+              audio2.pause();
+              audio3.play();
+              num++;
+            } else {
+              audio1.pause();
+              audio2.pause();
+              audio3.pause();
+              num = 0;
+            }
+
+            $(this).attr("src", "../assets/window" + imageName[num] + ".PNG");
+            audio.puase();
+            audio.play();
+          });
+        });
+      </script>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>
