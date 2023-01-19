@@ -26,3 +26,30 @@ body {
     display: block;
     margin: auto;
 }
+
+.control_panel_layer {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .control_div {
+    padding: 15px;
+  }
+
+  .control_div label,
+  input {
+    display: inline-block;
+    margin: 10px;
+    width: 110px;
+  }
+
+  #panel {
+    width: 50%;
+    border: 3px solid rgb(45, 44, 44);
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+

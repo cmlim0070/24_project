@@ -36,10 +36,17 @@
     <div class="player-room">
       <div class="sample-text">플레이어 도트 그래픽 영역</div>
       <img src="../assets/window1.png" id="window" width="25%" height="25%" />
+      <img
+        src="../assets/audio_effect_btn.png"
+        id="window"
+        width="25%"
+        height="25%"
+        onclick="audio_effect_open('audio_effect_control.html','test')"
+      />
 
-      <!--창문 click 시 창문 그래픽 및 ASMR 음원 변경-->
       <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
       <script type="text/javascript">
+        /*창문 click 시 창문 그래픽 및 ASMR 음원 변경*/
         $(function () {
           let num = 0;
           let imageName = ["1", "2", "3", "4"];
@@ -74,6 +81,11 @@
             audio.play();
           });
         });
+
+        /*audio effect control 팝업창*/
+        function audio_effect_open(page, name) {
+          window.open(page, name);
+        }
       </script>
     </div>
     <div id="root"></div>
