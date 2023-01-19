@@ -76,6 +76,21 @@
         });
       </script>
     </div>
+
+    <!--style transfer output music 재생바-->
+    <!-- <div class="mp3-player-bar">
+      <script>
+        var bgm = new Audio('');
+        if(!bgm.canPlayType('audio/ogg')) alert('브라우저가 ogg 재생을 지원하지 않습니다.');
+        else {
+          var bgm_url = 'http://upload.wikimedia.org/wikipedia/commons/d/d7/Wikinews_Remix_Jingle.ogg';
+          bgm = new Audio(bgm_url);
+          bgm.volume = 0.4;
+          bgm.play();
+        }
+      </script>
+    </div> -->
+
     <div id="root"></div>
   </body>
 </html>
