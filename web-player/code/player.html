@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../style/player.css" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <title>캐릭캐릭뮤직체인지</title>
@@ -35,15 +36,76 @@
     <!--inside of player room-->
     <div class="player-room">
       <div class="sample-text">플레이어 도트 그래픽 영역</div>
-      <img src="../assets/window1.png" id="window" width="25%" height="25%" />
-      <img
-        src="../assets/audio_effect_btn.png"
-        id="window"
-        width="25%"
-        height="25%"
-        onclick="audio_effect_open('audio_effect_control.html','test')"
-      />
 
+      <!--ASMR sound btn-->
+      <img src="../assets/window1.png" id="window" width="25%" height="25%" />
+      <!--audio effect popup btn-->
+      <a href="javascript:openPop()">
+        <div>
+          <img
+            src="../assets/audio_effect_btn.png"
+            id="window"
+            width="25%"
+            height="25%"
+          />
+        </div>
+      </a>
+
+      <!--layer popup area-->
+      <div class="popup_layer" id="popup_layer" style="display: none">
+        <div class="popup_box">
+          <div style="height: 10px; width: 375px; float: top">
+            <a href="javascript:closePop();"
+              ><img
+                src="../assets/x.jpg"
+                class="m_header-banner-close"
+                width="30px"
+                height="30px"
+            /></a>
+          </div>
+          <!--layer popup content area-->
+          <div class="popup_cont">
+            <h5>EFFECT CONTROL</h5>
+            <div class="control_panel_layer">
+              <div class="control_div">
+                <label class="panel_label">VOLUME</label>
+                <input
+                  class="panel_bar"
+                  type="range"
+                  id="volume_slider"
+                  min="0"
+                  max="100"
+                  value="100"
+                  onclick="volume_control(event)"
+                />
+              </div>
+              <div class="control_div">
+                <label class="panel_label">BPM</label>
+                <input
+                  class="panel_bar"
+                  type="range"
+                  id="bpm_slider"
+                  min="0"
+                  max="100"
+                  value="100"
+                  onclick="bpm_control(event)"
+                />
+              </div>
+              <div class="control_div">
+                <label class="panel_label">REVERB</label>
+                <input
+                  class="panel_bar"
+                  type="range"
+                  id="reverb_slider"
+                  min="0"
+                  max="100"
+                  value="100"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
       <script type="text/javascript">
         /*창문 click 시 창문 그래픽 및 ASMR 음원 변경*/
@@ -82,9 +144,13 @@
           });
         });
 
-        /*audio effect control 팝업창*/
-        function audio_effect_open(page, name) {
-          window.open(page, name);
+        /*audio effect control popup open*/
+        function openPop() {
+          document.getElementById("popup_layer").style.display = "block";
+        }
+        /*audio effect control popup close*/
+        function closePop() {
+          document.getElementById("popup_layer").style.display = "none";
         }
       </script>
     </div>
