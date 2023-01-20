@@ -36,6 +36,7 @@
     <!--inside of player room-->
     <div class="player-room">
       <div class="sample-text">플레이어 도트 그래픽 영역</div>
+      <img class="sample-room" src="../assets/sample room.png" width="600" height="500">
 
       <!--ASMR sound btn-->
       <img src="../assets/window1.png" id="window" width="25%" height="25%" />
@@ -154,8 +155,8 @@
         }
       </script>
 
-    <!--style transfer output music 재생바-->
-    <div class="mp3-player">
+     <!--style transfer output music 재생바-->
+     <div class="mp3-player">
       <canvas></canvas>
       <div class="song">
         <div class="artist">Sample Song</div>
@@ -170,9 +171,8 @@
       <div class="soundControl"></div>
       <div class="time">00:00</div>
       <audio autoplay controls>
-        
       </audio>
-      <script type="text/javascript">
+      <!-- <script type="text/javascript">
         var bgm = new Audio('');
         if(!bgm.canPlayType('audio/ogg')) alert('브라우저가 ogg 재생을 지원하지 않습니다.');
         else {
@@ -181,11 +181,13 @@
           bgm.volume = 0.4;
           bgm.play();
         }
-      </script>
+      </script> -->
     </div>
 
-      <img class="sample-room" src="../assets/sample room.png" width="600" height="500">
+    <!--player room outside-->
+
     </div>
+
     <div id="root"></div>
   </body>
 </html>

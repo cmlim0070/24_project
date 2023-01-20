@@ -8,14 +8,13 @@ body {
     background-color: rgb(2, 7, 21);
     overflow: hidden;
     display: flex;
-    justify-content: center
+    justify-content: center;
+    align-items: center;
   }
 
 .player-room{
-    position: absolute;
     height: 500px;
     width: 500px;
-    color: aliceblue;
     justify-content: center;
 }
 
@@ -24,11 +23,13 @@ body {
 }
 
 .sample-room{
-    position: relative;
-    top: 0px;
+    position: absolute;
 }
 
 #window {
+    position : relative;
+    top: 0px;
+    left: 300px;
     display: block;
     margin: auto;
 }
@@ -186,3 +187,7 @@ body {
       background: rgb(255, 152, 238); /* 슬라이더 핸들 색상 */
       cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
   }
+
+  /* mp3-bar */
+
+  
