@@ -75,7 +75,7 @@
                   id="volume_slider"
                   min="0"
                   max="100"
-                  value="100"
+                  value="50"
                   onclick="volume_control(event)"
                 />
               </div>
@@ -87,7 +87,7 @@
                   id="bpm_slider"
                   min="0"
                   max="100"
-                  value="100"
+                  value="50"
                   onclick="bpm_control(event)"
                 />
               </div>
@@ -99,7 +99,7 @@
                   id="reverb_slider"
                   min="0"
                   max="100"
-                  value="100"
+                  value="50"
                 />
               </div>
             </div>
@@ -154,37 +154,42 @@
         }
       </script>
 
-    <!--style transfer output music 재생바-->
-    <div class="mp3-player">
-      <canvas></canvas>
-      <div class="song">
-        <div class="artist">Sample Song</div>
-        <div class="name">Odd Look ft. The Weeknd</div>
+      <!--style transfer output music 재생바-->
+      <div class="mp3-player">
+        <canvas></canvas>
+        <div class="song">
+          <div class="artist">Sample Song</div>
+          <div class="name">Odd Look ft. The Weeknd</div>
+        </div>
+        <div class="playarea">
+          <div class="prevSong"></div>
+          <div class="play"></div>
+          <div class="pause"></div>
+          <div class="nextSong"></div>
+        </div>
+        <div class="soundControl"></div>
+        <div class="time">00:00</div>
+        <audio autoplay controls></audio>
+        <script type="text/javascript">
+          var bgm = new Audio("");
+          if (!bgm.canPlayType("audio/ogg"))
+            alert("브라우저가 ogg 재생을 지원하지 않습니다.");
+          else {
+            var bgm_url =
+              "http://upload.wikimedia.org/wikipedia/commons/d/d7/Wikinews_Remix_Jingle.ogg";
+            bgm = new Audio(bgm_url);
+            bgm.volume = 0.4;
+            bgm.play();
+          }
+        </script>
       </div>
-      <div class="playarea">
-        <div class="prevSong"></div>
-        <div class="play"></div>
-        <div class="pause"></div>
-        <div class="nextSong"></div>
-      </div>
-      <div class="soundControl"></div>
-      <div class="time">00:00</div>
-      <audio autoplay controls>
-        
-      </audio>
-      <script type="text/javascript">
-        var bgm = new Audio('');
-        if(!bgm.canPlayType('audio/ogg')) alert('브라우저가 ogg 재생을 지원하지 않습니다.');
-        else {
-          var bgm_url = 'http://upload.wikimedia.org/wikipedia/commons/d/d7/Wikinews_Remix_Jingle.ogg';
-          bgm = new Audio(bgm_url);
-          bgm.volume = 0.4;
-          bgm.play();
-        }
-      </script>
-    </div>
 
-      <img class="sample-room" src="../assets/sample room.png" width="600" height="500">
+      <img
+        class="sample-room"
+        src="../assets/sample room.png"
+        width="600"
+        height="500"
+      />
     </div>
     <div id="root"></div>
   </body>
