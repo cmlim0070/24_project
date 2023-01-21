@@ -154,39 +154,37 @@
           document.getElementById("popup_layer").style.display = "none";
         }
       </script>
-
-     <!--style transfer output music 재생바-->
-     <div class="mp3-player">
-      <canvas></canvas>
-      <div class="song">
-        <div class="artist">Sample Song</div>
-        <div class="name">Odd Look ft. The Weeknd</div>
-      </div>
-      <div class="playarea">
-        <div class="prevSong"></div>
-        <div class="play"></div>
-        <div class="pause"></div>
-        <div class="nextSong"></div>
-      </div>
-      <div class="soundControl"></div>
-      <div class="time">00:00</div>
-      <audio autoplay controls>
-      </audio>
-      <!-- <script type="text/javascript">
-        var bgm = new Audio('');
-        if(!bgm.canPlayType('audio/ogg')) alert('브라우저가 ogg 재생을 지원하지 않습니다.');
-        else {
-          var bgm_url = 'http://upload.wikimedia.org/wikipedia/commons/d/d7/Wikinews_Remix_Jingle.ogg';
-          bgm = new Audio(bgm_url);
-          bgm.volume = 0.4;
-          bgm.play();
-        }
-      </script> -->
-    </div>
-
     <!--player room outside-->
-
     </div>
+         <!--style transfer output music 재생바-->
+         <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+         <div class="mp3-player">
+             <div class="player">
+                   <canvas></canvas>
+                   <div class="song">
+                     <div class="artist">sample song</div>
+                     <div class="name">sample</div>
+                   </div>
+                   <div class="playarea">
+                     <div class="play">
+                      <script>
+                          // sample music
+                          <audio
+                          id="kpop-sample"
+                          autoplay
+                          loop
+                          src="../assets/Ghost of the wind.mp3"
+                          type="audio/mpeg">
+                          </audio>
+                      </script>
+                     </div>
+                     <div class="pause"></div>
+                   </div>
+                 <div class="soundControl"></div>
+                 <div class="time">00:00</div>
+               </div>
+           </div>
+         </div>
 
     <div id="root"></div>
   </body>
