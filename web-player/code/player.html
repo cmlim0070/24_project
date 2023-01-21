@@ -32,6 +32,14 @@
       src="../assets/wave.mp3"
       type="audio/mpeg"
     ></audio>
+    <!-- sample music -->
+    <audio
+    id="kpop-sample"
+    autoplay
+    loop
+    src="../assets/Ghost of the wind.mp3"
+    type="audio/mpeg">
+    </audio>
 
     <!--inside of player room-->
     <div class="player-room">
@@ -166,16 +174,12 @@
                      <div class="name">sample</div>
                    </div>
                    <div class="playarea">
-                     <div class="play">
+                     <div class="play" onclick="play()">
                       <script>
-                          // sample music
-                          <audio
-                          id="kpop-sample"
-                          autoplay
-                          loop
-                          src="../assets/Ghost of the wind.mp3"
-                          type="audio/mpeg">
-                          </audio>
+                          function play(){
+                            var audio4 = document.getElementById("kpop-sample");
+                            audio4.play();
+                          }
                       </script>
                      </div>
                      <div class="pause"></div>
