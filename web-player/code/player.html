@@ -169,19 +169,16 @@
          <!--style transfer output music 재생바-->
          <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
          <div class="mp3-player">
-            <!-- audio visualization을 하고 싶었는데요...그러나 -->
+            <!-- audio visualization-->
              <div class="player">
                    <canvas></canvas>
-                   <div class="song">
-                     <div class="artist">sample song</div>
-                     <div class="name">sample</div>
-                   </div>
                    <div class="playarea">
                      <div class="play" onclick="play()">
                       <script>
                           // style changed music play
                           function play(){
                             var audio4 = document.getElementById("kpop-sample");
+                            document.getElementById("kpop-sample").volume =0.1;
                             audio4.play();
                           }
                           // volumn control
@@ -191,10 +188,20 @@
                            })
                       </script>
                      </div>
-                     <div class="pause"></div>
+                    <div class="pause" onclick="pause()">
+                      <script>
+                            // style changed music play
+                            function play(){
+                            var audio4 = document.getElementById("kpop-sample");
+                            audio4.pause();
+                          }
+                      </script>
+                    </div>
+                    <div class="soundControl">
+
+
+                    </div>
                    </div>
-                 <div class="soundControl"></div>
-                 <div class="time">00:00</div>
                </div>
            </div>
          </div>
