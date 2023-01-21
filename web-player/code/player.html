@@ -169,18 +169,33 @@
          <!--style transfer output music 재생바-->
          <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
          <div class="mp3-player">
-            <!-- audio visualization-->
+            <!-- pixel audio visualization 추가 예정입니다-->
              <div class="player">
                    <canvas></canvas>
                    <div class="playarea">
-                     <div class="play" onclick="play()">
+                     <div class="play" onclick="musicControl()">
                       <script>
-                          // style changed music play
-                          function play(){
+                          var playMode = 0;
+                          function play(){ //재생
                             var audio4 = document.getElementById("kpop-sample");
-                            document.getElementById("kpop-sample").volume =0.1;
+                            document.getElementById("kpop-sample").volume =0.1; //디폴트 볼륨 0.1
                             audio4.play();
+                            playMode==1
                           }
+                          function pause(){ //일시정지
+                            var audio4 = document.getElementById("kpop-sample");
+                            audio4.pause();
+                            playMode==0
+                          }
+                          function musicControl(){ //music mode change
+                              if (playMode==0){
+                                play();
+                                playMode=1;
+                              } else {
+                                pause();
+                                playMode=0;
+                              }
+                           }
                           // volumn control
                           const audioVolume = document.getElementById('volume-control');
                           audioVolume.addEventListener("change", function(e) {
@@ -189,17 +204,9 @@
                       </script>
                      </div>
                     <div class="pause" onclick="pause()">
-                      <script>
-                            // style changed music play
-                            function play(){
-                            var audio4 = document.getElementById("kpop-sample");
-                            audio4.pause();
-                          }
-                      </script>
                     </div>
                     <div class="soundControl">
-
-
+                      <script></script>
                     </div>
                    </div>
                </div>
