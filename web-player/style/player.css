@@ -272,3 +272,6 @@ canvas {
     opacity: 0.4;
 }
   
+#volume-slider{
+  margin-left: 50px;
+}
