@@ -205,9 +205,9 @@
                       class="mp3-bar"
                       type="range"
                       id="volume-slider"
-                      min="1"
-                      max="10"
-                      value="2"
+                      min="0"
+                      max="100"
+                      value="50"
                       onclick="volumeControl(event)"
                     />
                       <script>
@@ -215,7 +215,7 @@
                         const audio = document.getElementById('kpop-sample');
                         const audioVolume = document.getElementById("volume-slider");
                         audioVolume.addEventListener("change", function(e) {
-                          audio.volume = this.value/10;
+                          audio.volume = this.value/100;
                         })
                         function mute(){
                           
