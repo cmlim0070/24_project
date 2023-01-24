@@ -169,7 +169,7 @@
          <!--style transfer output music 재생바-->
          <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
          <div class="mp3-player">
-            <!-- pixel audio visualization 추가 예정입니다-->
+            <!-- pixel audio visualization 추가...실패-->
              <div class="player">
                    <canvas></canvas>
                    <div class="playarea">
@@ -178,7 +178,7 @@
                           var playMode = 0;
                           function play(){ //재생
                             var audio4 = document.getElementById("kpop-sample");
-                            document.getElementById("kpop-sample").volume =0.1; //디폴트 볼륨 0.1
+                            document.getElementById("kpop-sample").volume =0.1;
                             audio4.play();
                             playMode==1
                           }
@@ -196,17 +196,31 @@
                                 playMode=0;
                               }
                            }
-                          // volumn control
-                          const audioVolume = document.getElementById('volume-control');
-                          audioVolume.addEventListener("change", function(e) {
-                              audio.volume = this.value/10;
-                           })
                       </script>
                      </div>
                     <div class="pause" onclick="pause()">
                     </div>
-                    <div class="soundControl">
-                      <script></script>
+                    <div class="soundControl" id = "volume-Control">
+                    <input
+                      class="mp3-bar"
+                      type="range"
+                      id="volume-slider"
+                      min="1"
+                      max="10"
+                      value="2"
+                      onclick="volumeControl(event)"
+                    />
+                      <script>
+                        // volume control
+                        const audio = document.getElementById('kpop-sample');
+                        const audioVolume = document.getElementById("volume-slider");
+                        audioVolume.addEventListener("change", function(e) {
+                          audio.volume = this.value/10;
+                        })
+                        function mute(){
+                          
+                        }
+                      </script>
                     </div>
                    </div>
                </div>
