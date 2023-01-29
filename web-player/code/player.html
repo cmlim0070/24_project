@@ -60,6 +60,75 @@
         </div>
       </a>
 
+    <!--midi input file-->
+    <a href="#pop_info_1" class="btn_open">
+        <div>
+            <img
+              src="https://media.istockphoto.com/id/1393088744/ko/%EB%B2%A1%ED%84%B0/%ED%9D%B0%EC%83%89-%EB%B0%B0%EA%B2%BD%EC%97%90-%EB%91%A5%EA%B7%BC-%EB%B6%84%ED%99%8D%EC%83%89-%EB%B0%98%EC%A7%9D%EC%9D%B4%EB%8A%94-cd%EC%9D%98-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%B2%A1%ED%84%B0-%ED%94%8C%EB%9E%AB-%ED%94%BD%EC%85%80-%EC%95%84%ED%8A%B8-%EC%95%84%EC%9D%B4%EC%BD%98.jpg?s=612x612&w=is&k=20&c=ARlgXEtaLQ9tiSpraflJ_sXzAIYb33fbVcNP0FvXYt0="
+              id="window"
+              width="25%"
+              height="25%"
+            />
+          </div>
+    </a>
+    
+    <!-- 팝업 -->
+    <div id="pop_info_1" class="pop_wrap" style="display:none;">
+        <div class="pop_inner">
+            <div class="popup_box2">
+              <div style="height: 10px; width: 375px; float: top">
+                <a href="javascript:closePop();"
+                  ><img
+                    src="../assets/x.jpg"
+                    class="m_header-banner-close"
+                    width="30px"
+                    height="30px"
+                /></a>
+              </div>
+              <!--popup content area-->
+              <div class="popup_cont2">
+                <!--여기 수정하기..팝업으로 뜨게-->
+                <br><br><br><br><br><br>
+                <div class="midi_submit_layer">
+                  <div class="submit_div">
+                    <label for="upload_label">INPUT MIDI</label>
+                    <br>
+                    <input
+                        type="file"
+                        id="upload_label"
+                        name="upload_label"
+                        accept="audio/*"><br>
+                    <br>
+                    <input type="submit" value="upload">
+    
+                </div>
+              </div>
+            </div>
+          </div>    
+    </div>
+    
+    
+    <script>
+      var target = document.querySelectorAll('.btn_open');
+      var targetID;
+    
+      // 팝업 열기
+      for(var i = 0; i < target.length; i++){
+        target[i].addEventListener('click', function(){
+          targetID = this.getAttribute('href');
+          document.querySelector(targetID).style.display = 'block';
+        });
+      }
+      
+      // 팝업 닫기
+      for(var j = 0; j < target.length; j++){
+        btnPopClose[j].addEventListener('click', function(){
+          this.parentNode.parentNode.style.display = 'none';
+        });
+      }
+    </script>
+      
+      
       <!--layer popup area-->
       <div class="popup_layer" id="popup_layer" style="display: none">
         <div class="popup_box">
@@ -165,17 +234,6 @@
 
     <!--player room outside-->
       
-      <!--midi input 파일업로드-->
-      <form id="test">
-        <fieldset style="margin-top: 150px;">
-          <br><br><br>
-            <legend> <h3> input midi </h3> </legend>
-            <input id="files-upload" type="file" ><br>
-            <br> <input type="submit" value="upload">
-        </fieldset>
-      </form>
-
-
 
 
     </div>
