@@ -12,6 +12,7 @@
   <body>
     <!--ASMR music list-->
     <audio
+      class="asmr"
       id="school"
       autoplay
       loop
@@ -19,6 +20,7 @@
       type="audio/mpeg"
     ></audio>
     <audio
+      class="asmr"
       id="rain"
       autoplay
       loop
@@ -26,6 +28,7 @@
       type="audio/mpeg"
     ></audio>
     <audio
+      class="asmr"
       id="wave"
       autoplay
       loop
@@ -128,7 +131,6 @@
       }
     </script>
       
-      
       <!--layer popup area-->
       <div class="popup_layer" id="popup_layer" style="display: none">
         <div class="popup_box">
@@ -221,7 +223,6 @@
             audio.play();
           });
         });
-
         /*audio effect control popup open*/
         function openPop() {
           document.getElementById("popup_layer").style.display = "block";
@@ -229,6 +230,16 @@
         /*audio effect control popup close*/
         function closePop() {
           document.getElementById("popup_layer").style.display = "none";
+        }
+        /*audio volume control*/
+        function volume_control(){
+          const audio1 = document.getElementById("school");
+          const audio2 = document.getElementById("rain");
+          const audio3 = document.getElementById("wave");
+          const asrmAudioVolume = document.getElementById("volume_slider");
+          audio1.volume = asrmAudioVolume.value/100;
+          audio2.volume = asrmAudioVolume.value/100;
+          audio3.volume = asrmAudioVolume.value/100;
         }
       </script>
 
@@ -279,7 +290,6 @@
                       min="0"
                       max="100"
                       value="50"
-                      onclick="volumeControl(event)"
                     />
                       <script>
                         // volume control
