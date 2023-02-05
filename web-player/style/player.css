@@ -33,13 +33,28 @@ body {
   z-index: 10000;
 }
 
+.room-btn {
+  margin-top: 200px;
+  height: 100px;
+  width: 100px;
+}
+
+#input {
+  position: relative;
+  left: 350px;
+  top: 120px;
+}
+
 #window {
     position : relative;
-    /* 임시 크기 고정 */
-    height: 50px;
-    width: 50px;
-    top: 0px;
-    left: 500px;
+    top: -90px;
+    left: 230px;
+}
+
+#effect {
+  position : relative;
+  top: 20px;
+  left: 110px;
 }
 
 #canvas {
@@ -200,6 +215,67 @@ body {
       background: rgb(255, 152, 238); /* 슬라이더 핸들 색상 */
       cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
   }
+
+/* 드럼 팝업 */
+.drum_popup_box{
+  position: relative;
+  top: 230px;
+  left: 180px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100px;
+  width: 300px;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+/* 인풋 팝업 */
+.input_popup_box{
+  position: relative;
+  top: 645px;
+  left: 510px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100px;
+  width: 200px;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.filebox .upload-name {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
+}
+
+.filebox label {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #000000;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 40px;
+  margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+  /* 기존 스타일 삭제 */
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
 
 .dropdown-wrap {
   
