@@ -18,22 +18,35 @@ body {
 }
 
 .player-room{
-    justify-content: center;
+  height: 560px;
+  justify-content: center;
 }
 
 .sample-room{
     position: absolute;
+    z-index: 2000;
+}
+
+.btn-wrap{
+  position: relative;
+  display: block;
+  z-index: 10000;
 }
 
 #window {
     position : relative;
     /* 임시 크기 고정 */
-    height: 200px;
-    width: 200px;
+    height: 50px;
+    width: 50px;
     top: 0px;
     left: 500px;
 }
 
+#canvas {
+  position: relative;
+  margin-left: -100px;
+  z-index: 5000;
+}
 
   .popup_layer {
     position: fixed;
@@ -194,7 +207,6 @@ body {
 
   /* mp3-bar */
 .mp3-player {
-    margin: 0;
     padding: 0;
   -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -205,11 +217,16 @@ body {
   display: block;
 }
 
+.bottom-wrap {
+  display: flex;
+  align-items: center
+}
 
  /*style & bpm 선택 dropbox*/
 .style-dropdown {
   position: relative;
   display: inline-block;
+  margin: 3px;
 }
 
 .style-dropbtn_icon {
@@ -250,11 +267,6 @@ body {
 
 .style-dropdown:hover .style-dropdown-content {
   display: block;
-}
-
-
-canvas {
-    display: block;
 }
 
 .player .playarea {
