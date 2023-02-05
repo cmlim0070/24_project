@@ -48,6 +48,108 @@
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
 
+            <!--layer popup area-->
+            <div class="modal">
+              <!-- 입력 팝업 -->
+              <div class="popup_layer" id="input_popup_layer" style="height: 100px; width: 200px; display: none">
+                <div class="input_popup_box">
+                  <div style="float: top">
+                    <a href="javascript:closeInputPop();">
+                      <img
+                        src="../assets/x.jpg"
+                        class="m_header-banner-close"
+                        width="30px"
+                        height="30px"
+                    /></a>
+                  </div>
+                  <!--layer input popup content area-->
+                  <div class="popup_cont">
+                    <div class="filebox">
+                      <label for="file">mid-file 선택
+                      <input type="file" id="file">
+                      </label> 
+                      <input class="upload-name" value="첨부파일" placeholder="첨부파일">
+                  </div>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- 사운드이펙트 팝업-->
+              <div class="popup_layer" id="effect_popup_layer" style="display: none">
+                <div class="effect_popup_box">
+                  <div style="height: 10px; width: 375px; float: top">
+                    <a href="javascript:closeEffectPop();"
+                      ><img
+                        src="../assets/x.jpg"
+                        class="m_header-banner-close"
+                        width="30px"
+                        height="30px"
+                    /></a>
+                  </div>
+                  <!--layer popup content area-->
+                  <div class="popup_cont">
+                    <h5>EFFECT CONTROL</h5>
+                    <div class="control_panel_layer">
+                      <div class="control_div">
+                        <label class="panel_label">VOLUME</label>
+                        <input
+                          class="panel_bar"
+                          type="range"
+                          id="volume_slider"
+                          min="0"
+                          max="100"
+                          value="50"
+                          onclick="volume_control(event)"
+                        />
+                      </div>
+                      <div class="control_div">
+                        <label class="panel_label">BPM</label>
+                        <input
+                          class="panel_bar"
+                          type="range"
+                          id="bpm_slider"
+                          min="0"
+                          max="100"
+                          value="50"
+                          onclick="bpm_control(event)"
+                        />
+                      </div>
+                      <div class="control_div">
+                        <label class="panel_label">REVERB</label>
+                        <input
+                          class="panel_bar"
+                          type="range"
+                          id="reverb_slider"
+                          min="0"
+                          max="100"
+                          value="50"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- 드럼 팝업 -->
+              <div class="popup_layer" id="drum_popup_layer" style="height: 100px; width: 200px; display: none">
+                <div class="drum_popup_box">
+                  <div style="float: top">
+                    <a href="javascript:closeDrumPop();"
+                      ><img
+                        src="../assets/x.jpg"
+                        class="m_header-banner-close"
+                        width="30px"
+                        height="30px"
+                    /></a>
+                  </div>
+                  <!--layer input popup content area-->
+                  <div class="popup_cont">
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+
     <!--inside of player room-->
     <div class="player-room">
       <img class="sample-room" src="../assets/sample_room.gif">
@@ -85,7 +187,8 @@
             id="effect"
           />
         </a>
-      </div>
+
+    </div>
     
     <script>
 
@@ -133,108 +236,7 @@
           this.parentNode.parentNode.style.display = 'none';
         });
       }
-    </script>
-      
-      <!--layer popup area-->
-
-      <!-- 입력 팝업 -->
-      <div class="popup_layer" id="input_popup_layer" style="display: none">
-        <div class="input_popup_box">
-          <div style="float: top">
-            <a href="javascript:closeInputPop();">
-              <img
-                src="../assets/x.jpg"
-                class="m_header-banner-close"
-                width="30px"
-                height="30px"
-            /></a>
-          </div>
-          <!--layer input popup content area-->
-          <div class="popup_cont">
-            <div class="filebox">
-              <label for="file">mid-file 선택
-              <input type="file" id="file">
-              </label> 
-              <input class="upload-name" value="첨부파일" placeholder="첨부파일">
-           </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 사운드이펙트 팝업-->
-      <div class="popup_layer" id="effect_popup_layer" style="display: none">
-        <div class="popup_box">
-          <div style="height: 10px; width: 375px; float: top">
-            <a href="javascript:closeEffectPop();"
-              ><img
-                src="../assets/x.jpg"
-                class="m_header-banner-close"
-                width="30px"
-                height="30px"
-            /></a>
-          </div>
-          <!--layer popup content area-->
-          <div class="popup_cont">
-            <h5>EFFECT CONTROL</h5>
-            <div class="control_panel_layer">
-              <div class="control_div">
-                <label class="panel_label">VOLUME</label>
-                <input
-                  class="panel_bar"
-                  type="range"
-                  id="volume_slider"
-                  min="0"
-                  max="100"
-                  value="50"
-                  onclick="volume_control(event)"
-                />
-              </div>
-              <div class="control_div">
-                <label class="panel_label">BPM</label>
-                <input
-                  class="panel_bar"
-                  type="range"
-                  id="bpm_slider"
-                  min="0"
-                  max="100"
-                  value="50"
-                  onclick="bpm_control(event)"
-                />
-              </div>
-              <div class="control_div">
-                <label class="panel_label">REVERB</label>
-                <input
-                  class="panel_bar"
-                  type="range"
-                  id="reverb_slider"
-                  min="0"
-                  max="100"
-                  value="50"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 드럼 팝업 -->
-      <div class="popup_layer" id="drum_popup_layer" style="display: none">
-        <div class="drum_popup_box">
-          <div style="float: top">
-            <a href="javascript:closeDrumPop();"
-              ><img
-                src="../assets/x.jpg"
-                class="m_header-banner-close"
-                width="30px"
-                height="30px"
-            /></a>
-          </div>
-          <!--layer input popup content area-->
-          <div class="popup_cont">
-  
-          </div>
-        </div>
-      </div>      
+    </script>      
 
       <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
       <script type="text/javascript">

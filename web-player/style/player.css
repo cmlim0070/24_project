@@ -28,7 +28,7 @@ body {
 }
 
 .btn-wrap{
-  position: relative;
+  position: absolute;
   display: block;
   z-index: 10000;
 }
@@ -63,24 +63,38 @@ body {
   z-index: 5000;
 }
 
+/* 팝업들 위치 고정 */
+.modal {
+  position: absolute;
+}
+
+  #input_popup_layer{
+    position: absolute;
+  }
+
+  #drum_popup_layer{
+    position: absolute;
+  }
+
+  #effect_popup_layer{
+    position: absolute;
+  }
+
   .popup_layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10000;
+    z-index: 10005;
     width: 100%;
     height: 100%;
   }
 
   /*layer popup box*/
-  .popup_box {
+  .effect_popup_box {
     position: relative;
-    top: 50%;
-    left: 50%;
+    top: 160px;
+    left: 720px;
     overflow-x: hidden;
     overflow-y: hidden;
-    height: 500px;
-    width: 505px;
+    height: 400px;
+    width: 300px;
     transform: translate(-50%, -50%);
     z-index: 1002;
     border-radius: 10px;
@@ -92,23 +106,23 @@ body {
   }
 
   /*layer popup contents*/
-  .popup_box .popup_cont {
-    padding: 30px;
+  .effect_popup_box .popup_cont {
+    padding: 10px 30px 0px 30px;
     line-height: 1.4rem;
     font-size: 14px;
   }
-  .popup_box .popup_cont h2 {
+  .effect_popup_box .popup_cont h2 {
     padding: 10px 0;
     color: #333;
     margin: 0;
   }
-  .popup_box .popup_cont p {
+  .effect_popup_box .popup_cont p {
     border-top: 1px solid #666;
     padding-top: 30px;
   }
 
   /*layerpopup button*/
-  .popup_box .popup_btn {
+  .effect_popup_box .popup_btn {
     display: table;
     table-layout: fixed;
     width: 100%;
@@ -116,7 +130,7 @@ body {
     background: #ececec;
     word-break: break-word;
   }
-  .popup_box .popup_btn a {
+  .effect_popup_box .popup_btn a {
     position: relative;
     display: table-cell;
     height: 70px;
@@ -126,7 +140,7 @@ body {
     text-decoration: none;
     background: #ececec;
   }
-  .popup_box .popup_btn a:before {
+  .effect_popup_box .popup_btn a:before {
     content: "";
     display: block;
     position: absolute;
@@ -145,7 +159,7 @@ body {
     text-align: center;
     font-size: 23px;
   }
-  .popup_box .popup_btn a:after {
+  .effect_popup_box .popup_btn a:after {
     content: "";
     display: block;
     position: absolute;
@@ -160,11 +174,11 @@ body {
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-  .popup_box .popup_btn a.close_day {
+  .effect_popup_box .popup_btn a.close_day {
     background: #5d5d5d;
   }
-  .popup_box .popup_btn a.close_day:before,
-  .popup_box .popup_btn a.close_day:after {
+  .effect_popup_box .popup_btn a.close_day:before,
+  .effect_popup_box .popup_btn a.close_day:after {
     display: none;
   }
   /*popup overlay background*/
@@ -186,9 +200,10 @@ body {
     margin: auto;
     flex-direction: column;
     text-align: center;
+    padding: 10px 0px 15px 0px;
   }
   .control_div {
-    padding: 15px;
+    text-align: center;
   }
   .control_div label,
   input {
@@ -219,8 +234,8 @@ body {
 /* 드럼 팝업 */
 .drum_popup_box{
   position: relative;
-  top: 230px;
-  left: 180px;
+  top: 50px;
+  left: 0px;
   overflow-x: hidden;
   overflow-y: hidden;
   height: 100px;
@@ -235,11 +250,10 @@ body {
 /* 인풋 팝업 */
 .input_popup_box{
   position: relative;
-  top: 645px;
-  left: 510px;
+  top: 500px;
+  left: 600px;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 100px;
   width: 200px;
   transform: translate(-50%, -50%);
   z-index: 1002;
