@@ -232,7 +232,7 @@ body {
   }
 
 /* 드럼 팝업 */
-.drum_popup_box{
+.drum_popup_box {
   position: relative;
   top: 50px;
   left: 0px;
@@ -245,6 +245,17 @@ body {
   border-radius: 10px;
   box-sizing: border-box;
   background-color: #ffffff;
+}
+
+.drum-btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.drum-btn {
+  height: 40px;
+  width: 40px;
+  margin: 0px 10px 0px 0px;
 }
 
 /* 인풋 팝업 */
@@ -406,3 +417,4 @@ body {
   margin-left: 50px;
 
 }
+
