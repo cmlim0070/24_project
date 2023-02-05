@@ -5,23 +5,20 @@ p {
 
 body {
   display: flex;
-  justify-content: center;
-  align-items:center;
   min-height: 100vh;
-  background-color: rgb(2, 7, 21);
+  background-color: rgb(117, 10, 247);
   overflow: hidden;
-  flex-direction: column;
+  /* 중앙정렬 */
+  align-items: center;
+  justify-content: center;
   }
 
-.player-room{
-    height: 650px;
-    width: 650px;
-    justify-content: center;
-    margin-bottom: 50px;
+.center-box {
+  justify-content: center;
 }
 
-.sample-text{
-
+.player-room{
+    justify-content: center;
 }
 
 .sample-room{
@@ -30,10 +27,11 @@ body {
 
 #window {
     position : relative;
+    /* 임시 크기 고정 */
+    height: 200px;
+    width: 200px;
     top: 0px;
-    left: 300px;
-    display: block;
-    margin: auto;
+    left: 500px;
 }
 
 
@@ -190,6 +188,10 @@ body {
       cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
   }
 
+.dropdown-wrap {
+  
+}
+
   /* mp3-bar */
 .mp3-player {
     margin: 0;
@@ -257,7 +259,7 @@ canvas {
 
 .player .playarea {
   display: flex;
-  align-items: center
+  align-items: center;
 }
 
 .player .playarea .play {
