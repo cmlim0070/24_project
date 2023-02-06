@@ -411,7 +411,7 @@ tone-button {
     border-radius: 120px;
     width: 120px;
     height: 120px;
-    background: url("../assets/play_btn.png") 42px 34px no-repeat;
+    background: url("../static/assets/play_btn.png") 42px 34px no-repeat;
     background-size: 45px 55px;
 }
 
@@ -424,7 +424,7 @@ tone-button {
     border-radius: 120px;
     width: 120px;
     height: 120px;
-    background: url(../assets/pause_btn.png) 43px 35px no-repeat;
+    background: url(../static/assets/pause_btn.png) 43px 35px no-repeat;
     background-size: 35px 51px;
 }
 
@@ -433,7 +433,7 @@ tone-button {
     width: 50px;
     height: 50px;
     margin-left: -16px;
-    background: url("../assets/mute_btn.png");
+    background: url("../static/assets/mute_btn.png");
     background-size: 50px 50px;
     text-align: center;
 }
