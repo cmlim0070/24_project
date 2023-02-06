@@ -8,6 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="theme-color" content="#000000" />
+    <script
+    type="text/javascript"
+    src="https://unpkg.com/tone@13.4.9/build/Tone.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/@tonejs/ui@0.0.8/build/tonejs-ui.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/@tonejs/midi"
+    ></script>
     <title>캐릭캐릭뮤직체인지</title>
   </head>
   <body>
@@ -17,7 +29,7 @@
       id="school"
       autoplay
       loop
-      src="../assets/school.mp3"
+      src="../assets/asmr-nightcity.mp3"
       type="audio/mpeg"
     ></audio>
     <audio
@@ -25,7 +37,7 @@
       id="rain"
       autoplay
       loop
-      src="../assets/rain.mp3"
+      src="../assets/asmr-rain.wav"
       type="audio/mpeg"
     ></audio>
     <audio
@@ -41,8 +53,8 @@
     id="kpop-sample"
     autoplay
     loop
-    src="../assets/Ghost of the wind.mp3"
-    type="audio/mpeg">
+    src="../assets/output-sample.mid"
+    type="audio/midi">
     </audio>
     <!-- drum preset -->
     <audio
@@ -73,10 +85,29 @@
                   <!--layer input popup content area-->
                   <div class="popup_cont">
                     <div class="filebox">
-                      <label for="file">mid-file 선택
-                      <input type="file" id="file">
-                      </label> 
-                      <input class="upload-name" value="첨부파일" placeholder="첨부파일">
+                      <script type='text/javascript' src='//www.midijs.net/lib/midi.js'>
+                        MIDIjs.play("../assets/output-sample.mid")
+                      </script>
+                      <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+                      <midi-player
+                      src="../assets/output-sample.mid"
+                      sound-font visualizer="#myVisualizer">
+                    </midi-player>
+                      <form onsubmit="fetchMidi(this.url.value); return false;">
+                      </form>
+                      <div id="FileDrop">
+                        <div id="Text">
+                        </div>
+                        <input type="file" accept="audio/midi" />
+                      </div>
+                      <tone-play-toggle disabled></tone-play-toggle>
+                      <span><tone-button id="rewind"></tone-button></span>
+                      <span id="position">0:0</span>
+                      <span id="ticks">Ticks:</span>
+                      <span id="bpm">BPM: 0</span>
+                      <button id="tempoUp" onclick='changeTempo("up")'>UP</button>
+                      <button id="tempoDown" onclick='changeTempo("dn")'>DOWN</button>
+                      <button id="resetTempo" onclick='changeTempo("reset")'>ResetTempo</button>
                   </div>
                   </div>
                 </div>
@@ -529,6 +560,213 @@
           initialized = true;
         }
       });
+    });
+  </script>
+
+  <!-- Tone.js 스크립트 코드 -->
+  <script type="text/javascript">
+    var CW = CW || {};
+
+    CW.tempoOffset = 0; //a property to manage the global changes to tempo
+
+    if (
+      !(window.File && window.FileReader && window.FileList && window.Blob)
+    ) {
+      document.querySelector("#FileDrop #Text").textContent =
+        "Reading files not supported by this browser";
+    } else {
+      const fileDrop = document.querySelector("#FileDrop");
+      fileDrop.addEventListener("dragenter", () =>
+        fileDrop.classList.add("Hover")
+      );
+      fileDrop.addEventListener("dragleave", () =>
+        fileDrop.classList.remove("Hover")
+      );
+      fileDrop.addEventListener("drop", () =>
+        fileDrop.classList.remove("Hover")
+      );
+      document
+        .querySelector("#FileDrop input")
+        .addEventListener("change", (e) => {
+          const files = e.target.files;
+          if (files.length > 0) {
+            const file = files[0];
+            document.querySelector("#FileDrop #Text").textContent = file.name;
+            readFile(file);
+          }
+        });
+    }
+
+    function readFile(file) {
+      //handle errors like 404, other screwups; also only accept midi
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const midi = new Midi(e.target.result);
+        const useableMidiObject = parseMidi(midi);
+        makeSong(useableMidiObject);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function fetchMidi(myURL) {
+      Midi.fromUrl(myURL).then((midi) => {
+        const useableMidiObject = parseMidi(midi);
+        makeSong(useableMidiObject);
+      });
+    }
+
+    //************** parse data from midi file or url into useable midi object ********************
+    function parseMidi(midi) {
+      if (midi.header) {
+        const midiJSON = JSON.stringify(midi, undefined, null);
+        const parsedMidiObject = JSON.parse(midiJSON);
+        return parsedMidiObject;
+      } else {
+        alert("Something went wrong when parsing your midi file");
+        location.reload();
+      }
+    }
+
+    function setupPlayer(midi) {
+      document.querySelector("#ResultsText").value = JSON.stringify(
+        midi,
+        undefined,
+        2
+      );
+      document.querySelector("tone-play-toggle").removeAttribute("disabled");
+      document.addEventListener("keydown", assignKeys);
+    }
+
+    //************** Put midi data into Tone.Parts ********************
+
+    function makeSong(midi) {
+      Tone.Transport.PPQ = midi.header.ppq;
+      const numofVoices = midi.tracks.length;
+      const synths = [];
+
+      //************** Tell Transport about Time Signature changes  ********************
+      for (let i = 0; i < midi.header.timeSignatures.length; i++) {
+        Tone.Transport.schedule(function (time) {
+          Tone.Transport.timeSignature =
+            midi.header.timeSignatures[i].timeSignature;
+          console.log(
+            midi.header.timeSignatures[i].timeSignature,
+            Tone.Transport.timeSignature,
+            Tone.Transport.position
+          );
+        }, midi.header.timeSignatures[i].ticks + "i");
+      }
+
+      //************** Tell Transport about bpm changes  ********************
+      for (let i = 0; i < midi.header.tempos.length; i++) {
+        Tone.Transport.schedule(function (time) {
+          Tone.Transport.bpm.value =
+            midi.header.tempos[i].bpm + CW.tempoOffset;
+        }, midi.header.tempos[i].ticks + "i");
+      }
+
+      //************ Change time from seconds to ticks in each part  *************
+      for (let i = 0; i < numofVoices; i++) {
+        midi.tracks[i].notes.forEach((note) => {
+          note.time = note.ticks + "i";
+        });
+      }
+
+      //************** Create Synths and Parts, one for each track  ********************
+      for (let i = 0; i < numofVoices; i++) {
+        synths[i] = new Tone.PolySynth().toMaster();
+
+        var part = new Tone.Part(function (time, value) {
+          synths[i].triggerAttackRelease(
+            value.name,
+            value.duration,
+            time,
+            value.velocity
+          );
+        }, midi.tracks[i].notes).start();
+      }
+
+      setupPlayer(midi); //only does this once makeSong finished
+    }
+
+    //************** Set up position & BPM indicators  ********************
+
+    Tone.Transport.scheduleRepeat(function (time) {
+      showPosition();
+      document.getElementById("ticks").textContent =
+        "Ticks: " + Tone.Transport.ticks;
+      document.getElementById("bpm").textContent =
+        "BPM: " + Tone.Transport.bpm.value.toFixed();
+    }, "8n");
+
+    function showPosition() {
+      //need to coordinate this with latencyHint in setupPlayer if I want accuracy
+      var myPos = Tone.Transport.position;
+      var posArray = myPos.split(/\D+/); // split based on non-digits
+      var myBar = Number(posArray[0]) + 1; //first element, converted to number, then increased
+      var myBeat = Number(posArray[1]) + 1;
+      document.getElementById("position").textContent = myBar + ":" + myBeat;
+    }
+
+    //************** Set up buttons  ********************
+    //******* Everything below here is cosmetic  ********
+
+    function changeTempo(dir) {
+      switch (dir) {
+        case "up" || "ArrowUp" || 38:
+          Tone.Transport.bpm.value = Tone.Transport.bpm.value + 1.01;
+          CW.tempoOffset = CW.tempoOffset + 1.01;
+          break;
+
+        case "dn" || "ArrowDown" || 40:
+          Tone.Transport.bpm.value = Tone.Transport.bpm.value - 1.01;
+          CW.tempoOffset = CW.tempoOffset - 1.01;
+          break;
+
+        case "reset":
+          if (Tone.Transport.state === "started") {
+            const baseTempo = Tone.Transport.bpm.value - CW.tempoOffset;
+            Tone.Transport.bpm.value = baseTempo;
+          }
+          CW.tempoOffset = 0;
+          break;
+      }
+    }
+
+    function assignKeys(event) {
+      var key = event.key || event.keyCode;
+
+      if (key === "ArrowUp" || key === 38) {
+        event.preventDefault();
+        changeTempo("up");
+      }
+
+      if (key === "ArrowDown" || key === 40) {
+        event.preventDefault();
+        changeTempo("dn");
+      }
+    }
+
+    document
+      .querySelector("tone-play-toggle")
+      .addEventListener("change", (e) => {
+        if (e.detail) {
+          Tone.Transport.start();
+        } else {
+          Tone.Transport.pause();
+        }
+      });
+
+    document.querySelector("#rewind").label = "REWIND";
+    document.querySelector("#rewind").addEventListener("click", (e) => {
+      if (Tone.Transport.state === "started") {
+        Tone.Transport.stop();
+        Tone.Transport.position = "0:0:0";
+        Tone.Transport.start();
+      } else {
+        Tone.Transport.stop();
+        Tone.Transport.position = "0:0:0";
+      }
     });
   </script>
   </body>

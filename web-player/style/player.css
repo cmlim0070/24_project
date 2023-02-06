@@ -265,7 +265,7 @@ body {
   left: 600px;
   overflow-x: hidden;
   overflow-y: hidden;
-  width: 200px;
+  width: 400px;
   transform: translate(-50%, -50%);
   z-index: 1002;
   box-sizing: border-box;
@@ -300,6 +300,35 @@ body {
   padding: 0;
   overflow: hidden;
   border: 0;
+}
+
+tone-play-toggle {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+tone-button {
+  display: inline-block;
+  width: 15%;
+}
+
+#position,
+#bpm,
+#ticks {
+  margin-left: 20px;
+}
+
+#bpm {
+  margin-right: 20px;
+}
+
+#tempoUp,
+#tempoDown,
+#resetTempo {
+  position: relative;
+  height: 30px;
+  margin-left: 5px;
+  font-size: 14px;
 }
 
 .dropdown-wrap {
