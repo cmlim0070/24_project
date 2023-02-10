@@ -164,27 +164,39 @@
               <h5>EFFECT CONTROL</h5>
               <div class="control_panel_layer">
                 <div class="control_div">
-                  <label class="panel_label">VOLUME</label>
+                  <label class="panel_label">MUSIC</label>
                   <input
                     class="panel_bar"
                     type="range"
-                    id="volume_slider"
+                    id="music-volume-slider"
                     min="0"
                     max="100"
                     value="50"
-                    onclick="volume_control(event)"
+                    onclick="music_volume()"
                   />
                 </div>
                 <div class="control_div">
-                  <label class="panel_label">BPM</label>
+                  <label class="panel_label">DRUM</label>
                   <input
                     class="panel_bar"
                     type="range"
-                    id="bpm_slider"
+                    id="drum-volume-slider"
                     min="0"
                     max="100"
                     value="50"
-                    onclick="bpm_control(event)"
+                    onclick="drum_volume(event)"
+                  />
+                </div>
+                <div class="control_div">
+                  <label class="panel_label">ASMR</label>
+                  <input
+                    class="panel_bar"
+                    type="range"
+                    id="asmr-volume-slider"
+                    min="0"
+                    max="100"
+                    value="50"
+                    onclick="asmr_volume()"
                   />
                 </div>
                 <div class="control_div">
@@ -192,10 +204,11 @@
                   <input
                     class="panel_bar"
                     type="range"
-                    id="reverb_slider"
+                    id="reverb-slider"
                     min="0"
                     max="100"
                     value="50"
+                    onclick="reverb_control"
                   />
                 </div>
               </div>
@@ -371,14 +384,30 @@
           });
 
           /*audio volume control - 일괄 조정 가능하도록 추후 코드 수정*/
-          function volume_control() {
+          function asmr_volume() {
             const audio1 = document.getElementById("school");
             const audio2 = document.getElementById("rain");
             const audio3 = document.getElementById("wave");
-            const asrmAudioVolume = document.getElementById("volume_slider");
+            const asrmAudioVolume =
+              document.getElementById("asmr-volume-slider");
             audio1.volume = asrmAudioVolume.value / 100;
             audio2.volume = asrmAudioVolume.value / 100;
             audio3.volume = asrmAudioVolume.value / 100;
+          }
+
+          function music_volume() {
+            const audio = document.getElementById("kpop-sample");
+            const musicAudioVolume = document.getElementById(
+              "music-volume-slider"
+            );
+            audio.volume = musicAudioVolume.value / 100;
+          }
+
+          function drum_volume() {
+            const audio = document.getElementById("drum-80-bpm");
+            const drumAudioVolume =
+              document.getElementById("drum-volume-slider");
+            audio.volume = drumAudioVolume.value / 100;
           }
         </script>
 
