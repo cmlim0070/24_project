@@ -410,8 +410,11 @@
         <!--bpm 선택 dropbox-->
         <div class="style-dropdown">
           <button class="style-dropbtn">
-            <span class="style-dropbtn_icon">more_horiz</span>
-            BPM
+            <div class="bpm-text-wrap">
+              <span class="style-dropbtn_icon">more_horiz</span>
+              BPM
+              <span id="bpm">0</span>
+            </div>
           </button>
           <div class="style-dropdown-content">
             <option value="60" class="bpmbtn" onclick="setBpm(this.value)">60</option>
@@ -425,7 +428,8 @@
           function setBpm(bpm) {
             var target_bpm = Number(bpm);
             Tone.Transport.bpm.value = target_bpm;
-            changeDrum(bpm);
+            document.getElementById("bpm").textContent =
+            target_bpm;
           }
           // bpm에 맞춰서 drum 바꾸는 함수
           function changeDrum(bpm) {
@@ -478,12 +482,6 @@
         <span><tone-button id="rewind"></tone-button></span>
         <span id="position">0:0</span>
         <span id="ticks">Ticks:</span>
-        <span id="bpm">BPM: 0</span>
-        <button id="tempoUp" onclick='changeTempo("up")'>UP</button>
-        <button id="tempoDown" onclick='changeTempo("dn")'>DOWN</button>
-        <button id="resetTempo" onclick='changeTempo("reset")'>
-          ResetTempo
-        </button>
 
         <!--style transfer output music 재생바-->
         <link
@@ -797,8 +795,6 @@
         showPosition();
         document.getElementById("ticks").textContent =
           "Ticks: " + Tone.Transport.ticks;
-        document.getElementById("bpm").textContent =
-          "BPM: " + Tone.Transport.bpm.value.toFixed();
       }, "8n");
 
       function showPosition() {

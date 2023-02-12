@@ -345,6 +345,15 @@ tone-button {
   font-size: 14px;
 }
 
+.bpm-text-wrap{
+  display: flex;
+  align-items: center
+}
+
+#bpm {
+  margin-left: 10px;
+}
+
 .dropdown-wrap {
   
 }
