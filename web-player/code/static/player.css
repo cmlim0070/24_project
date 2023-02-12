@@ -95,8 +95,8 @@ body {
   /*layer popup box*/
   .effect_popup_box {
     position: relative;
-    top: 220px;
-    left: 950px;
+    top: 180px;
+    left: 800px;
     overflow-x: hidden;
     overflow-y: hidden;
     height: 470px;
@@ -240,8 +240,8 @@ body {
 /* 드럼 팝업 */
 .drum_popup_box {
   position: relative;
-  top: 150px;
-  left: 200px;
+  top: 80px;
+  left: 170px;
   overflow-x: hidden;
   overflow-y: hidden;
   height: 100px;
