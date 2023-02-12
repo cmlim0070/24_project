@@ -20,6 +20,7 @@ body {
 .player-room{
   height: 560px;
   justify-content: center;
+  display: flex;
 }
 
 .sample-room{
@@ -37,6 +38,11 @@ body {
   margin-top: 200px;
   height: 100px;
   width: 100px;
+}
+
+.room-btn :hover {
+  transform:scale(1.3); 
+  transition: 0.5s;
 }
 
 #input {
@@ -89,8 +95,8 @@ body {
   /*layer popup box*/
   .effect_popup_box {
     position: relative;
-    top: 250px;
-    left: 720px;
+    top: 220px;
+    left: 950px;
     overflow-x: hidden;
     overflow-y: hidden;
     height: 470px;
@@ -234,8 +240,8 @@ body {
 /* 드럼 팝업 */
 .drum_popup_box {
   position: relative;
-  top: 50px;
-  left: 0px;
+  top: 150px;
+  left: 200px;
   overflow-x: hidden;
   overflow-y: hidden;
   height: 100px;
@@ -283,42 +289,50 @@ body {
 }
 
 .filebox label {
-  display: inline-block;
+  /* display: inline-block;
   padding: 10px 20px;
   color: #000000;
   vertical-align: middle;
   cursor: pointer;
   height: 40px;
-  margin-left: 10px;
+  margin-left: 10px; */
 }
 
 .filebox input[type="file"] {
-  /* 기존 스타일 삭제 */
-  position: absolute;
+  /* position: absolute;
   width: 0;
   height: 0;
   padding: 0;
   overflow: hidden;
-  border: 0;
+  border: 0; */
 }
 
+#test-file {
+  display: none;
+}
+
+/* 삭제하면 오류나서 display none으로 해뒀어요 */
 tone-play-toggle {
+  display: none;
   margin-top: 10px;
   margin-bottom: 5px;
 }
 
+/* 삭제하면 오류나서 display none으로 해뒀어요 */
 tone-button {
-  display: inline-block;
+  display: none;
   width: 15%;
 }
 
+/* 삭제하면 오류나서 display none으로 해뒀어요 */
 #position,
-#bpm,
 #ticks {
+  display: none;
   margin-left: 20px;
 }
 
 #bpm {
+  margin-left: 20px;
   margin-right: 20px;
 }
 
@@ -334,6 +348,10 @@ tone-button {
 .dropdown-wrap {
   
 }
+
+/* 미디 플레이어 */
+
+
 
   /* mp3-bar */
 .mp3-player {
@@ -383,7 +401,16 @@ tone-button {
   min-width: 100px;
 }
 
-.style-dropdown-content a {
+.stylebtn { 
+  display: block;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+  padding: 12px 20px;
+}
+
+/* 원래 style-dropdown-content a */
+.bpmbtn { 
   display: block;
   text-decoration: none;
   color: rgb(255, 255, 255);
@@ -392,6 +419,11 @@ tone-button {
 }
 
 .style-dropdown-content a:hover {
+  background-color: #d0b4b428;
+}
+
+.style-dropdown-content option:hover {
+  cursor: pointer;
   background-color: #d0b4b428;
 }
 

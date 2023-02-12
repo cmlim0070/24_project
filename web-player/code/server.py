@@ -12,8 +12,7 @@ app.config['UPLOAD_FOLDER'] = 'C:/Users/82108/Desktop/졸프/24_project/web-play
 def render():
     return render_template('player.html')
 
-
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET', 'POST']) # 유저 파일 업로드
 def upload_file():
     if request.method == 'POST':
         f = request.files['file']

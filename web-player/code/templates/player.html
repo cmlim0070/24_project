@@ -30,7 +30,6 @@
     <audio
       class="asmr"
       id="school"
-      autoplay
       loop
       src="../static/assets/asmr-nightcity.mp3"
       type="audio/mpeg"
@@ -38,7 +37,6 @@
     <audio
       class="asmr"
       id="rain"
-      autoplay
       loop
       src="../static/assets/asmr-rain.wav"
       type="audio/mpeg"
@@ -46,48 +44,36 @@
     <audio
       class="asmr"
       id="wave"
-      autoplay
       loop
       src="../static/assets/wave.mp3"
       type="audio/mpeg"
     ></audio>
     <!-- Style change sample music -->
     <audio
-      id="kpop-sample"
-      autoplay
-      loop
-      src="../static/assets/Ghost of the Wind.mp3"
-      type="audio/mpeg"
-    ></audio>
+    id="kpop-sample"
+    loop
+    src="../static/assets/Ghost of the Wind.mp3"
+    type="audio/mpeg">
+    </audio>
     <!-- drum preset -->
     <audio
+      id="drum-60-bpm"
+      loop
+      src="../static/assets/drum-60-bpm.mp3"
+      type="audio/mpeg"
+    ></audio>
+    <audio
       id="drum-80-bpm"
-      autoplay
       loop
       src="../static/assets/drum-80-bpm.mp3"
       type="audio/mpeg"
     ></audio>
-
-    <div class="container">
-      <h1>machine learning</h1>
-      <h2>image upload</h2>
-      {% if filename %}
-      <div>
-        <img src="{{filename}}" />
-      </div>
-      <div>
-        <p>{{label}} {{probability}}</p>
-      </div>
-      {% endif %}
-      <form
-        method="post"
-        action="http://localhost:5000/upload"
-        enctype="multipart/form-data"
-      >
-        <input type="file" name="file" />
-        <input type="submit" value="submit" />
-      </form>
-    </div>
+    <audio
+      id="drum-100-bpm"
+      loop
+      src="../static/assets/drum-100-bpm.mp3"
+      type="audio/mpeg"
+   ></audio>
 
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
@@ -112,36 +98,16 @@
             <!--layer input popup content area-->
             <div class="popup_cont">
               <div class="filebox">
-                <script
-                  type="text/javascript"
-                  src="//www.midijs.net/lib/midi.js"
-                >
-                  MIDIjs.play("../static/assets/output-sample.mid")
-                </script>
-                <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
-                <midi-player
-                  src="../static/assets/output-sample.mid"
-                  sound-font
-                  visualizer="#myVisualizer"
-                >
-                </midi-player>
-                <form
-                  onsubmit="fetchMidi(this.url.value); return false;"
-                ></form>
-                <div id="FileDrop">
-                  <div id="Text"></div>
-                  <input type="file" accept="audio/midi" />
+                <div class="container">
+                  <form
+                    method="post"
+                    action="http://localhost:5000/upload"
+                    enctype="multipart/form-data"
+                  >
+                    <input type="file" name="file" />
+                    <input type="submit" value="submit" />
+                  </form>
                 </div>
-                <tone-play-toggle disabled></tone-play-toggle>
-                <span><tone-button id="rewind"></tone-button></span>
-                <span id="position">0:0</span>
-                <span id="ticks">Ticks:</span>
-                <span id="bpm">BPM: 0</span>
-                <button id="tempoUp" onclick='changeTempo("up")'>UP</button>
-                <button id="tempoDown" onclick='changeTempo("dn")'>DOWN</button>
-                <button id="resetTempo" onclick='changeTempo("reset")'>
-                  ResetTempo
-                </button>
               </div>
             </div>
           </div>
@@ -278,7 +244,7 @@
           </a>
 
           <!--audio effect popup btn-->
-          <a href="javascript:openEffectPop()">
+          <a href="javascript:openEffectPop()">  
             <img
               src="../static/assets/audio_effect_btn.png"
               class="room-btn"
@@ -426,9 +392,18 @@
             STYLE
           </button>
           <div class="style-dropdown-content">
-            <a href="#">basic</a>
-            <a href="#">mellow</a>
-            <a href="#">sad</a>
+            <option value="basic"
+            class="stylebtn"
+            onclick="setStyle(this.value)"
+            >basic</a>
+            <option value= "mellow"
+            class="stylebtn"
+            onclick= "setStyle(this.value)"
+            >mellow</a>
+            <option value= "sad"
+            class="stylebtn"
+            onclick="setStyle(this.value)"
+            >sad</a>
           </div>
         </div>
 
@@ -439,11 +414,76 @@
             BPM
           </button>
           <div class="style-dropdown-content">
-            <a href="#">80</a>
-            <a href="#">100</a>
-            <a href="#">120</a>
+            <option value="60" class="bpmbtn" onclick="setBpm(this.value)">60</option>
+            <option value="80" class="bpmbtn" onclick="setBpm(this.value)">80</option>
+            <option value="100" class="bpmbtn" onclick="setBpm(this.value)">100</option>
           </div>
         </div>
+
+        <script>
+          // bpm change
+          function setBpm(bpm) {
+            var target_bpm = Number(bpm);
+            Tone.Transport.bpm.value = target_bpm;
+            changeDrum(bpm);
+          }
+          // bpm에 맞춰서 drum 바꾸는 함수
+          function changeDrum(bpm) {
+            if (nowbpm != selectbpm){ //현재 bpm과 선택한 bpm이 다를 떄
+              if (bpm==60) {
+                for (let i = 0; i < midi.header.tempos.length; i++) {
+                  Tone.Transport.schedule(function (time) {
+                    Tone.Transport.bpm.value =
+                      midi.header.tempos[i].bpm + CW.tempoOffset;
+                  }, midi.header.tempos[i].ticks + "i");
+                }
+              } else if (bpm==80) {
+
+              } else { //bpm==120
+
+              }
+            }
+
+
+
+          }
+
+          function setStyle(style) {
+            var style = style;
+          }
+        </script>
+
+        <!-- 임시 bpm 조정 -->
+        <script
+        type="text/javascript"
+        src="//www.midijs.net/lib/midi.js"
+        >
+        MIDIjs.play("../static/assets/output-sample.mid") // 추후 경로 output으로 수정
+        </script>
+        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+        <midi-player
+          src="../static/assets/output-sample.mid"
+          sound-font
+          visualizer="#myVisualizer"
+        >
+        </midi-player>
+        <form
+        onsubmit="fetchMidi(this.url.value); return false;"
+        ></form>
+        <div id="FileDrop">
+        <div id="Text"></div>
+        <input type="file" id="test-file" accept="audio/midi" />
+        </div>
+        <tone-play-toggle disabled></tone-play-toggle>
+        <span><tone-button id="rewind"></tone-button></span>
+        <span id="position">0:0</span>
+        <span id="ticks">Ticks:</span>
+        <span id="bpm">BPM: 0</span>
+        <button id="tempoUp" onclick='changeTempo("up")'>UP</button>
+        <button id="tempoDown" onclick='changeTempo("dn")'>DOWN</button>
+        <button id="resetTempo" onclick='changeTempo("reset")'>
+          ResetTempo
+        </button>
 
         <!--style transfer output music 재생바-->
         <link
@@ -488,17 +528,9 @@
                 </script>
               </div>
               <div class="pause" onclick="pause()"></div>
-              <div class="soundControl" id="volume-Control">
-                <input
-                  class="mp3-bar"
-                  type="range"
-                  id="volume-slider"
-                  min="0"
-                  max="100"
-                  value="50"
-                />
+              <div class="soundControl" id="volume-Control" display="none">
                 <script>
-                  // volume control
+                  // volume control 코드 삭제하면 오디오 비주얼라이제이션 안됨 (왜?)
                   const audio = document.getElementById("kpop-sample");
                   const audioVolume = document.getElementById("volume-slider");
                   audioVolume.addEventListener("change", function (e) {
