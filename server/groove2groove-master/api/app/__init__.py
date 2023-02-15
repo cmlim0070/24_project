@@ -18,17 +18,39 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from groove2groove.io import NoteSequencePipeline
 from groove2groove.models import roll2seq_style_transfer
 
+from flask import Flask, request, url_for, render_template
+from werkzeug.utils import secure_filename
+import os
+import time
 
-app = flask.Flask(__name__,
-                  instance_relative_config=True)
+app = Flask(__name__, instance_relative_config=True)
+app.config['UPLOAD_FOLDER'] = './upload'
 app.config.from_object('app.config')
 app.config.from_pyfile('app.cfg', silent=True)
-if 'STATIC_FOLDER' in app.config:
-    app.static_folder = app.config['STATIC_FOLDER']
-    app.static_url_path = '/'
+
+
+@app.route('/')
+def render():
+    return render_template('player.html')
+
+# @app.route('/upload', methods=['GET', 'POST'])  # 유저 파일 업로드
+# def upload_file():
+#     if request.method == 'POST':
+#         file = './upload/content.mid'
+#         if os.path.isfile('./upload/content.mid'):
+#             os.remove(file)
+#         f = request.files['file']
+#         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'content.mid'))
+#         return render_template('player_test.html')
+
+# if 'STATIC_FOLDER' in app.config:
+#     app.static_folder = app.config['STATIC_FOLDER']
+#     app.static_url_path = '/'
+
 
 app.wsgi_app = ProxyFix(app.wsgi_app, **app.config.get('PROXY_FIX', {}))
-limiter = Limiter(app, key_func=get_remote_address, headers_enabled=True, **app.config.get('LIMITER', {}))
+limiter = Limiter(app, key_func=get_remote_address,
+                  headers_enabled=True, **app.config.get('LIMITER', {}))
 CORS(app, **app.config.get('CORS', {}))
 
 logging.getLogger('tensorflow').handlers.clear()
@@ -36,7 +58,6 @@ logging.getLogger('tensorflow').handlers.clear()
 models = {}
 model_graphs = {}
 tf_lock = threading.Lock()
-
 
 if app.config.get('SERVE_STATIC_FILES', False):
     @app.route("/", defaults={'path': 'index.html'})
@@ -48,7 +69,8 @@ if app.config.get('SERVE_STATIC_FILES', False):
 @app.before_first_request
 def init_models():
     for model_name, model_cfg in app.config['MODELS'].items():
-        logdir = os.path.join(app.config['MODEL_ROOT'], model_cfg.get('logdir', model_name))
+        logdir = os.path.join(
+            app.config['MODEL_ROOT'], model_cfg.get('logdir', model_name))
         with open(os.path.join(logdir, 'model.yaml'), 'rb') as f:
             config = Configuration.from_yaml(f)
 
@@ -56,17 +78,22 @@ def init_models():
         with model_graphs[model_name].as_default():
             models[model_name] = config.configure(roll2seq_style_transfer.Experiment,
                                                   logdir=logdir, train_mode=False)
-            models[model_name].trainer.load_variables(**model_cfg.get('load_variables', {}))
+            models[model_name].trainer.load_variables(
+                "latest", "./experiments/v01_drums/latest.ckpt-24361")
 
 
-@app.route('/api/v1/style_transfer/<model_name>/', methods=['POST'])
-@limiter.limit(app.config.get('MODEL_RATE_LIMIT', None))
+@ app.route('/<model_name>/', methods=['POST'])
+@ limiter.limit(app.config.get('MODEL_RATE_LIMIT', None))
 def run_model(model_name):
     files = flask.request.files
+    print("파일 업로드")
     content_seq = NoteSequence.FromString(files['content_input'].read())
+    print("content")
     style_seq = NoteSequence.FromString(files['style_input'].read())
+    print("style")
     sample = flask.request.form.get('sample') == 'true'
-    softmax_temperature = float(flask.request.form.get('softmax_temperature', 0.6))
+    softmax_temperature = float(
+        flask.request.form.get('softmax_temperature', 0.6))
 
     sanitize_ns(content_seq)
     sanitize_ns(style_seq)
@@ -87,15 +114,16 @@ def run_model(model_name):
 
     run_options = None
     if 'BATCH_TIMEOUT' in app.config:
-        run_options = tf.RunOptions(timeout_in_ms=int(app.config['BATCH_TIMEOUT'] * 1000))
+        run_options = tf.RunOptions(timeout_in_ms=int(
+            app.config['BATCH_TIMEOUT'] * 1000))
 
     pipeline = NoteSequencePipeline(source_seq=content_seq, style_seq=style_seq,
                                     bars_per_segment=8, warp=True)
     try:
         with tf_lock, model_graphs[model_name].as_default():
             outputs = models[model_name].run(
-                    pipeline, sample=sample, softmax_temperature=softmax_temperature,
-                    normalize_velocity=True, options=run_options)
+                pipeline, sample=sample, softmax_temperature=softmax_temperature,
+                normalize_velocity=True, options=run_options)
     except tf.errors.DeadlineExceededError:
         return error_response('MODEL_TIMEOUT', status_code=500)
     output_seq = pipeline.postprocess(outputs)
@@ -111,14 +139,15 @@ def http_error_handler(error):
         'error': error.name,
         'description': error.description
     })
-    response.content_type = 'application/json';
+    response.content_type = 'application/json'
     return response
 
 
 def error_response(error, status_code=400):
-    response = flask.make_response(flask.json.dumps({'error': error}), status_code)
-    response.content_type = 'application/json';
-    return response;
+    response = flask.make_response(
+        flask.json.dumps({'error': error}), status_code)
+    response.content_type = 'application/json'
+    return response
 
 
 def sanitize_ns(ns):
@@ -138,7 +167,8 @@ def sanitize_ns(ns):
 
     for collection in [ns.tempos, ns.time_signatures, ns.key_signatures, ns.pitch_bends,
                        ns.control_changes, ns.text_annotations, ns.section_annotations]:
-        filtered = [event for event in collection if event.time <= ns.total_time]
+        filtered = [
+            event for event in collection if event.time <= ns.total_time]
         del collection[:]
         collection.extend(filtered)
 
@@ -150,9 +180,17 @@ def ns_stats(ns):
     tempos.append(NoteSequence.Tempo(time=ns.total_time + 1e-4))
     tempos.sort(key=lambda x: x.time)
     for i in range(len(tempos) - 1):
-       stats['beats'] += (tempos[i + 1].time - tempos[i].time) * tempos[i].qpm / 60
+        stats['beats'] += (tempos[i + 1].time -
+                           tempos[i].time) * tempos[i].qpm / 60
 
-    stats['programs'] = len(set((note.program, note.is_drum) for note in ns.notes))
+    stats['programs'] = len(set((note.program, note.is_drum)
+                            for note in ns.notes))
     stats['notes'] = len(ns.notes)
 
     return stats
+
+
+if __name__ == '__main__':
+    app.run(debug=False)
+
+app.run(host='127.0.0.1', debug=False)
