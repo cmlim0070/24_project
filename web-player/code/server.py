@@ -3,9 +3,7 @@ import io
 import logging
 import os
 import threading
-import tensorflow.compat
 
-from magenta.music.protobuf import music_pb2
 from confugue import Configuration
 import flask
 from flask_cors import CORS
