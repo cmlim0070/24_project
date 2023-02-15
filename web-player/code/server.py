@@ -91,13 +91,15 @@ def run_model(model_name):
     # files = flask.request.files
     files = request.files.getlist("file[]")
     print("테스트1")
-
+    files[0].save('./uploads/' + secure_filename(files[0].filename))
     content_seq = NoteSequence.FromString(
         files[0].read())
     print("테스트2")
     print(files[0].filename)
 
+    files[1].save('./uploads/' + secure_filename(files[1].filename))
     style_seq = NoteSequence.FromString(files[1].read())
+
     print("테스트3")
     print(files[1].filename)
 
