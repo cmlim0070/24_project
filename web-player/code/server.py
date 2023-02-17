@@ -86,20 +86,25 @@ def init_models():
 @ app.route('/<model_name>/', methods=['POST'])
 @ limiter.limit(app.config.get('MODEL_RATE_LIMIT', None))
 def run_model(model_name):
-    # files = flask.request.files
-    files = request.files.getlist("file[]")
+    # files = request.files.getlist("file[]")
+    # print("테스트1")
+    # files[0].save('./uploads/' + secure_filename(files[0].filename))
+    # content_seq = NoteSequence.FromString(
+    #     files[0].read())
+    # print("테스트2")
+    # print(files[0].filename)
+
+    # files[1].save('./uploads/' + secure_filename(files[1].filename))
+    # style_seq = NoteSequence.FromString(files[1].read())
+    # # print("테스트3")
+    # print(files[1].filename)
+
+    files = flask.request.files
     print("테스트1")
-    files[0].save('./uploads/' + secure_filename(files[0].filename))
-    content_seq = NoteSequence.FromString(
-        files[0].read())
+    content_seq = NoteSequence.FromString(files['content_input'].read())
     print("테스트2")
-    print(files[0].filename)
-
-    files[1].save('./uploads/' + secure_filename(files[1].filename))
-    style_seq = NoteSequence.FromString(files[1].read())
-
+    style_seq = NoteSequence.FromString(files['style_input'].read())
     print("테스트3")
-    print(files[1].filename)
 
     sample = flask.request.form.get('sample') == 'true'
     softmax_temperature = float(
@@ -121,6 +126,9 @@ def run_model(model_name):
         return error_response('STYLE_INPUT_TOO_MANY_NOTES')
     if style_stats['programs'] > app.config.get('MAX_STYLE_INPUT_PROGRAMS', np.inf):
         return error_response('STYLE_INPUT_TOO_MANY_INSTRUMENTS')
+
+    print(style_stats['beats'], style_stats['notes'], style_stats['programs'])
+    print(content_stats['beats'], content_stats['notes'])
 
     run_options = None
     if 'BATCH_TIMEOUT' in app.config:
