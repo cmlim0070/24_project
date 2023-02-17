@@ -4,7 +4,6 @@ import logging
 import os
 import threading
 
-from magenta.music.protobuf import music_pb2
 from confugue import Configuration
 import flask
 from flask_cors import CORS
@@ -102,10 +101,10 @@ def run_model(model_name):
 
     files = flask.request.files
     print("테스트1")
-    content_seq = music_pb2.NoteSequence.FromString(
+    content_seq = FromString(
         files['content_input'].read())
     print("테스트2")
-    style_seq = music_pb2.NoteSequence.FromString(files['style_input'].read())
+    style_seq = FromString(files['style_input'].read())
     print("테스트3")
 
     sample = flask.request.form.get('sample') == 'true'
