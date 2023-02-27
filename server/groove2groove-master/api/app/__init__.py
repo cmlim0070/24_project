@@ -28,25 +28,9 @@ app.config['UPLOAD_FOLDER'] = './upload'
 app.config.from_object('app.config')
 app.config.from_pyfile('app.cfg', silent=True)
 
-
-@app.route('/')
-def render():
-    return render_template('player.html')
-
-# @app.route('/upload', methods=['GET', 'POST'])  # 유저 파일 업로드
-# def upload_file():
-#     if request.method == 'POST':
-#         file = './upload/content.mid'
-#         if os.path.isfile('./upload/content.mid'):
-#             os.remove(file)
-#         f = request.files['file']
-#         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'content.mid'))
-#         return render_template('player_test.html')
-
-# if 'STATIC_FOLDER' in app.config:
-#     app.static_folder = app.config['STATIC_FOLDER']
-#     app.static_url_path = '/'
-
+if 'STATIC_FOLDER' in app.config:
+    app.static_folder = app.config['STATIC_FOLDER']
+    app.static_url_path = '/'
 
 app.wsgi_app = ProxyFix(app.wsgi_app, **app.config.get('PROXY_FIX', {}))
 limiter = Limiter(app, key_func=get_remote_address,
@@ -82,7 +66,7 @@ def init_models():
                 "latest", "./experiments/v01_drums/latest.ckpt-24361")
 
 
-@ app.route('/<model_name>/', methods=['POST'])
+@ app.route('/<model_name>', methods=['POST'])
 @ limiter.limit(app.config.get('MODEL_RATE_LIMIT', None))
 def run_model(model_name):
     files = flask.request.files
@@ -188,9 +172,3 @@ def ns_stats(ns):
     stats['notes'] = len(ns.notes)
 
     return stats
-
-
-if __name__ == '__main__':
-    app.run(debug=False)
-
-app.run(host='127.0.0.1', debug=False)

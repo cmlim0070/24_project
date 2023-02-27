@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+    <script
+    type="text/javascript"
+    src="https://unpkg.com/tone@13.4.9/build/Tone.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://unpkg.com/@tonejs/ui@0.0.8/build/tonejs-ui.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://unpkg.com/@tonejs/midi"
+  ></script>
+</head>
+<body>
+
+          <button id="target">start</button>
+
+</body>
+<script>
+    // reverb test
+      // const player = new Tone.Player("../static/assets/output-sample.mid").toDestination();
+      // const reverb = new Tone.Reverb({
+      //     decay: 8.5,
+      //     preDelay: 0.1,
+      //   }).toMaster();
+      //   reverb.generate().then(() => {
+      //     console.log('reverb ready');
+      //     checkFinishLoading();
+      //   });
+      //   reverb.wet.value = 0.3;
+      //   const lpf = new Tone.Filter(1000, 'lowpass').connect(reverb);
+      //   const hpf = new Tone.Filter(1, 'highpass').connect(lpf);
+      //   const chorus = new Tone.Chorus(4, 2.5, 0.1).connect(hpf); 
+
+      //   function reverbTest() {
+      //       console.log("start");
+      //       player.connect(reverb);
+      //       player.start();
+      //   }
+    //   var buffer = new Tone.Buffer("output-sample.mid", function(){
+    //     //the buffer is now available.
+    //     console.log(buffer)
+    //     var buff = buffer.get();
+    //   });
+        
+      const reverb = new Tone.Reverb();
+
+      const player = new Tone.Player({
+        url: "https://tonejs.github.io/audio/berklee/Analogsynth_octaves_highmid.mp3",
+        loop: true,
+        volume: 6,
+      }).connect(reverb);
+
+    //   ui({
+    //     parent: document.querySelector("#content"),
+    //     tone: reverb
+    //   });
+
+      // bind the interface
+    //   document.querySelector("tone-play-toggle").addEventListener("start", () => player.start());
+    //   document.querySelector("tone-play-toggle").addEventListener("stop", () => player.stop());
+
+      document.getElementById("target").addEventListener("click", ()=> player.start());
+      
+    </script>
+</html>
