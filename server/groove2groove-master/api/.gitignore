@@ -1,3 +1,5 @@
+experiments/
+
 /experiments/eval/style_profiles/*.json
 
 # Byte-compiled / optimized / DLL files
