@@ -26,11 +26,7 @@ import time
 
 
 app = Flask(__name__, instance_relative_config=True)
-<<<<<<< Updated upstream
-app.config['UPLOAD_FOLDER'] = './upload_test/'
-=======
 app.config['UPLOAD_FOLDER'] = './uploads'
->>>>>>> Stashed changes
 app.config.from_object('app.config')
 app.config.from_pyfile('app.cfg', silent=True)
 
@@ -90,71 +86,6 @@ def init_models():
 
 @ app.route('/output/', methods=['GET', 'POST'])
 @ limiter.limit(app.config.get('MODEL_RATE_LIMIT', None))
-<<<<<<< Updated upstream
-def run_model(model_name):
-    # files = request.files.getlist("file[]")
-    # print("테스트1")
-    # files[0].save('./uploads/' + secure_filename(files[0].filename))
-    # content_seq = NoteSequence.FromString(
-    #     files[0].read())
-    # print("테스트2")
-    # print(files[0].filename)
-
-    # files[1].save('./uploads/' + secure_filename(files[1].filename))
-    # style_seq = NoteSequence.FromString(files[1].read())
-    # # print("테스트3")
-    # print(files[1].filename)
-
-    files = flask.request.files
-    print("테스트1")
-    content_seq = NoteSequence.FromString(files['content_input'].read())
-    print("테스트2")
-    style_seq = NoteSequence.FromString(files['style_input'].read())
-    print("테스트3")
-
-    sample = flask.request.form.get('sample') == 'true'
-    softmax_temperature = float(
-        flask.request.form.get('softmax_temperature', 0.6))
-
-    sanitize_ns(content_seq)
-    sanitize_ns(style_seq)
-
-    content_stats = ns_stats(content_seq)
-    if content_stats['beats'] > app.config.get('MAX_CONTENT_INPUT_BEATS', np.inf) + 1e-2:
-        return error_response('CONTENT_INPUT_TOO_LONG')
-    if content_stats['notes'] > app.config.get('MAX_CONTENT_INPUT_NOTES', np.inf):
-        return error_response('CONTENT_INPUT_TOO_MANY_NOTES')
-
-    style_stats = ns_stats(style_seq)
-    if style_stats['beats'] > app.config.get('MAX_STYLE_INPUT_BEATS', np.inf) + 1e-2:
-        return error_response('STYLE_INPUT_TOO_LONG')
-    if style_stats['notes'] > app.config.get('MAX_STYLE_INPUT_NOTES', np.inf):
-        return error_response('STYLE_INPUT_TOO_MANY_NOTES')
-    if style_stats['programs'] > app.config.get('MAX_STYLE_INPUT_PROGRAMS', np.inf):
-        return error_response('STYLE_INPUT_TOO_MANY_INSTRUMENTS')
-
-    print(style_stats['beats'], style_stats['notes'], style_stats['programs'])
-    print(content_stats['beats'], content_stats['notes'])
-
-    run_options = None
-    if 'BATCH_TIMEOUT' in app.config:
-        run_options = tf.RunOptions(timeout_in_ms=int(
-            app.config['BATCH_TIMEOUT'] * 1000))
-
-    pipeline = NoteSequencePipeline(source_seq=content_seq, style_seq=style_seq,
-                                    bars_per_segment=8, warp=True)
-    try:
-        with tf_lock, model_graphs[model_name].as_default():
-            outputs = models[model_name].run(
-                pipeline, sample=sample, softmax_temperature=softmax_temperature,
-                normalize_velocity=True, options=run_options)
-    except tf.errors.DeadlineExceededError:
-        return error_response('MODEL_TIMEOUT', status_code=500)
-    output_seq = pipeline.postprocess(outputs)
-    output = io.BytesIO(output_seq.SerializeToString())
-    return flask.send_file(io.BytesIO(output_seq.SerializeToString()),
-                           mimetype='application/protobuf')
-=======
 def run_model():
     try:
         files = flask.request.files
@@ -218,7 +149,6 @@ def run_model():
     except Exception as e:
         print(e)
         pass
->>>>>>> Stashed changes
 
 
 @app.errorhandler(werkzeug.exceptions.HTTPException)
