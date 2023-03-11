@@ -24,8 +24,13 @@ from werkzeug.utils import secure_filename
 import os
 import time
 
+
 app = Flask(__name__, instance_relative_config=True)
+<<<<<<< Updated upstream
 app.config['UPLOAD_FOLDER'] = './upload_test/'
+=======
+app.config['UPLOAD_FOLDER'] = './uploads'
+>>>>>>> Stashed changes
 app.config.from_object('app.config')
 app.config.from_pyfile('app.cfg', silent=True)
 
@@ -44,9 +49,10 @@ def render():
 #         f.save(os.path.join(app.config['UPLOAD_FOLDER'], 'content.mid'))
 #         return render_template('player_test.html')
 
-# if 'STATIC_FOLDER' in app.config:
-#     app.static_folder = app.config['STATIC_FOLDER']
-#     app.static_url_path = '/'
+
+if 'STATIC_FOLDER' in app.config:
+    app.static_folder = app.config['STATIC_FOLDER']
+    app.static_url_path = '/'
 
 
 app.wsgi_app = ProxyFix(app.wsgi_app, **app.config.get('PROXY_FIX', {}))
@@ -74,7 +80,6 @@ def init_models():
             app.config['MODEL_ROOT'], model_cfg.get('logdir', model_name))
         with open(os.path.join(logdir, 'model.yaml'), 'rb') as f:
             config = Configuration.from_yaml(f)
-
         model_graphs[model_name] = tf.Graph()
         with model_graphs[model_name].as_default():
             models[model_name] = config.configure(roll2seq_style_transfer.Experiment,
@@ -83,8 +88,9 @@ def init_models():
                 "latest", "./experiments/v01_drums/latest.ckpt-24361")
 
 
-@ app.route('/<model_name>/', methods=['POST'])
+@ app.route('/output/', methods=['GET', 'POST'])
 @ limiter.limit(app.config.get('MODEL_RATE_LIMIT', None))
+<<<<<<< Updated upstream
 def run_model(model_name):
     # files = request.files.getlist("file[]")
     # print("테스트1")
@@ -148,6 +154,71 @@ def run_model(model_name):
     output = io.BytesIO(output_seq.SerializeToString())
     return flask.send_file(io.BytesIO(output_seq.SerializeToString()),
                            mimetype='application/protobuf')
+=======
+def run_model():
+    try:
+        files = flask.request.files
+        files['content_input'].save(
+            './uploads/'+secure_filename('content.mid'))
+        files['style_input'].save(
+            './uploads/'+secure_filename('style.mid'))
+
+        os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
+                    --sample --softmax-temperature 0.6 \
+                    uploads/content.mid uploads/style.mid static/output/output_midi.mid")
+        os.system(
+            "timidity static/output/output_midi.mid -Ow -o static/output/output.mp3")
+
+        return render_template('player.html')
+
+        # content_seq = NoteSequence.FromString(
+        #     files['content_input'].read())
+        # style_seq = NoteSequence.FromString(
+        #     files['style_input'].read())
+
+        # sample = flask.request.form.get('sample') == 'true'
+        # softmax_temperature = float(
+        #     flask.request.form.get('softmax_temperature', 0.6))
+
+        # sanitize_ns(content_seq)
+        # sanitize_ns(style_seq)
+
+        # content_stats = ns_stats(content_seq)
+        # if content_stats['beats'] > app.config.get('MAX_CONTENT_INPUT_BEATS', np.inf) + 1e-2:
+        #     return error_response('CONTENT_INPUT_TOO_LONG')
+        # if content_stats['notes'] > app.config.get('MAX_CONTENT_INPUT_NOTES', np.inf):
+        #     return error_response('CONTENT_INPUT_TOO_MANY_NOTES')
+
+        # style_stats = ns_stats(style_seq)
+        # if style_stats['beats'] > app.config.get('MAX_STYLE_INPUT_BEATS', np.inf) + 1e-2:
+        #     return error_response('STYLE_INPUT_TOO_LONG')
+        # if style_stats['notes'] > app.config.get('MAX_STYLE_INPUT_NOTES', np.inf):
+        #     return error_response('STYLE_INPUT_TOO_MANY_NOTES')
+        # if style_stats['programs'] > app.config.get('MAX_STYLE_INPUT_PROGRAMS', np.inf):
+        #     return error_response('STYLE_INPUT_TOO_MANY_INSTRUMENTS')
+
+        # run_options = None
+        # if 'BATCH_TIMEOUT' in app.config:
+        #     run_options = tf.RunOptions(timeout_in_ms=int(
+        #         app.config['BATCH_TIMEOUT'] * 1000))
+
+        # pipeline = NoteSequencePipeline(source_seq=content_seq, style_seq=style_seq,
+        #                                 bars_per_segment=8, warp=True)
+        # try:
+        #     with tf_lock, model_graphs[model_name].as_default():
+        #         outputs = models[model_name].run(
+        #             pipeline, sample=sample, softmax_temperature=softmax_temperature,
+        #             normalize_velocity=True, options=run_options)
+        # except tf.errors.DeadlineExceededError:
+        #     return error_response('MODEL_TIMEOUT', status_code=500)
+        # output_seq = pipeline.postprocess(outputs)
+        # output = io.BytesIO(output_seq.SerializeToString())
+        # return flask.send_file(io.BytesIO(content_seq.SerializeToString()),
+        #                        mimetype='application/protobuf')
+    except Exception as e:
+        print(e)
+        pass
+>>>>>>> Stashed changes
 
 
 @app.errorhandler(werkzeug.exceptions.HTTPException)
@@ -174,6 +245,7 @@ def sanitize_ns(ns):
         tempo = ns.tempos.add()
         tempo.time = 0
         tempo.qpm = 120
+
     if not ns.time_signatures:
         ts = ns.time_signatures.add()
         ts.time = 0
@@ -190,6 +262,8 @@ def sanitize_ns(ns):
             event for event in collection if event.time <= ns.total_time]
         del collection[:]
         collection.extend(filtered)
+
+    print(ns.total_time)
 
 
 def ns_stats(ns):
@@ -210,6 +284,4 @@ def ns_stats(ns):
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
-
-app.run(host='127.0.0.1', debug=False)
+    app.run(host='127.0.0.1', debug=False)
