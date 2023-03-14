@@ -92,14 +92,13 @@ position: absolute;
   height: 100%;
 }
 
-/*layer popup box*/
+/*사운드이펙트 팝업*/
 .effect_popup_box {
   position: relative;
-  top: 180px;
-  left: 800px;
+  top: 230px;
+  left: 900px;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 470px;
   width: 300px;
   transform: translate(-50%, -50%);
   z-index: 1002;
@@ -113,7 +112,7 @@ position: absolute;
 
 /*layer popup contents*/
 .effect_popup_box .popup_cont {
-  padding: 10px 30px 0px 30px;
+  padding: 10px 30px 30px 30px;
   line-height: 1.4rem;
   font-size: 14px;
 }
@@ -235,6 +234,12 @@ input {
     border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
     background: rgb(255, 152, 238); /* 슬라이더 핸들 색상 */
     cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
+}
+
+/* 팝업-리버브 부분 */
+.reverb-box{
+  display: flex;
+  flex-direction: column;
 }
 
 /* 드럼 팝업 */
