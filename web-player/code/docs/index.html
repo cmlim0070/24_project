@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "UA-33600926-1");
+    </script>
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+      integrity="sha256-4RctOgogjPAdwGbwq+rxfwAmSpZhWaafcZR9btzUk18="
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body class="d-flex flex-column h-100 text-body bg-body">
+    <!-- Begin page content -->
+    <main role="main" class="flex-shrink-0 my-2">
+      <div class="container-fluid bg-light p-5 mb-3">
+        <button id="play" type="button" class="btn btn-primary btn-lg" disabled>
+          <em class="bi bi-play"></em>
+          Play
+        </button>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="reverb">Reverb</label>
+              <input id="reverb" type="checkbox" class="form-check-input" />
+            </div>
+            <div class="form-check form-switch">
+              <label class="form-check-label" for="reverse">
+                Reverse Inpulse Response
+              </label>
+              <input type="checkbox" class="form-check-input" id="reverse" />
+            </div>
+          </div>
+          <div class="col" style="display: none">
+            <div class="overflow-auto">
+              <canvas id="graph" width="512" height="256"></canvas>
+            </div>
+            <p class="text-right">
+              The sound uses the drum part of
+              <a
+                href="https://soundcloud.com/logue256/autumn-wind"
+                target="_blank"
+              >
+                <em class="bi bi-soundwave"></em>
+                Autmun Wind
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+        <section class="mb-3">
+          <div class="row">
+            <div class="col-md">
+              <label for="time" class="form-label" aria-describedby="time-help">
+                Time
+              </label>
+              <input
+                type="range"
+                class="form-range"
+                title="1.1"
+                value="2"
+                min="0"
+                max="50"
+                id="time"
+              />
+              <div id="time-help" class="form-text">Room size</div>
+            </div>
+            <div class="col-md">
+              <label for="decay" class="form-label">Decay</label>
+              <input
+                type="range"
+                class="form-range"
+                title="2"
+                value="2"
+                min="0"
+                max="100"
+                id="decay"
+              />
+              <div id="decay-help" class="form-text">
+                Hardness of room wall size
+              </div>
+            </div>
+            <div class="col-md">
+              <label for="delay" class="form-label">Delay</label>
+              <input
+                type="range"
+                class="form-range"
+                title="0"
+                value="0"
+                min="0"
+                max="100"
+                id="delay"
+              />
+              <div id="delay-help" class="form-text">
+                Delays due to obstacles in front of room walls
+              </div>
+            </div>
+            <div class="col-md">
+              <label for="mix" class="form-label">Dry / Wet</label>
+              <input
+                type="range"
+                id="mix"
+                class="form-range"
+                min="0"
+                max="1"
+                step="0.05"
+                value="0.5"
+                title="0.5"
+              />
+              <div id="delay-help" class="form-text">
+                Closer to the original sound or closer to the effector
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha256-Bh8LHqeebiyiT0YD5V0+kJ90cboLJ5zbbepAVUEGxqI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="reverb.umd.js"></script>
+    <script>
+      document.getElementById("play").setAttribute("disabled", "disabled");
+
+      document.addEventListener("touchstart", initAudioContext);
+      function initAudioContext() {
+        document.removeEventListener("touchstart", initAudioContext);
+        // wake up AudioContext
+        const emptySource = ctx.createBufferSource();
+        emptySource.start();
+        emptySource.stop();
+      }
+
+      window.addEventListener("load", async () => {
+        // Setup Audio Context
+        const AudioCtx = new window.AudioContext();
+
+        // Defreeze AudioContext for iOS.
+        document.addEventListener("touchstart", initAudioContext);
+        function initAudioContext() {
+          document.removeEventListener("touchstart", initAudioContext);
+          // wake up AudioContext
+          const emptySource = AudioCtx.createBufferSource();
+          emptySource.start();
+          emptySource.stop();
+        }
+
+        // Setup Reverb Class
+        const reverb = new Reverb(AudioCtx);
+        console.info(
+          `Reverb.js loaded. (version: ${Reverb.version} / build: ${Reverb.build})`
+        );
+        const AudioSrc = AudioCtx.createBufferSource();
+
+        // Load audio file and decode asyncly.
+        const LoadSample = async (url) => {
+          return new Promise((resolve) => {
+            fetch(url)
+              .then((response) => response.arrayBuffer())
+              .then((arraybuf) =>
+                AudioCtx.decodeAudioData(
+                  arraybuf,
+                  (buffer) => {
+                    document.getElementById("play").removeAttribute("disabled");
+                    resolve(buffer);
+                  },
+                  (e) => alert(e)
+                )
+              )
+              .catch((e) => alert(e));
+          });
+        };
+
+        // Draw FFT to canvas
+        // Code taken from https://www.g200kg.com/jp/docs/webaudio/filter.html
+        const AnalyserNode = AudioCtx.createAnalyser();
+        const canvas = document.getElementById("graph");
+        const canvasContext = canvas.getContext("2d");
+
+        const analysedata = new Float32Array(1024);
+        const DrawGraph = () => {
+          AnalyserNode.getFloatFrequencyData(analysedata);
+          // Background
+          canvasContext.fillStyle = "#343a40";
+          canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+          // FFT Graph
+          canvasContext.fillStyle = document.getElementById("reverb").checked
+            ? "#17a2b8"
+            : "#28a745";
+          for (let i = 0; i < canvas.width; ++i) {
+            const f = (AudioCtx.sampleRate * i) / (canvas.width * 2);
+            const y = canvas.height / 2 + (analysedata[i] + 48.16) * 2.56;
+            canvasContext.fillRect(i, canvas.height - y, 1, y);
+          }
+
+          // y axis (dB)
+          for (let d = -50; d < 50; d += 10) {
+            const y = (canvas.height / 2 - (d * canvas.height) / 100) | 0;
+            // Line
+            canvasContext.fillStyle = "#6c757d";
+            canvasContext.fillRect(20, y, canvas.width, 1);
+            // Label
+            canvasContext.fillStyle = "#fd7e14";
+            canvasContext.fillText(d + "dB", 5, y);
+          }
+          canvasContext.fillStyle = "#ffc107";
+          canvasContext.fillRect(20, canvas.height / 2, canvas.width, 1);
+
+          // x axis (frequency)
+          for (let f = 2200; f < AudioCtx.sampleRate / 2; f += 2000) {
+            const x = ((f * (canvas.width * 2)) / AudioCtx.sampleRate) | 0;
+            // Line
+            canvasContext.fillStyle = "#6c757d";
+            canvasContext.fillRect(x, 0, 1, canvas.height - 10);
+            // Label
+            if (x % 4 == 0) {
+              canvasContext.fillStyle = "#e83e8c";
+              canvasContext.fillText(
+                f / 1000 + "kHz",
+                x - 10,
+                canvas.height - 1
+              );
+            }
+          }
+        };
+
+        // Reverb switch handler
+        const setReverb = () => {
+          AudioSrc.disconnect();
+
+          if (document.getElementById("reverb").checked) {
+            // Connect Reverb
+            reverb.connect(AudioSrc).connect(AnalyserNode);
+          } else {
+            reverb.disconnect(AudioSrc).connect(AnalyserNode);
+          }
+          AnalyserNode.connect(AudioCtx.destination);
+          reverb.setNoise("pink");
+        };
+
+        const sound = await LoadSample("./wave.mp3");
+
+        // Draw FFT
+        setInterval(DrawGraph, 10);
+
+        // Play button
+        document.getElementById("play").addEventListener(
+          "click",
+          (event) => {
+            if (event.target != event.currentTarget) return;
+
+            if (AudioSrc.buffer == null) {
+              AudioSrc.buffer = sound;
+              AudioSrc.loop = true;
+
+              setReverb();
+              AudioSrc.start();
+            }
+
+            if (AudioCtx.state === "running") {
+              AudioCtx.suspend().then(() => {
+                event.target.innerHTML = '<em class="bi bi-play"></em> Play';
+              });
+            } else if (AudioCtx.state === "suspended") {
+              AudioCtx.resume().then(() => {
+                event.target.innerHTML = '<em class="bi bi-pause"></em> Pause';
+              });
+            }
+          },
+          false
+        );
+
+        // Reverb switch button
+        document.getElementById("reverb").addEventListener("click", setReverb);
+        // Reverse checkbox
+        document
+          .getElementById("reverse")
+          .addEventListener("click", (e) => reverb.reverse(e.target.checked));
+        // Reverb dualation time
+        document.getElementById("time").addEventListener("change", (e) => {
+          reverb.time(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Decay time
+        document.getElementById("decay").addEventListener("change", (e) => {
+          reverb.decay(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Delay time
+        document.getElementById("delay").addEventListener("change", (e) => {
+          reverb.delay(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Filter select box
+        document.getElementById("filter").addEventListener("change", (e) => {
+          reverb.filterType(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Filter frequency
+        document.getElementById("freq").addEventListener("change", (e) => {
+          reverb.filterFreq(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Filter quality
+        document.getElementById("q").addEventListener("change", (e) => {
+          reverb.filterQ(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Dry/Wet
+        document.getElementById("mix").addEventListener("change", (e) => {
+          reverb.mix(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Noise Type
+        document.querySelectorAll("[name=noise]").forEach((dom) =>
+          dom.addEventListener("click", (e) => {
+            document.getElementById("peaks").disabled =
+              e.target.value === "white";
+            reverb.setNoise(e.target.value);
+          })
+        );
+
+        document.getElementById("peaks").addEventListener("change", (e) => {
+          reverb.peaks(e.target.value);
+          e.target.title = e.target.value;
+        });
+        document.getElementById("scale").addEventListener("change", (e) => {
+          reverb.scale(e.target.value);
+          e.target.title = e.target.value;
+        });
+        document
+          .getElementById("randomAlgorithm")
+          .addEventListener("change", (e) => {
+            reverb.randomAlgorithm(e.target.value);
+            e.target.title = e.target.value;
+          });
+      });
+    </script>
+  </body>
+</html>
