@@ -1,5 +1,7 @@
 /experiments/eval/style_profiles/*.json
 
+/experiments
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

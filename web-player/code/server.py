@@ -81,7 +81,7 @@ def init_models():
             models[model_name] = config.configure(roll2seq_style_transfer.Experiment,
                                                   logdir=logdir, train_mode=False)
             models[model_name].trainer.load_variables(
-                "latest", "./experiments/v01_drums/latest.ckpt-24361")
+                "latest", "C:\\Users\\user\\Desktop\\24_project\\web-player\\code\\experiments\\v01_drums\\latest.ckpt-24361")
 
 
 @ app.route('/output/', methods=['GET', 'POST'])
