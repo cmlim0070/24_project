@@ -186,7 +186,7 @@
                     id="asmr-volume-slider"
                     min="0"
                     max="100"
-                    value="50"
+                    value="20"
                     onclick="asmr_volume()"
                   />
                 </div>
@@ -461,6 +461,16 @@
           });
 
           /*audio volume control - 일괄 조정 가능하도록 추후 코드 수정*/
+
+          // asmr_volume_init
+            const audio1 = document.getElementById("school");
+            const audio2 = document.getElementById("rain");
+            const audio3 = document.getElementById("wave");
+            audio1.volume = 0.2;
+            audio2.volume = 0.2;
+            audio3.volume = 0.2;
+
+
           function asmr_volume() {
             const audio1 = document.getElementById("school");
             const audio2 = document.getElementById("rain");

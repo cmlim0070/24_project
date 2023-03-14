@@ -89,10 +89,13 @@ def init_models():
 def run_model():
     try:
         files = flask.request.files
+        files = 
         files['content_input'].save(
             './uploads/'+secure_filename('content.mid'))
         files['style_input'].save(
             './uploads/'+secure_filename('style.mid'))
+        files['style_input'].save(
+            './uploads/'+secure_filename('putputtest.mid'))
 
         os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
                     --sample --softmax-temperature 0.6 \
