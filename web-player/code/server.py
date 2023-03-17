@@ -62,26 +62,26 @@ models = {}
 model_graphs = {}
 tf_lock = threading.Lock()
 
-if app.config.get('SERVE_STATIC_FILES', False):
-    @app.route("/", defaults={'path': 'index.html'})
-    @app.route("/<path:path>")
-    def root(path):
-        return flask.send_from_directory(app.static_folder, path)
+# if app.config.get('SERVE_STATIC_FILES', False):
+#     @app.route("/", defaults={'path': 'index.html'})
+#     @app.route("/<path:path>")
+#     def root(path):
+#         return flask.send_from_directory(app.static_folder, path)
 
 
-@app.before_first_request
-def init_models():
-    for model_name, model_cfg in app.config['MODELS'].items():
-        logdir = os.path.join(
-            app.config['MODEL_ROOT'], model_cfg.get('logdir', model_name))
-        with open(os.path.join(logdir, 'model.yaml'), 'rb') as f:
-            config = Configuration.from_yaml(f)
-        model_graphs[model_name] = tf.Graph()
-        with model_graphs[model_name].as_default():
-            models[model_name] = config.configure(roll2seq_style_transfer.Experiment,
-                                                  logdir=logdir, train_mode=False)
-            models[model_name].trainer.load_variables(
-                "latest", "./experiments/v01_drums/latest.ckpt-24361")
+# @app.before_first_request
+# def init_models():
+#     for model_name, model_cfg in app.config['MODELS'].items():
+#         logdir = os.path.join(
+#             app.config['MODEL_ROOT'], model_cfg.get('logdir', model_name))
+#         with open(os.path.join(logdir, 'model.yaml'), 'rb') as f:
+#             config = Configuration.from_yaml(f)
+#         model_graphs[model_name] = tf.Graph()
+#         with model_graphs[model_name].as_default():
+#             models[model_name] = config.configure(roll2seq_style_transfer.Experiment,
+#                                                   logdir=logdir, train_mode=False)
+#             models[model_name].trainer.load_variables(
+#                 "latest", "./experiments/v01_drums/latest.ckpt-24361")
 
 
 @ app.route('/output/', methods=['GET', 'POST'])
@@ -97,8 +97,12 @@ def run_model():
         os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
                     --sample --softmax-temperature 0.6 \
                     uploads/content.mid uploads/style.mid static/output/output_midi.mid")
+        # os.system(
+        #     "timidity static/output/output_midi.mid -Ow -o static/output/output.mp3")
         os.system(
-            "timidity static/output/output_midi.mid -Ow -o static/output/output.mp3")
+            "timidity --output-mode=w --output-file=static/output/temp.wav static/output/output_midi.mid")
+        os.system("sox static/output/temp.wav static/output/output.wav vol 8")
+        os.system("sox static/output/output.wav -r 3k static/output/output_low.wav")
 
         return render_template('player.html')
 
@@ -151,66 +155,66 @@ def run_model():
         pass
 
 
-@app.errorhandler(werkzeug.exceptions.HTTPException)
-def http_error_handler(error):
-    response = error.get_response()
-    response.data = flask.json.dumps({
-        'code': error.code,
-        'error': error.name,
-        'description': error.description
-    })
-    response.content_type = 'application/json'
-    return response
+# @app.errorhandler(werkzeug.exceptions.HTTPException)
+# def http_error_handler(error):
+#     response = error.get_response()
+#     response.data = flask.json.dumps({
+#         'code': error.code,
+#         'error': error.name,
+#         'description': error.description
+#     })
+#     response.content_type = 'application/json'
+#     return response
 
 
-def error_response(error, status_code=400):
-    response = flask.make_response(
-        flask.json.dumps({'error': error}), status_code)
-    response.content_type = 'application/json'
-    return response
+# def error_response(error, status_code=400):
+#     response = flask.make_response(
+#         flask.json.dumps({'error': error}), status_code)
+#     response.content_type = 'application/json'
+#     return response
 
 
-def sanitize_ns(ns):
-    if not ns.tempos:
-        tempo = ns.tempos.add()
-        tempo.time = 0
-        tempo.qpm = 120
+# def sanitize_ns(ns):
+#     if not ns.tempos:
+#         tempo = ns.tempos.add()
+#         tempo.time = 0
+#         tempo.qpm = 120
 
-    if not ns.time_signatures:
-        ts = ns.time_signatures.add()
-        ts.time = 0
-        ts.numerator = 4
-        ts.denominator = 4
+#     if not ns.time_signatures:
+#         ts = ns.time_signatures.add()
+#         ts.time = 0
+#         ts.numerator = 4
+#         ts.denominator = 4
 
-    for note in ns.notes:
-        note.end_time = max(note.start_time, note.end_time)
-        ns.total_time = max(ns.total_time, note.end_time)
+#     for note in ns.notes:
+#         note.end_time = max(note.start_time, note.end_time)
+#         ns.total_time = max(ns.total_time, note.end_time)
 
-    for collection in [ns.tempos, ns.time_signatures, ns.key_signatures, ns.pitch_bends,
-                       ns.control_changes, ns.text_annotations, ns.section_annotations]:
-        filtered = [
-            event for event in collection if event.time <= ns.total_time]
-        del collection[:]
-        collection.extend(filtered)
+#     for collection in [ns.tempos, ns.time_signatures, ns.key_signatures, ns.pitch_bends,
+#                        ns.control_changes, ns.text_annotations, ns.section_annotations]:
+#         filtered = [
+#             event for event in collection if event.time <= ns.total_time]
+#         del collection[:]
+#         collection.extend(filtered)
 
-    print(ns.total_time)
+#     print(ns.total_time)
 
 
-def ns_stats(ns):
-    stats = {'beats': 0}
+# def ns_stats(ns):
+#     stats = {'beats': 0}
 
-    tempos = list(ns.tempos)
-    tempos.append(NoteSequence.Tempo(time=ns.total_time + 1e-4))
-    tempos.sort(key=lambda x: x.time)
-    for i in range(len(tempos) - 1):
-        stats['beats'] += (tempos[i + 1].time -
-                           tempos[i].time) * tempos[i].qpm / 60
+#     tempos = list(ns.tempos)
+#     tempos.append(NoteSequence.Tempo(time=ns.total_time + 1e-4))
+#     tempos.sort(key=lambda x: x.time)
+#     for i in range(len(tempos) - 1):
+#         stats['beats'] += (tempos[i + 1].time -
+#                            tempos[i].time) * tempos[i].qpm / 60
 
-    stats['programs'] = len(set((note.program, note.is_drum)
-                            for note in ns.notes))
-    stats['notes'] = len(ns.notes)
+#     stats['programs'] = len(set((note.program, note.is_drum)
+#                             for note in ns.notes))
+#     stats['notes'] = len(ns.notes)
 
-    return stats
+#     return stats
 
 
 if __name__ == '__main__':
