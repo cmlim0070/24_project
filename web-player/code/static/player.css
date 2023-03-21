@@ -34,13 +34,32 @@ display: block;
 z-index: 10000;
 }
 
-.room-btn {
-margin-top: 200px;
+.window-btn {
+  margin-top: 200px;
+  height: 100px;
+  width: 100px;
+  }
+
+.monitor-btn {
+/* margin-top: 200px; */
 height: 100px;
 width: 100px;
 }
 
-.room-btn :hover {
+.radio-btn {
+  /* margin-top: 200px; */
+  height: 100px;
+  width: 100px;
+}
+
+.piano-btn {
+  /* margin-top: 183px;
+  margin-right: 178px; */
+  height: 135px;
+  width: 135px;
+}
+
+.piano-btn :hover {
 transform:scale(1.3); 
 transition: 0.5s;
 }

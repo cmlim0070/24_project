@@ -89,7 +89,6 @@ def init_models():
 def run_model():
     try:
         files = flask.request.files
-        files = 
         files['content_input'].save(
             './uploads/'+secure_filename('content.mid'))
         files['style_input'].save(
