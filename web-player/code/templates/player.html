@@ -129,7 +129,6 @@
                     enctype="multipart/form-data"
                   >
                     <input type="file" name="content_input" multiple="" />
-                    <input type="file" name="style_input" multiple="" />
                     <input type="submit" value="submit" />
                   </form>
                 </div>
@@ -332,8 +331,8 @@
           <!-- audio input btn -->
           <a href="javascript:openInputPop()">
             <img
-              src="../static/assets/audio_input_btn.png"
-              class="room-btn"
+              src="../static/assets/monitor_btn.png"
+              class="monitor-btn"
               id="input"
             />
           </a>
@@ -342,14 +341,14 @@
           <img
             src="../static/assets/window1.png"
             id="window"
-            class="room-btn"
+            class="window-btn"
           />
 
           <!-- drum btn -->
           <a href="javascript:openDrumPop()">
             <img
-              src="../static/assets/drum_btn.png"
-              class="room-btn"
+              src="../static/assets/piano_btn.png"
+              class="piano-btn"
               id="drum"
             />
           </a>
@@ -357,8 +356,8 @@
           <!--audio effect popup btn-->
           <a href="javascript:openEffectPop()">  
             <img
-              src="../static/assets/audio_effect_btn.png"
-              class="room-btn"
+              src="../static/assets/radio_btn.png"
+              class="radio-btn"
               id="effect"
             />
           </a>
@@ -568,7 +567,7 @@
           function setBpm(bpm) {
             var target_bpm = Number(bpm);
             Tone.Transport.bpm.value = target_bpm;
-            var nowbpm = Tone.Transport.bpm.value;
+            // var nowbpm = Tone.Transport.bpm.value;
             document.getElementById("bpm").textContent =
             target_bpm;
           }
@@ -823,8 +822,10 @@
     </script>
 
     <!-- Tone.js 스크립트 코드 -->
-    <script type="text/javascript">
-      var CW = CW || {};
+    <script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+      
+    var CW = CW || {};
 
       CW.tempoOffset = 0; //a property to manage the global changes to tempo
 
@@ -837,7 +838,7 @@
         const fileDrop = document.querySelector("#FileDrop");
         fileDrop.addEventListener("dragenter", () =>
           fileDrop.classList.add("Hover")
-        );
+        );9[]
         fileDrop.addEventListener("dragleave", () =>
           fileDrop.classList.remove("Hover")
         );
@@ -867,9 +868,24 @@
         reader.readAsArrayBuffer(file);
       }
 
+      console.log("bpm 가져오기 테스트")
+      var outputBPM = getMidiBPM("../static/output/output_midi.mid");
+
+      function getMidiBPM(myURL) {
+        Midi.fromUrl(myURL).then((midi) => {
+          const useableMidiObject = parseMidi(midi);
+          const audioBPM = useableMidiObject.header.tempos[0].bpm;
+
+          console.log(audioBPM);        
+          
+          return audioBPM;
+        });
+      }
+
       function fetchMidi(myURL) {
         Midi.fromUrl(myURL).then((midi) => {
           const useableMidiObject = parseMidi(midi);
+          return useableMidiObject;
           makeSong(useableMidiObject);
         });
       }
@@ -886,6 +902,8 @@
         }
       }
 
+      console.log(midi.header.tempos.length)
+      
       function setupPlayer(midi) {
         document.querySelector("#ResultsText").value = JSON.stringify(
           midi,
@@ -1155,7 +1173,7 @@
           reverb.setNoise("pink");
         };
 
-        const sound = await LoadSample("../static/output/output.mp3");
+        const sound = await LoadSample("../static/assets/drum-80-bpm.mp3");
 
         // Draw FFT
         setInterval(DrawGraph, 10);
