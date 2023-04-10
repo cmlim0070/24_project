@@ -60,13 +60,13 @@ def run_model():
     try:
         files = flask.request.files
         files['content_input'].save(
-            './uploads/'+secure_filename('content.mid'))
+            './static/output/'+secure_filename('content.mid'))
         # files['style_input'].save(
         #     './uploads/'+secure_filename('style.mid'))
 
         os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
                     --sample --softmax-temperature 0.6 \
-                    uploads/content.mid static/assets/style.mid static/output/output_midi.mid")
+                    static/output/content.mid static/assets/style.mid static/output/output_midi.mid")
 
         os.system(
             "timidity --output-mode=w --output-file=static/output/temp.wav static/output/output_midi.mid")
@@ -83,14 +83,6 @@ def run_model():
     except Exception as e:
         print(e)
         pass
-
-
-@app.route('/output/<string:audioBPM>', methods=['POST'])
-def BpmInfo(audioBPM):
-    bpminfo = json.loads(audioBPM)
-    bpm = bpminfo
-    print(bpm)
-    return ('/output')
 
 
 if __name__ == '__main__':

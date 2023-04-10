@@ -7,3 +7,6 @@ web-player/code/experiments/v01_drums/latest.ckpt-24361.data-00000-of-00001
 *.mp3
 *.wav
 *.mid
+web-player/code/static/output/output.wav
+web-player/code/static/output/temp.wav
+web-player/code/static/output/output_midi.mid

@@ -823,7 +823,7 @@
 
     <!-- Tone.js 스크립트 코드 -->
     <script type="text/javascript"
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+    src="https://code.jquery.com/jquery-latest.min.js">
       
     var CW = CW || {};
 
@@ -877,10 +877,24 @@
           const audioBPM = useableMidiObject.header.tempos[0].bpm;
 
           console.log(audioBPM);        
-          
+
+
+          /*
+          var postdata = {
+            'bpm':useableMidiObject.header.tempos[0].bpm
+          }
+
+          $.ajax({
+            type: 'POST',
+            url: '{{url_for("run_model")}}',
+            data: JSON.stringify(postdata),
+            dataType : 'JSON',
+            contentType: "application/json"
+          });
+        
+          */
           return audioBPM;
-        });
-      }
+        }
 
       function fetchMidi(myURL) {
         Midi.fromUrl(myURL).then((midi) => {
