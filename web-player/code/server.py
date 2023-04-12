@@ -71,7 +71,7 @@ def run_model():
         os.system(
             "timidity --output-mode=w --output-file=static/output/temp.wav static/output/output_midi.mid")
         os.system(
-            "sox static/output/temp.wav -r 3k static/output/output.wav trim 0 120 fade 5 -0 8.5 vol 8")
+            "sox static/output/temp.wav -r 8k static/output/output.wav tempo 0.66666667 trim 0 120 fade 5 -0 8.5 vol 8")
 
         # bpm = request.get_json()
         # print("------bpm-------")
