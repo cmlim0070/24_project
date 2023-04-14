@@ -1020,24 +1020,8 @@
         Midi.fromUrl(myURL).then((midi) => {
           const useableMidiObject = parseMidi(midi);
           const audioBPM = useableMidiObject.header.tempos[0].bpm;
-
           console.log(audioBPM);        
 
-
-          /*
-          var postdata = {
-            'bpm':useableMidiObject.header.tempos[0].bpm
-          }
-
-          $.ajax({
-            type: 'POST',
-            url: '{{url_for("run_model")}}',
-            data: JSON.stringify(postdata),
-            dataType : 'JSON',
-            contentType: "application/json"
-          });
-        
-          */
           return audioBPM;
         }
 

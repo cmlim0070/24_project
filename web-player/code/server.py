@@ -1,9 +1,13 @@
 import json
+
+from sklearn import preprocessing
 import app
 import io
 import logging
 import os
 import threading
+import subprocess
+import sys
 
 from confugue import Configuration
 import flask
@@ -70,19 +74,38 @@ def run_model():
 
         os.system(
             "timidity --output-mode=w --output-file=static/output/temp.wav static/output/output_midi.mid")
-        os.system(
-            "sox static/output/temp.wav -r 8k static/output/output.wav tempo 0.66666667 trim 0 120 fade 5 -0 8.5 vol 8")
 
-        # bpm = request.get_json()
-        # print("------bpm-------")
-        # print(bpm)
-        # result = json.loads(bpm)
-        # print(result)
+        cmd = ["tempo", "-i", "static/output/temp.wav"]
+        fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
+        originalBPM = fd_popen.read().strip()
+        fd_popen.close()
+        originalBPM.decode('utf-8')
+        print(originalBPM)
+
+        bpm_80 = str(float(80)/float(originalBPM[0]))
+        bpm_100 = str(float(100)/float(originalBPM[0]))
+        bpm_120 = str(float(120)/float(originalBPM[0]))
+
+        os.system(
+            "sox static/output/temp.wav -r 8k static/output/80_output.wav tempo " + bpm_80 + " trim 0 120 fade 5 -0 8.5 vol 8")
+        os.system(
+            "sox static/output/temp.wav -r 8k static/output/100_output.wav tempo " + bpm_100 + " trim 0 120 fade 5 -0 8.5 vol 8")
+        os.system(
+            "sox static/output/temp.wav -r 8k static/output/120_output.wav tempo " + bpm_120 + " trim 0 120 fade 5 -0 8.5 vol 8")
 
         return render_template('player.html')
     except Exception as e:
         print(e)
         pass
+
+
+def get_tempo(mid):
+    for track in mid.tracks:
+        for msg in track:
+            if msg.type == 'set_tempo':
+                return msg.tempo
+            else:
+                return 500000
 
 
 if __name__ == '__main__':
