@@ -3,4 +3,16 @@ web-player/code/uploads/style.mid
 web-player/code/static/output/output.mp3
 web-player/code/static/output/output_midi.mid
 
-/experiments
+web-player/code/experiments/v01_drums/latest.ckpt-24361.data-00000-of-00001
+*.mp3
+*.wav
+*.mid
+web-player/code/static/output/output.wav
+web-player/code/static/output/temp.wav
+web-player/code/static/output/output_midi.mid
+web-player/code/uploads/content.mid
+*.wav
+*.mid
+*.wav
+*.mid
+*.mid
