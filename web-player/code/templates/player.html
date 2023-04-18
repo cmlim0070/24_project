@@ -44,7 +44,10 @@
     ></script>
     <title>캐릭캐릭뮤직체인지</title>
   </head>
+  
   <body>
+        
+
     <!--ASMR music list-->
     <audio
       class="asmr"
@@ -93,6 +96,8 @@
       src="../static/assets/drum-100-bpm.mp3"
       type="audio/mpeg"
     ></audio>
+
+
 
     <!--뽀모도로-->
     <div class="timer-container">
@@ -436,7 +441,8 @@
         </div>
 
 
-        <!-- 드럼 팝업 -->
+
+        <!-- 샘플 로파이 음악 팝업 -->
         <div
           class="popup_layer"
           id="drum_popup_layer"
@@ -455,6 +461,7 @@
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
+              sample
               <div class="drum-btn-wrap">
                 <button class="drum-btn">1</button>
                 <button class="drum-btn">2</button>
@@ -702,9 +709,9 @@
           var drumAudio_80 = document.getElementById("drum-80-bpm");
           var drumAudio_100 = document.getElementById("drum-100-bpm");
           var asrmAudioVolume = document.getElementById("asmr-volume-slider");  
-          drumAudio_60.volume = 0.1;
-          drumAudio_80.volume = 0.1;
-          drumAudio_100.volume = 0.1;
+          drumAudio_60.volume = 0.2;
+          drumAudio_80.volume = 0.2;
+          drumAudio_100.volume = 0.2;
 
           setBpm(80);
 
@@ -750,12 +757,12 @@
         </script>
 
         <!-- 임시 bpm 조정 -->
+        <!--
         <script
         type="text/javascript"
         src="//www.midijs.net/lib/midi.js"
         >
-
-        MIDIjs.play("../static/output/output_midi.mid") // 추후 경로 output으로 수정
+        MIDIjs.play("../static/output/output_midi.mid")
         </script>
         <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
         <midi-player
@@ -765,7 +772,6 @@
           id="midi-player"
         >
         </midi-player>
-
         <form
         onsubmit="fetchMidi(this.url.value); return false;"
         ></form>
@@ -777,17 +783,15 @@
         <span><tone-button id="rewind"></tone-button></span>
         <span id="position">0:0</span>
         <span id="ticks">Ticks:</span>
-
         <button>테스트 버튼</button>
-
         <script></script>
-
         <!--style transfer output music 재생바-->
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:100"
           rel="stylesheet"
           type="text/css"
         />
+      
         <div class="mp3-player">
           <div class="player">
             <div class="playarea">
@@ -795,6 +799,8 @@
                 <em class="bi bi-play"></em>
                 Play
               </button>
+
+              <!--
               <div class="play" id="play-img" onclick="musicControl()">
                 <script>
                   var playMode = 0;
@@ -840,12 +846,91 @@
                   function mute() {}
                 </script>
               </div>
+              -->
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- 오디오 비주얼라이제이션 -->
+    <!-- 오디오 비주얼라이제이션 
+      mp3 파일로 연결됨..? wav 되는지 확인 안해봄
+    -->
+    <!--todolist-->
+    <div class="todo-wrapper">
+      <header>TODO</header>        
+      <div class="inputField">
+          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
+          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+      </div>
+      <div>
+          <ul id="addTodo" class="Todolist"> 
+              <li><div id='result'></div></li>
+          </ul>
+      </div>
+    </div>
+    <script>
+      
+      const btn = document.getElementById('btn'); //버튼
+      let addValue = document.getElementById('addValue'); //할일 입력
+      let result = document.getElementById('result');// 추가된 할일
+
+      //할일 추가시
+      function addTodo(){
+          if(addValue.value==false){ /*''가능 */
+              alert('내용을 입력하세요!');
+          }else{
+          let list = document.createElement("li");
+          let del = document.createElement('button');
+          list.innerHTML = addValue.value;
+          result.appendChild(list); //추가된 할일에 할일 리스트 추가하기
+          list.appendChild(del);    //할일 리스트 추가시 삭제버튼도 추가    
+          del.innerText = "x";      //삭제버튼에 들어갈 'x'자 문자
+          del.style.fontSize = "20px";
+          del.style.border = "none";
+          del.style.float = "right";
+          del.style.right = "17px";
+          del.style.marginTop = "5px";
+          del.style.cursor = "pointer";
+          del.addEventListener("click", deleteList); //삭제버튼 클릭시 리스트지우기 이벤트 실행
+          del.style.position='relative';
+          
+          /*할일 추가할 때마다 삭제버튼도 같이 추가돼기-이 방법도 가능 */
+          //list.innerHTML+="<button type='button' id ='remove' onclick='removeList()'><i class='xi-trash xi-2x'></span></i></button>";
+          
+          addValue.value = "";                            //할일 입력창 초기화
+          addValue.focus();                               //강제 커서 깜빡임
+          list.addEventListener("click", function(){      //할일 완료 후 클릭시 밑줄로 표시
+              list.style.textDecoration = "line-through";
+              list.style.color = "gray";                  //클릭시 색변환
+          })
+        }
+      }
+      //할일 목록 삭제시
+      function deleteList(e){ //삭제 버튼(x) 클릭시 
+          let removeOne = e.target.parentElement;  //선택한 목록 한개만 지우기(부모 객체를 지운다)
+          removeOne.remove();
+      }
+      // //모두 삭제시
+      function allClearList(e){
+          if(confirm("정말 삭제하시겠습니까?")==true){ //취소메시지가 true(ok)일때
+              if(result.innerText==''){                      //목록칸이 비어있다면
+                  alert("삭제할 목록이 없습니다");            //삭제할 목록이 없다는 경고창뜨기
+              }else{                                         //삭제할 목록이 있다면
+                  result.innerText='';                       //전체 삭제
+              }
+          }else{                                      //취소메시지가 false(no)일때
+              return false;                           //삭제 취소
+          }
+      }
+      //입력값 한개만 나오는 코드
+      // function addTodo(){   //+버튼을 누르면
+          // const addValue = document.getElementById('addValue').value;
+          // document.getElementById("result").innerText = addValue;
+      // }
+
+      //변수지정 방법 : const, let, var
+      //css에는 꾸미는 기능만, js에서 동적으로 처리하는 기능만 넣은 상태
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         function getPos(Hz, minHz, maxHz, max) {
@@ -983,7 +1068,7 @@
         const fileDrop = document.querySelector("#FileDrop");
         fileDrop.addEventListener("dragenter", () =>
           fileDrop.classList.add("Hover")
-        );9[]
+        );
         fileDrop.addEventListener("dragleave", () =>
           fileDrop.classList.remove("Hover")
         );
@@ -1013,6 +1098,21 @@
         reader.readAsArrayBuffer(file);
       }
 
+      console.log("bpm 가져오기 테스트");
+      var outputBPM = getMidiBPM("../static/output/output_midi.mid");
+      console.log(outputBPM);
+
+      function getMidiBPM(myURL) {
+        Midi.fromUrl(myURL).then((midi) => {
+          const useableMidiObject = parseMidi(midi);
+          const audioBPM = useableMidiObject.header.tempos[0].bpm;
+          console.log("///////");
+          console.log(audioBPM);
+          // useableMidiObject.header.tempos[0].bpm = 100;
+          return audioBPM;
+        });
+      }
+
       console.log("bpm 가져오기 테스트")
       var outputBPM = getMidiBPM("../static/output/output_midi.mid");
 
@@ -1021,8 +1121,7 @@
           const useableMidiObject = parseMidi(midi);
           const audioBPM = useableMidiObject.header.tempos[0].bpm;
           console.log(audioBPM);        
-
-          return audioBPM;
+          return audioBPM;})
         }
 
       function fetchMidi(myURL) {
@@ -1400,6 +1499,7 @@
         document.getElementById("scale").addEventListener("change", (e) => {
           reverb.scale(e.target.value);
           e.target.title = e.target.value;
+          
         });
         document
           .getElementById("randomAlgorithm")
