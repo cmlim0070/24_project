@@ -1,7 +1,7 @@
 # import json
 
 # from sklearn import preprocessing
-import app
+# from app import app
 # import io
 # import logging
 import os
