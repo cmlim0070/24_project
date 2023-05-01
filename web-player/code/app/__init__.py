@@ -28,11 +28,6 @@ app.config['UPLOAD_FOLDER'] = './upload'
 app.config.from_object('app.config')
 app.config.from_pyfile('app.cfg', silent=True)
 
-
-@app.route('/')
-def render():
-    return render_template('player.html')
-
 # @app.route('/upload', methods=['GET', 'POST'])  # 유저 파일 업로드
 # def upload_file():
 #     if request.method == 'POST':
@@ -79,7 +74,7 @@ def init_models():
             models[model_name] = config.configure(roll2seq_style_transfer.Experiment,
                                                   logdir=logdir, train_mode=False)
             models[model_name].trainer.load_variables(
-                "latest", "./experiments/v01_drums/latest.ckpt-24361")
+                "latest", "C:\\Users\\user\\Desktop\\24_project\\web-player\\code\\experiments\\v01_drums\\latest.ckpt-24361")
 
 
 @ app.route('/<model_name>/', methods=['POST'])
@@ -188,9 +183,3 @@ def ns_stats(ns):
     stats['notes'] = len(ns.notes)
 
     return stats
-
-
-if __name__ == '__main__':
-    app.run(debug=False)
-
-app.run(host='127.0.0.1', debug=False)

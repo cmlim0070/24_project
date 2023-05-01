@@ -6,11 +6,30 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<meta name="theme-color" content="#000000" />-->
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+      integrity="sha256-4RctOgogjPAdwGbwq+rxfwAmSpZhWaafcZR9btzUk18="
+      crossorigin="anonymous"
     />
-    <meta name="theme-color" content="#000000" />
+
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "UA-33600926-1");
+    </script>
+    <!-- Bootstrap core CSS -->
+
     <script
       type="text/javascript"
       src="https://unpkg.com/tone@13.4.9/build/Tone.js"
@@ -25,6 +44,7 @@
     ></script>
     <title>캐릭캐릭뮤직체인지</title>
   </head>
+  
   <body>
     <!--ASMR music list-->
     <audio
@@ -73,8 +93,172 @@
       loop
       src="../static/assets/drum-100-bpm.mp3"
       type="audio/mpeg"
-   ></audio>
+    ></audio>
 
+    <!--뽀모도로-->
+    <div class="timer-container">
+
+        <div id="timer" class="timer">
+            <div class="cover1"></div>
+
+            <div id="lines">
+
+            </div>
+
+            <div id="fins">
+
+            </div>
+
+            <div id="num-container">
+
+            </div>
+
+            <div class="cover2"></div>
+        </div>
+    </div>
+
+    <script>
+      const timer = document.getElementById('timer');
+      const lines = timer.querySelector('#lines');
+      const fins = timer.querySelector('#fins');
+      const nums = timer.querySelector('#num-container');
+      const control = document.querySelector('.button-container #control');
+      const remainTime = document.querySelector('.time-container #remain-time');
+      const totalTime = document.querySelector('.time-container #total-time');
+
+      const endTime = 40
+
+      let intervalID = null;
+      let progressTimeSec = 0;
+
+      let isPlay = true;
+
+      function paintLines() {
+          for(let i=0; i<30; i++) {
+              const line = document.createElement('div');
+              line.classList.add('line');
+              line.style.transform = `rotate(${i*6}deg)`;
+
+              if (i%5 == 0) {
+                  line.classList.add('thick')
+              }
+
+              lines.append(line);
+          }
+      }
+
+      function paintNumber() {
+          let left = 15;
+          let right = 45;
+
+          for (let i=0; i<6; i++) {
+              const numBox = document.createElement('div');
+              numBox.classList.add('num-box');
+              numBox.style.transform = `rotate(${i*30}deg)`;
+
+              const spanLeft = document.createElement('span');
+              const spanRight = document.createElement('span');
+
+              const leftText = left - 5*i;
+              spanLeft.textContent = leftText<0 ? 60+ leftText : leftText;
+              spanRight.textContent = right - (5 * i);
+
+              spanLeft.style.transform = `rotate(${-30*i}deg)`;
+              spanRight.style.transform = `rotate(${-30*i}deg)`;
+
+              numBox.append(spanLeft,spanRight);
+              nums.append(numBox);
+          }
+      }
+
+      function paintRemainTime() {
+          for (let min=0; min<endTime; min++) {
+              for (let sec=0; sec<60; sec++) {
+                  const remainFin = document.createElement('div');
+                  remainFin.classList.add('fin');
+
+                  const deg = min*6+sec*0.1;
+                  remainFin.style.transform = `rotate(${-deg}deg)`
+                  
+                  fins.append(remainFin);
+              }
+          }
+      }
+
+      function tickSec() {
+          progressTimeSec++;
+          if(progressTimeSec >= endTime * 60) pause();
+
+          const lastFin = fins.lastChild;
+
+          if (lastFin) {
+              lastFin.remove();
+          }
+
+          renderRemainTime();
+      }
+
+      function play() {
+          intervalID = setInterval(tickSec,100)
+          isPlay = true;
+          control.innerHTML = `<i class="fas fa-pause"></i>`;
+      }
+
+      function pause() {
+          clearInterval(intervalID);
+          isPlay = false;
+          control.innerHTML = `<i class="fas fa-play"></i>`;
+      }
+
+      function onClickControl() {
+          if (isPlay) {
+              pause();
+              
+          } else {
+              play();
+          }
+      }
+
+      function renderRemainTime() {
+          const totalSec = endTime * 60 - progressTimeSec;
+          const min = Math.floor(totalSec/60);
+          const sec = totalSec % 60;
+
+          remainTime.textContent = `
+              ${min<10?`0${min}`:min} : 
+              ${sec<10?`0${sec}`:sec}
+          `;
+      }
+
+      function paintTime() {
+          renderRemainTime();
+          totalTime.textContent = `(${endTime} : 00)`;
+      }
+
+      if (lines) {
+          paintLines();
+      }
+
+      if (nums) {
+          paintNumber();
+      }
+
+      if (fins) {
+          paintRemainTime();
+      }
+
+      if(control) {
+          control.addEventListener('click', onClickControl);
+      }
+
+      if(remainTime && totalTime) {
+          paintTime();
+      }
+
+      play();
+      
+    </script> 
+  
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
       <!--layer popup area-->
@@ -101,11 +285,10 @@
                 <div class="container">
                   <form
                     method="post"
-                    action="http://localhost:5000/v01_drums"
+                    action="http://localhost:5000/output"
                     enctype="multipart/form-data"
                   >
                     <input type="file" name="content_input" multiple="" />
-                    <input type="file" name="style_input" multiple="" />
                     <input type="submit" value="submit" />
                   </form>
                 </div>
@@ -128,7 +311,7 @@
             </div>
             <!--layer popup content area-->
             <div class="popup_cont">
-              <h5>EFFECT CONTROL</h5>
+              <h5>VOLUME CONTROL</h5>
               <div class="control_panel_layer">
                 <div class="control_div">
                   <label class="panel_label">MUSIC</label>
@@ -162,33 +345,106 @@
                     id="asmr-volume-slider"
                     min="0"
                     max="100"
-                    value="50"
+                    value="20"
                     onclick="asmr_volume()"
                   />
                 </div>
-                <div class="control_div">
-                  <label class="panel_label">REVERB</label>
-                  <input
-                    class="panel_bar"
-                    type="range"
-                    id="reverb-slider"
-                    min="0"
-                    max="100"
-                    value="50"
-                    onclick="reverb_control"
-                  />
-                </div>
-              </div>
+
+                <div class="reverb-box">
+                    <div class="form-check form-switch">
+                      <label class="form-check-label" for="reverb">Reverb</label>
+                      <input id="reverb" type="checkbox" class="form-check-input" />
+                    </div>
+                    <div class="form-check form-switch">
+                      <label class="form-check-label" for="reverse">
+                        Reverse Inpulse Response
+                      </label>
+                      <input type="checkbox" class="form-check-input" id="reverse" />
+                    </div>
+
+                  <div class="col" style="display: none">
+                    <div class="overflow-auto">
+                      <canvas id="graph" width="512" height="256"></canvas>
+                    </div>
+                    <p class="text-right">
+                      The sound uses the drum part of
+                      <a
+                        href="https://soundcloud.com/logue256/autumn-wind"
+                        target="_blank"
+                      >
+                        <em class="bi bi-soundwave"></em>
+                        Autmun Wind
+                      </a>
+                      .
+                    </p>
+                  </div>
+
+                <section class="mb-3">
+
+
+                      <label for="time" class="form-label" aria-describedby="time-help">
+                        Time
+                      </label>
+                      <input
+                        type="range"
+                        class="form-range"
+                        title="1.1"
+                        value="2"
+                        min="0"
+                        max="50"
+                        id="time"
+                      />
+                      <!-- <div id="time-help" class="form-text">Room size</div> -->
+
+
+                      <label for="decay" class="form-label">Decay</label>
+                      <input
+                        type="range"
+                        class="form-range"
+                        title="2"
+                        value="2"
+                        min="0"
+                        max="100"
+                        id="decay"
+                      />
+                      <!-- <div id="decay-help" class="form-text">
+                        Hardness of room wall size
+                      </div> -->
+
+
+                      <label for="mix" class="form-label">Dry / Wet</label>
+                      <input
+                        type="range"
+                        id="mix"
+                        class="form-range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        value="0.5"
+                        title="0.5"
+                      />
+                      <!-- <div id="delay-help" class="form-text">
+                        Closer to the original sound or closer to the effector
+                      </div> -->
+
+
+                </section>
+              </div>  <!-- 리버브 끝 -->
+
+              </div>              
             </div>
           </div>
         </div>
 
-        <!-- 드럼 팝업 -->
+
+
+        <!-- 샘플 로파이 음악 팝업 -->
         <div
           class="popup_layer"
           id="drum_popup_layer"
           style="height: 100px; width: 200px; display: none"
         >
+
           <div class="drum_popup_box">
             <div style="float: top">
               <a href="javascript:closeDrumPop();"
@@ -201,6 +457,7 @@
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
+              sample
               <div class="drum-btn-wrap">
                 <button class="drum-btn">1</button>
                 <button class="drum-btn">2</button>
@@ -211,7 +468,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>  
 
       <!--inside of player room-->
       <div class="player-room">
@@ -222,8 +479,8 @@
           <!-- audio input btn -->
           <a href="javascript:openInputPop()">
             <img
-              src="../static/assets/audio_input_btn.png"
-              class="room-btn"
+              src="../static/assets/monitor_btn.png"
+              class="monitor-btn"
               id="input"
             />
           </a>
@@ -232,14 +489,14 @@
           <img
             src="../static/assets/window1.png"
             id="window"
-            class="room-btn"
+            class="window-btn"
           />
 
           <!-- drum btn -->
           <a href="javascript:openDrumPop()">
             <img
-              src="../static/assets/drum_btn.png"
-              class="room-btn"
+              src="../static/assets/piano_btn.png"
+              class="piano-btn"
               id="drum"
             />
           </a>
@@ -247,8 +504,8 @@
           <!--audio effect popup btn-->
           <a href="javascript:openEffectPop()">  
             <img
-              src="../static/assets/audio_effect_btn.png"
-              class="room-btn"
+              src="../static/assets/radio_btn.png"
+              class="radio-btn"
               id="effect"
             />
           </a>
@@ -351,6 +608,16 @@
           });
 
           /*audio volume control - 일괄 조정 가능하도록 추후 코드 수정*/
+
+          // asmr_volume_init
+            const audio1 = document.getElementById("school");
+            const audio2 = document.getElementById("rain");
+            const audio3 = document.getElementById("wave");
+            audio1.volume = 0.2;
+            audio2.volume = 0.2;
+            audio3.volume = 0.2;
+
+
           function asmr_volume() {
             const audio1 = document.getElementById("school");
             const audio2 = document.getElementById("rain");
@@ -370,12 +637,13 @@
             audio.volume = musicAudioVolume.value / 100;
           }
 
-          function drum_volume() {
-            const audio = document.getElementById("drum-80-bpm");
-            const drumAudioVolume =
-              document.getElementById("drum-volume-slider");
-            audio.volume = drumAudioVolume.value / 100;
-          }
+          // function drum_volume() {
+          //   const audio = document.getElementById("drum-80-bpm");
+          //   const drumAudioVolume =
+          //     document.getElementById("drum-volume-slider");
+          //   audio.volume = drumAudioVolume.value / 100;
+          // }
+
         </script>
 
         <!-- pixel audio visualization-->
@@ -383,7 +651,7 @@
           <canvas id="canvas" width="720"></canvas>
         </div>
 
-        <!--player room outside-->
+      <!--player room outside-->
       </div>
       <div class="bottom-wrap">
         <!--style 선택 dropbox-->
@@ -418,37 +686,63 @@
             </div>
           </button>
           <div class="style-dropdown-content">
-            <option value="60" class="bpmbtn" onclick="setBpm(this.value)">60</option>
-            <option value="80" class="bpmbtn" onclick="setBpm(this.value)">80</option>
-            <option value="100" class="bpmbtn" onclick="setBpm(this.value)">100</option>
+            <option value="60" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">60</option>
+            <option value="80" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">80</option>
+            <option value="100" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">100</option>
           </div>
         </div>
+        
+        <!-- <tone-content>
+          <tone-play-toggle>
+            <button id="target">start</button>
+          </tone-play-toggle>
+        </tone-content> -->
 
         <script>
+
+          //초기 설정
+          var drumAudio_60 = document.getElementById("drum-60-bpm");
+          var drumAudio_80 = document.getElementById("drum-80-bpm");
+          var drumAudio_100 = document.getElementById("drum-100-bpm");
+          var asrmAudioVolume = document.getElementById("asmr-volume-slider");  
+          drumAudio_60.volume = 0.2;
+          drumAudio_80.volume = 0.2;
+          drumAudio_100.volume = 0.2;
+
+          setBpm(80);
+
           // bpm change
           function setBpm(bpm) {
             var target_bpm = Number(bpm);
             Tone.Transport.bpm.value = target_bpm;
+            // var nowbpm = Tone.Transport.bpm.value;
             document.getElementById("bpm").textContent =
             target_bpm;
           }
+
           // bpm에 맞춰서 drum 바꾸는 함수
           function changeDrum(bpm) {
-            if (nowbpm != selectbpm){ //현재 bpm과 선택한 bpm이 다를 떄
               if (bpm==60) {
-                for (let i = 0; i < midi.header.tempos.length; i++) {
-                  Tone.Transport.schedule(function (time) {
-                    Tone.Transport.bpm.value =
-                      midi.header.tempos[i].bpm + CW.tempoOffset;
-                  }, midi.header.tempos[i].ticks + "i");
-                }
+                console.log("드럼 테스트")
+                // drum change
+                drumAudio_80.pause(); // 일시 정지
+                drumAudio_80.currentTime = 0;
+                drumAudio_100.pause(); // 일시 정지
+                drumAudio_100.currentTime = 0;
+                drumAudio_60.play();
               } else if (bpm==80) {
-
-              } else { //bpm==120
-
+                drumAudio_60.pause(); // 일시 정지
+                drumAudio_60.currentTime = 0;
+                drumAudio_100.pause(); // 일시 정지
+                drumAudio_100.currentTime = 0;
+                drumAudio_80.play();
+              } else { //bpm==100
+                drumAudio_60.pause(); // 일시 정지
+                drumAudio_60.currentTime = 0;
+                drumAudio_80.pause(); // 일시 정지
+                drumAudio_80.currentTime = 0;
+                drumAudio_100.play();
               }
-            }
-
 
 
           }
@@ -459,19 +753,23 @@
         </script>
 
         <!-- 임시 bpm 조정 -->
+        <!--
         <script
         type="text/javascript"
         src="//www.midijs.net/lib/midi.js"
         >
-        MIDIjs.play("../static/assets/output-sample.mid") // 추후 경로 output으로 수정
+
+        MIDIjs.play("../static/output/output_midi.mid")
         </script>
         <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
         <midi-player
-          src="../static/assets/output-sample.mid"
+          src="../static/output/output_midi.mid"
           sound-font
           visualizer="#myVisualizer"
+          id="midi-player"
         >
         </midi-player>
+
         <form
         onsubmit="fetchMidi(this.url.value); return false;"
         ></form>
@@ -484,15 +782,26 @@
         <span id="position">0:0</span>
         <span id="ticks">Ticks:</span>
 
+        <button>테스트 버튼</button>
+
+        <script></script>
+
         <!--style transfer output music 재생바-->
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:100"
           rel="stylesheet"
           type="text/css"
         />
+      
         <div class="mp3-player">
           <div class="player">
             <div class="playarea">
+              <button id="play" type="button" class="btn btn-primary btn-lg" disabled>
+                <em class="bi bi-play"></em>
+                Play
+              </button>
+
+              <!--
               <div class="play" id="play-img" onclick="musicControl()">
                 <script>
                   var playMode = 0;
@@ -538,12 +847,15 @@
                   function mute() {}
                 </script>
               </div>
+              -->
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- 오디오 비주얼라이제이션 -->
+    <!-- 오디오 비주얼라이제이션 
+      mp3 파일로 연결됨..? wav 되는지 확인 안해봄
+    -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         function getPos(Hz, minHz, maxHz, max) {
@@ -665,8 +977,10 @@
     </script>
 
     <!-- Tone.js 스크립트 코드 -->
-    <script type="text/javascript">
-      var CW = CW || {};
+    <script type="text/javascript"
+    src="https://code.jquery.com/jquery-latest.min.js">
+      
+    var CW = CW || {};
 
       CW.tempoOffset = 0; //a property to manage the global changes to tempo
 
@@ -709,9 +1023,36 @@
         reader.readAsArrayBuffer(file);
       }
 
+      console.log("bpm 가져오기 테스트");
+      var outputBPM = getMidiBPM("../static/output/output_midi.mid");
+      console.log(outputBPM);
+
+      function getMidiBPM(myURL) {
+        Midi.fromUrl(myURL).then((midi) => {
+          const useableMidiObject = parseMidi(midi);
+          const audioBPM = useableMidiObject.header.tempos[0].bpm;
+          console.log("///////");
+          console.log(audioBPM);
+          // useableMidiObject.header.tempos[0].bpm = 100;
+          return audioBPM;
+        });
+      }
+
+      console.log("bpm 가져오기 테스트")
+      var outputBPM = getMidiBPM("../static/output/output_midi.mid");
+
+      function getMidiBPM(myURL) {
+        Midi.fromUrl(myURL).then((midi) => {
+          const useableMidiObject = parseMidi(midi);
+          const audioBPM = useableMidiObject.header.tempos[0].bpm;
+          console.log(audioBPM);        
+          return audioBPM;})
+        }
+
       function fetchMidi(myURL) {
         Midi.fromUrl(myURL).then((midi) => {
           const useableMidiObject = parseMidi(midi);
+          return useableMidiObject;
           makeSong(useableMidiObject);
         });
       }
@@ -728,6 +1069,8 @@
         }
       }
 
+      console.log(midi.header.tempos.length)
+      
       function setupPlayer(midi) {
         document.querySelector("#ResultsText").value = JSON.stringify(
           midi,
@@ -866,6 +1209,229 @@
           Tone.Transport.stop();
           Tone.Transport.position = "0:0:0";
         }
+      });
+    </script>
+
+
+    <!--reverb test-->
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha256-Bh8LHqeebiyiT0YD5V0+kJ90cboLJ5zbbepAVUEGxqI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../static/reverb.umd.js"></script>
+    <script>
+      document.getElementById("play").setAttribute("disabled", "disabled");
+
+      document.addEventListener("touchstart", initAudioContext);
+      function initAudioContext() {
+        document.removeEventListener("touchstart", initAudioContext);
+        // wake up AudioContext
+        const emptySource = ctx.createBufferSource();
+        emptySource.start();
+        emptySource.stop();
+      }
+
+      window.addEventListener("load", async () => {
+        // Setup Audio Context
+        const AudioCtx = new window.AudioContext();
+
+        // Defreeze AudioContext for iOS.
+        document.addEventListener("touchstart", initAudioContext);
+        function initAudioContext() {
+          document.removeEventListener("touchstart", initAudioContext);
+          // wake up AudioContext
+          const emptySource = AudioCtx.createBufferSource();
+          emptySource.start();
+          emptySource.stop();
+        }
+
+        // Setup Reverb Class
+        const reverb = new Reverb(AudioCtx);
+        console.info(
+          `Reverb.js loaded. (version: ${Reverb.version} / build: ${Reverb.build})`
+        );
+        const AudioSrc = AudioCtx.createBufferSource();
+
+        // Load audio file and decode asyncly.
+        const LoadSample = async (url) => {
+          return new Promise((resolve) => {
+            fetch(url)
+              .then((response) => response.arrayBuffer())
+              .then((arraybuf) =>
+                AudioCtx.decodeAudioData(
+                  arraybuf,
+                  (buffer) => {
+                    document.getElementById("play").removeAttribute("disabled");
+                    resolve(buffer);
+                  },
+                  (e) => alert(e)
+                )
+              )
+              .catch((e) => alert(e));
+          });
+        };
+
+        // Draw FFT to canvas
+        // Code taken from https://www.g200kg.com/jp/docs/webaudio/filter.html
+        const AnalyserNode = AudioCtx.createAnalyser();
+        const canvas = document.getElementById("graph");
+        const canvasContext = canvas.getContext("2d");
+
+        const analysedata = new Float32Array(1024);
+        const DrawGraph = () => {
+          AnalyserNode.getFloatFrequencyData(analysedata);
+          // Background
+          canvasContext.fillStyle = "#343a40";
+          canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+          // FFT Graph
+          canvasContext.fillStyle = document.getElementById("reverb").checked
+            ? "#17a2b8"
+            : "#28a745";
+          for (let i = 0; i < canvas.width; ++i) {
+            const f = (AudioCtx.sampleRate * i) / (canvas.width * 2);
+            const y = canvas.height / 2 + (analysedata[i] + 48.16) * 2.56;
+            canvasContext.fillRect(i, canvas.height - y, 1, y);
+          }
+
+          // y axis (dB)
+          for (let d = -50; d < 50; d += 10) {
+            const y = (canvas.height / 2 - (d * canvas.height) / 100) | 0;
+            // Line
+            canvasContext.fillStyle = "#6c757d";
+            canvasContext.fillRect(20, y, canvas.width, 1);
+            // Label
+            canvasContext.fillStyle = "#fd7e14";
+            canvasContext.fillText(d + "dB", 5, y);
+          }
+          canvasContext.fillStyle = "#ffc107";
+          canvasContext.fillRect(20, canvas.height / 2, canvas.width, 1);
+
+          // x axis (frequency)
+          for (let f = 2200; f < AudioCtx.sampleRate / 2; f += 2000) {
+            const x = ((f * (canvas.width * 2)) / AudioCtx.sampleRate) | 0;
+            // Line
+            canvasContext.fillStyle = "#6c757d";
+            canvasContext.fillRect(x, 0, 1, canvas.height - 10);
+            // Label
+            if (x % 4 == 0) {
+              canvasContext.fillStyle = "#e83e8c";
+              canvasContext.fillText(
+                f / 1000 + "kHz",
+                x - 10,
+                canvas.height - 1
+              );
+            }
+          }
+        };
+
+        // Reverb switch handler
+        const setReverb = () => {
+          AudioSrc.disconnect();
+
+          if (document.getElementById("reverb").checked) {
+            // Connect Reverb
+            reverb.connect(AudioSrc).connect(AnalyserNode);
+          } else {
+            reverb.disconnect(AudioSrc).connect(AnalyserNode);
+          }
+          AnalyserNode.connect(AudioCtx.destination);
+          reverb.setNoise("pink");
+        };
+
+        const sound = await LoadSample("../static/assets/drum-80-bpm.mp3");
+
+        // Draw FFT
+        setInterval(DrawGraph, 10);
+
+        // Play button
+        document.getElementById("play").addEventListener(
+          "click",
+          (event) => {
+            if (event.target != event.currentTarget) return;
+
+            if (AudioSrc.buffer == null) {
+              AudioSrc.buffer = sound;
+              AudioSrc.loop = true;
+
+              setReverb();
+              AudioSrc.start();
+            }
+
+            if (AudioCtx.state === "running") {
+              AudioCtx.suspend().then(() => {
+                event.target.innerHTML = '<em class="bi bi-play"></em> Play';
+              });
+            } else if (AudioCtx.state === "suspended") {
+              AudioCtx.resume().then(() => {
+                event.target.innerHTML = '<em class="bi bi-pause"></em> Pause';
+              });
+            }
+          },
+          false
+        );
+
+        // Reverb switch button
+        document.getElementById("reverb").addEventListener("click", setReverb);
+        // Reverse checkbox
+        document
+          .getElementById("reverse")
+          .addEventListener("click", (e) => reverb.reverse(e.target.checked));
+        // Reverb dualation time
+        document.getElementById("time").addEventListener("change", (e) => {
+          reverb.time(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Decay time
+        document.getElementById("decay").addEventListener("change", (e) => {
+          reverb.decay(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Filter select box
+        document.getElementById("filter").addEventListener("change", (e) => {
+          reverb.filterType(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Filter frequency
+        document.getElementById("freq").addEventListener("change", (e) => {
+          reverb.filterFreq(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Filter quality
+        document.getElementById("q").addEventListener("change", (e) => {
+          reverb.filterQ(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Dry/Wet
+        document.getElementById("mix").addEventListener("change", (e) => {
+          reverb.mix(e.target.value);
+          e.target.title = e.target.value;
+        });
+        // Noise Type
+        document.querySelectorAll("[name=noise]").forEach((dom) =>
+          dom.addEventListener("click", (e) => {
+            document.getElementById("peaks").disabled =
+              e.target.value === "white";
+            reverb.setNoise(e.target.value);
+          })
+        );
+
+        document.getElementById("peaks").addEventListener("change", (e) => {
+          reverb.peaks(e.target.value);
+          e.target.title = e.target.value;
+        });
+        document.getElementById("scale").addEventListener("change", (e) => {
+          reverb.scale(e.target.value);
+          e.target.title = e.target.value;
+          
+        });
+        document
+          .getElementById("randomAlgorithm")
+          .addEventListener("change", (e) => {
+            reverb.randomAlgorithm(e.target.value);
+            e.target.title = e.target.value;
+          });
       });
     </script>
   </body>
