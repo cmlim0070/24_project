@@ -1,5 +1,22 @@
 {
   "dependencies": {
     "tone": "^14.7.77"
-  }
+  },
+  "scripts": {
+    "start": "C:/Users/user/AppData/Local/Programs/Python/Python36/python.exe c:/Users/user/Desktop/24_project/web-player/code/server.py"
+  },
+  "name": "24_project",
+  "description": "스타트 시연 영상 유튜브 링크 주소 : https://youtu.be/YM9b9UfQ6_k",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmlim0070/24_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmlim0070/24_project/issues"
+  },
+  "homepage": "https://github.com/cmlim0070/24_project#readme"
 }
