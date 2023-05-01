@@ -292,8 +292,15 @@
                     action="http://localhost:5000/output"
                     enctype="multipart/form-data"
                   >
+                  <!--
                     <input type="file" name="content_input" multiple="" />
-                    <input type="submit" value="submit" />
+                    <input type="submit" value="submit" />-->
+                    <input type="radio" name="content_input" value="con_1"/>con_1
+                    <input type="radio" name="style_input" value="sty_1" />sty_1
+                    <input type="radio" name="style_input" value="sty_2" />sty_2
+                    <input type="radio" name="style_input" value="sty_3" />sty_3
+                    <input type="button" name="input_check" id="input_check" value="CONVERT"/>
+
                   </form>
                 </div>
               </div>
@@ -1415,8 +1422,31 @@
           reverb.setNoise("pink");
         };
 
-        const sound = await LoadSample("../static/assets/drum-80-bpm.mp3");
-
+        let sound;
+        document.getElementById("input_check").addEventListener(
+          "click",
+          async (event) => {
+            if($('input[name="style_input"]:checked').val()=="sty_1") {
+              AudioCtx.suspend();
+              sound = await LoadSample("../static/output/1.wav");
+              console.log(sound)
+              AudioCtx.resume();
+            }
+            else if($('input[name="style_input"]:checked').val()=="sty_2") {
+              AudioCtx.suspend();
+              sound = await LoadSample("../static/output/2.wav");
+              console.log(sound)
+              AudioCtx.resume();
+            }
+            else if($('input[name="style_input"]:checked').val()=="sty_3"){
+              AudioCtx.suspend();
+              sound = await LoadSample("../static/output/3.wav");
+              console.log(sound)
+              AudioCtx.resume();
+            }
+          }
+        )
+        
         // Draw FFT
         setInterval(DrawGraph, 10);
 
