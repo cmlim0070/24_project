@@ -31,9 +31,9 @@ import os
 
 
 app = Flask(__name__, instance_relative_config=True)
-app.config['UPLOAD_FOLDER'] = './uploads'
-app.config.from_object('app.config')
-app.config.from_pyfile('app.cfg', silent=True)
+# app.config['UPLOAD_FOLDER'] = './uploads'
+# app.config.from_object('app.config')
+# app.config.from_pyfile('app.cfg', silent=True)
 
 
 @app.route('/')
