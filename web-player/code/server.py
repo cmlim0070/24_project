@@ -65,33 +65,45 @@ def run_model():
         files = flask.request.files
         files['content_input'].save(
             './static/output/'+secure_filename('content.mid'))
-        # files['style_input'].save(
-        #     './uploads/'+secure_filename('style.mid'))
 
+        # style bpm == 60
         os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
                     --sample --softmax-temperature 0.6 \
-                    static/output/content.mid static/assets/style.mid static/output/output_midi.mid")
+                    static/output/content.mid static/assets/60_style.mid static/output/60_output_midi.mid")
+        os.system(
+            "timidity --output-mode=w --output-file=static/output/60_temp.wav static/output/60_output_midi.mid")
+
+        # style bpm == 80
+        os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
+                    --sample --softmax-temperature 0.6 \
+                    static/output/content.mid static/assets/80_style.mid static/output/80_output_midi.mid")
+        os.system(
+            "timidity --output-mode=w --output-file=static/output/80_temp.wav static/output/80_output_midi.mid")
+
+        # style bpm ==100
+        os.system("python -m groove2groove.models.roll2seq_style_transfer --logdir experiments/v01_drums/ run-midi \
+                    --sample --softmax-temperature 0.6 \
+                    static/output/content.mid static/assets/100_style.mid static/output/100_output_midi.mid")
+        os.system(
+            "timidity --output-mode=w --output-file=static/output/100_temp.wav static/output/100_output_midi.mid")
+
+        # cmd = ["tempo", "-i", "static/output/temp.wav"]
+        # fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
+        # originalBPM = fd_popen.read().strip()
+        # fd_popen.close()
+        # originalBPM.decode('utf-8')
+        # print(originalBPM)
+
+        # bpm_80 = str(float(80)/float(originalBPM[0]))
+        # bpm_100 = str(float(100)/float(originalBPM[0]))
+        # bpm_120 = str(float(120)/float(originalBPM[0]))
 
         os.system(
-            "timidity --output-mode=w --output-file=static/output/temp.wav static/output/output_midi.mid")
-
-        cmd = ["tempo", "-i", "static/output/temp.wav"]
-        fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
-        originalBPM = fd_popen.read().strip()
-        fd_popen.close()
-        originalBPM.decode('utf-8')
-        print(originalBPM)
-
-        bpm_80 = str(float(80)/float(originalBPM[0]))
-        bpm_100 = str(float(100)/float(originalBPM[0]))
-        bpm_120 = str(float(120)/float(originalBPM[0]))
-
+            "sox static/output/60_temp.wav -r 8k static/output/60_output.wav trim 0 120 fade 5 -0 8.5 vol 8")
         os.system(
-            "sox static/output/temp.wav -r 8k static/output/80_output.wav tempo " + bpm_80 + " trim 0 120 fade 5 -0 8.5 vol 8")
+            "sox static/output/80_temp.wav -r 8k static/output/80_output.wav tempo trim 0 120 fade 5 -0 8.5 vol 8")
         os.system(
-            "sox static/output/temp.wav -r 8k static/output/100_output.wav tempo " + bpm_100 + " trim 0 120 fade 5 -0 8.5 vol 8")
-        os.system(
-            "sox static/output/temp.wav -r 8k static/output/120_output.wav tempo " + bpm_120 + " trim 0 120 fade 5 -0 8.5 vol 8")
+            "sox static/output/100_temp.wav -r 8k static/output/100_output.wav tempo trim 0 120 fade 5 -0 8.5 vol 8")
 
         return render_template('player.html')
     except Exception as e:

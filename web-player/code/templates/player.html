@@ -127,8 +127,6 @@
       const fins = timer.querySelector('#fins');
       const nums = timer.querySelector('#num-container');
       const control = document.querySelector('.button-container #control');
-      const remainTime = document.querySelector('.time-container #remain-time');
-      const totalTime = document.querySelector('.time-container #total-time');
 
       const endTime = 40
 
@@ -198,21 +196,14 @@
           if (lastFin) {
               lastFin.remove();
           }
-
-          renderRemainTime();
       }
 
       function play() {
           intervalID = setInterval(tickSec,100)
           isPlay = true;
-          control.innerHTML = `<i class="fas fa-pause"></i>`;
       }
 
-      function pause() {
-          clearInterval(intervalID);
-          isPlay = false;
-          control.innerHTML = `<i class="fas fa-play"></i>`;
-      }
+      
 
       function onClickControl() {
           if (isPlay) {
@@ -221,22 +212,6 @@
           } else {
               play();
           }
-      }
-
-      function renderRemainTime() {
-          const totalSec = endTime * 60 - progressTimeSec;
-          const min = Math.floor(totalSec/60);
-          const sec = totalSec % 60;
-
-          remainTime.textContent = `
-              ${min<10?`0${min}`:min} : 
-              ${sec<10?`0${sec}`:sec}
-          `;
-      }
-
-      function paintTime() {
-          renderRemainTime();
-          totalTime.textContent = `(${endTime} : 00)`;
       }
 
       if (lines) {
@@ -253,10 +228,6 @@
 
       if(control) {
           control.addEventListener('click', onClickControl);
-      }
-
-      if(remainTime && totalTime) {
-          paintTime();
       }
 
       play();
@@ -1415,7 +1386,7 @@
           reverb.setNoise("pink");
         };
 
-        const sound = await LoadSample("../static/assets/drum-80-bpm.mp3");
+        const sound = await LoadSample("../static/output/oasis.wav");
 
         // Draw FFT
         setInterval(DrawGraph, 10);
