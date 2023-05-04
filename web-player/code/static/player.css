@@ -35,32 +35,32 @@ display: block;
 z-index: 10000;
 }
 
-.window-btn {
+#window {
   margin-top: 200px;
   height: 100px;
   width: 100px;
   }
 
-.monitor-btn {
+#monitor {
 /* margin-top: 200px; */
 height: 100px;
 width: 100px;
 }
 
-.radio-btn {
+#radio {
   /* margin-top: 200px; */
   height: 100px;
   width: 100px;
 }
 
-.piano-btn {
+#piano {
   /* margin-top: 183px;
   margin-right: 178px; */
   height: 135px;
   width: 135px;
 }
 
-.piano-btn :hover {
+#piano-btn :hover {
 transform:scale(1.3); 
 transition: 0.5s;
 }
