@@ -70,13 +70,7 @@
       src="../static/assets/wave.mp3"
       type="audio/mpeg"
     ></audio>
-    <!-- Style change sample music -->
-    <audio
-    id="kpop-sample"
-    loop
-    src="../static/assets/Ghost of the Wind.mp3"
-    type="audio/mpeg">
-    </audio>
+    
     <!-- drum preset -->
     <audio
       id="drum-60-bpm"
@@ -199,19 +193,16 @@
               lastFin.remove();
           }
 
-          renderRemainTime();
       }
 
       function play() {
           intervalID = setInterval(tickSec,100)
           isPlay = true;
-          control.innerHTML = `<i class="fas fa-pause"></i>`;
       }
 
       function pause() {
           clearInterval(intervalID);
           isPlay = false;
-          control.innerHTML = `<i class="fas fa-play"></i>`;
       }
 
       function onClickControl() {
@@ -223,21 +214,6 @@
           }
       }
 
-      function renderRemainTime() {
-          const totalSec = endTime * 60 - progressTimeSec;
-          const min = Math.floor(totalSec/60);
-          const sec = totalSec % 60;
-
-          remainTime.textContent = `
-              ${min<10?`0${min}`:min} : 
-              ${sec<10?`0${sec}`:sec}
-          `;
-      }
-
-      function paintTime() {
-          renderRemainTime();
-          totalTime.textContent = `(${endTime} : 00)`;
-      }
 
       if (lines) {
           paintLines();
@@ -299,8 +275,9 @@
                     <input type="radio" name="style_input" value="sty_1" />sty_1
                     <input type="radio" name="style_input" value="sty_2" />sty_2
                     <input type="radio" name="style_input" value="sty_3" />sty_3
-                    <input type="button" name="input_check" id="input_check" value="CONVERT"/>
-
+                    <div id="style_num">{{value}}</div>
+                    <input type="submit" name="input_check" id="input_check" value="CONVERT" />
+                    
                   </form>
                 </div>
               </div>
@@ -1028,7 +1005,8 @@
           canvasCtx.fill();
         }
 
-        var canvas,
+        var ctx,
+          canvas,
           canvasCtx,
           audioCtx,
           source,
@@ -1316,6 +1294,7 @@
       }
 
       window.addEventListener("load", async () => {
+      //window.addEventListener("load", async () => {
         // Setup Audio Context
         const AudioCtx = new window.AudioContext();
 
@@ -1355,58 +1334,7 @@
           });
         };
 
-        // Draw FFT to canvas
-        // Code taken from https://www.g200kg.com/jp/docs/webaudio/filter.html
         const AnalyserNode = AudioCtx.createAnalyser();
-        const canvas = document.getElementById("graph");
-        const canvasContext = canvas.getContext("2d");
-
-        const analysedata = new Float32Array(1024);
-        const DrawGraph = () => {
-          AnalyserNode.getFloatFrequencyData(analysedata);
-          // Background
-          canvasContext.fillStyle = "#343a40";
-          canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-          // FFT Graph
-          canvasContext.fillStyle = document.getElementById("reverb").checked
-            ? "#17a2b8"
-            : "#28a745";
-          for (let i = 0; i < canvas.width; ++i) {
-            const f = (AudioCtx.sampleRate * i) / (canvas.width * 2);
-            const y = canvas.height / 2 + (analysedata[i] + 48.16) * 2.56;
-            canvasContext.fillRect(i, canvas.height - y, 1, y);
-          }
-
-          // y axis (dB)
-          for (let d = -50; d < 50; d += 10) {
-            const y = (canvas.height / 2 - (d * canvas.height) / 100) | 0;
-            // Line
-            canvasContext.fillStyle = "#6c757d";
-            canvasContext.fillRect(20, y, canvas.width, 1);
-            // Label
-            canvasContext.fillStyle = "#fd7e14";
-            canvasContext.fillText(d + "dB", 5, y);
-          }
-          canvasContext.fillStyle = "#ffc107";
-          canvasContext.fillRect(20, canvas.height / 2, canvas.width, 1);
-
-          // x axis (frequency)
-          for (let f = 2200; f < AudioCtx.sampleRate / 2; f += 2000) {
-            const x = ((f * (canvas.width * 2)) / AudioCtx.sampleRate) | 0;
-            // Line
-            canvasContext.fillStyle = "#6c757d";
-            canvasContext.fillRect(x, 0, 1, canvas.height - 10);
-            // Label
-            if (x % 4 == 0) {
-              canvasContext.fillStyle = "#e83e8c";
-              canvasContext.fillText(
-                f / 1000 + "kHz",
-                x - 10,
-                canvas.height - 1
-              );
-            }
-          }
-        };
 
         // Reverb switch handler
         const setReverb = () => {
@@ -1422,33 +1350,23 @@
           reverb.setNoise("pink");
         };
 
-        let sound;
-        document.getElementById("input_check").addEventListener(
-          "click",
-          async (event) => {
-            if($('input[name="style_input"]:checked').val()=="sty_1") {
-              AudioCtx.suspend();
-              sound = await LoadSample("../static/output/1.wav");
-              console.log(sound)
-              AudioCtx.resume();
-            }
-            else if($('input[name="style_input"]:checked').val()=="sty_2") {
-              AudioCtx.suspend();
-              sound = await LoadSample("../static/output/2.wav");
-              console.log(sound)
-              AudioCtx.resume();
-            }
-            else if($('input[name="style_input"]:checked').val()=="sty_3"){
-              AudioCtx.suspend();
-              sound = await LoadSample("../static/output/3.wav");
-              console.log(sound)
-              AudioCtx.resume();
-            }
-          }
-        )
-        
-        // Draw FFT
-        setInterval(DrawGraph, 10);
+
+        let sound = await LoadSample("../static/output/oasis.wav");
+
+        if(document.getElementById("style_num").innerText=='sty_1'){
+          console.log("test===================");
+          sound = await LoadSample("../static/output/1.wav");
+          console.log(sound)
+        }
+        else if(document.getElementById("style_num").innerText=='sty_2') {
+          sound = await LoadSample("../static/output/2.wav");
+          console.log(sound)
+        }
+        else if(document.getElementById("style_num").innerText=='sty_3') {
+          sound = await LoadSample("../static/output/3.wav");
+          console.log(document.getElementById("style_num").innerText);
+          console.log(sound)
+        }
 
         // Play button
         document.getElementById("play").addEventListener(
@@ -1536,7 +1454,7 @@
           .addEventListener("change", (e) => {
             reverb.randomAlgorithm(e.target.value);
             e.target.title = e.target.value;
-          });
+        });
       });
     </script>
   </body>
