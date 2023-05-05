@@ -177,7 +177,7 @@
                   const remainFin = document.createElement('div');
                   remainFin.classList.add('fin');
 
-                  const deg = min*6+sec*0.1;
+                  const deg = min*6+sec*1;
                   remainFin.style.transform = `rotate(${-deg}deg)`
                   
                   fins.append(remainFin);
@@ -478,36 +478,48 @@
         <div class="btn-wrap">
           <!-- audio input btn -->
           <a href="javascript:controlInputPop()">
-            <img
-              src="../static/assets/monitor_btn.png"
+            <div class = "monitor">
+              <img
+              src="../static/assets/모니터_버튼.png"
               class="room-btn"
-              id="input"
+              style ="height:100px"
             />
+            </div>
           </a>
 
           <!--ASMR sound btn-->
-          <img
+          <div class = "window">
+            <img
             src="../static/assets/window1.png"
             id="window"
             class="room-btn"
+            style ="height:100px"
           />
+          </div>
 
-          <!-- drum btn -->
+          <!-- piano btn -->
           <a href="javascript:controlDrumPop()">
-            <img
-              src="../static/assets/piano_btn.png"
+            <div class="piano">
+              <img
+              src="../static/assets/피아노_버튼.png"
               class="room-btn"
               id="drum"
+              style ="height:138px"
             />
+          </div>
+
           </a>
 
           <!--audio effect popup btn-->
-          <a href="javascript:controlEffectPop()">  
-            <img
-              src="../static/assets/radio_btn.png"
+          <a href="javascript:controlEffectPop()"> 
+            <div class="radio">
+              <img
+              src="../static/assets/라디오_버튼.png"
               class="room-btn"
               id="effect"
+              style ="height:80px"
             />
+            </div>
           </a>
         </div>
 
