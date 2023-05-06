@@ -45,7 +45,10 @@
     <title>캐릭캐릭뮤직체인지</title>
   </head>
   
+  
   <body>
+        
+
     <!--ASMR music list-->
     <audio
       class="asmr"
@@ -68,13 +71,7 @@
       src="../static/assets/wave.mp3"
       type="audio/mpeg"
     ></audio>
-    <!-- Style change sample music -->
-    <audio
-    id="kpop-sample"
-    loop
-    src="../static/assets/Ghost of the Wind.mp3"
-    type="audio/mpeg">
-    </audio>
+    
     <!-- drum preset -->
     <audio
       id="drum-60-bpm"
@@ -94,6 +91,8 @@
       src="../static/assets/drum-100-bpm.mp3"
       type="audio/mpeg"
     ></audio>
+
+
 
     <!--뽀모도로-->
     <div class="timer-container">
@@ -195,19 +194,16 @@
               lastFin.remove();
           }
 
-          renderRemainTime();
       }
 
       function play() {
           intervalID = setInterval(tickSec,100)
           isPlay = true;
-          control.innerHTML = `<i class="fas fa-pause"></i>`;
       }
 
       function pause() {
           clearInterval(intervalID);
           isPlay = false;
-          control.innerHTML = `<i class="fas fa-play"></i>`;
       }
 
       function onClickControl() {
@@ -219,10 +215,6 @@
           }
       }
 
-      function renderRemainTime() {
-          const totalSec = endTime * 60 - progressTimeSec;
-          const min = Math.floor(totalSec/60);
-          const sec = totalSec % 60;
 
           // remainTime.textContent = `
           //     ${min<10?`0${min}`:min} : 
@@ -281,8 +273,16 @@
                     action="http://localhost:5000/output"
                     enctype="multipart/form-data"
                   >
+                  <!--
                     <input type="file" name="content_input" multiple="" />
-                    <input type="submit" value="submit" />
+                    <input type="submit" value="submit" />-->
+                    <input type="radio" name="content_input" value="con_1"/>con_1
+                    <input type="radio" name="style_input" value="sty_1" />sty_1
+                    <input type="radio" name="style_input" value="sty_2" />sty_2
+                    <input type="radio" name="style_input" value="sty_3" />sty_3
+                    <div id="style_num">{{value}}</div>
+                    <input type="submit" name="input_check" id="input_check" value="CONVERT" />
+                    
                   </form>
                 </div>
               </div>
@@ -436,6 +436,16 @@
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
+              sample
+              <div class="drum-btn-wrap">
+                <button class="drum-btn">1</button>
+                <button class="drum-btn">2</button>
+                <button class="drum-btn">3</button>
+                <button class="drum-btn">4</button>
+                <button class="drum-btn">5</button>
+              </div>
+            </div>
+          </div>
               <div class="sample-btn-wrap">
                 <div id="radios">
                   <div class="inputs">
@@ -766,6 +776,7 @@
 
         <!-- 임시 bpm 조정 -->
         <!--
+        <!--
         <script
         type="text/javascript"
         src="//www.midijs.net/lib/midi.js"
@@ -781,7 +792,6 @@
           id="midi-player"
         >
         </midi-player>
-
         <form
         onsubmit="fetchMidi(this.url.value); return false;"
         ></form>
@@ -793,11 +803,8 @@
         <span><tone-button id="rewind"></tone-button></span>
         <span id="position">0:0</span>
         <span id="ticks">Ticks:</span>
-
         <button>테스트 버튼</button>
-
         <script></script>
-
         <!--style transfer output music 재생바-->
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:100"
@@ -859,12 +866,92 @@
                   function mute() {}
                 </script>
               </div>
+              -->
              
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- 오디오 비주얼라이제이션 
+      mp3 파일로 연결됨..? wav 되는지 확인 안해봄
+    -->
+    <!--todolist-->
+    <div class="todo-wrapper">
+      <header>TODO</header>        
+      <div class="inputField">
+          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
+          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+      </div>
+      <div>
+          <ul id="addTodo" class="Todolist"> 
+              <li><div id='result'></div></li>
+          </ul>
+      </div>
+    </div>
+    <script>
+      
+      const btn = document.getElementById('btn'); //버튼
+      let addValue = document.getElementById('addValue'); //할일 입력
+      let result = document.getElementById('result');// 추가된 할일
+
+      //할일 추가시
+      function addTodo(){
+          if(addValue.value==false){ /*''가능 */
+              alert('내용을 입력하세요!');
+          }else{
+          let list = document.createElement("li");
+          let del = document.createElement('button');
+          list.innerHTML = addValue.value;
+          result.appendChild(list); //추가된 할일에 할일 리스트 추가하기
+          list.appendChild(del);    //할일 리스트 추가시 삭제버튼도 추가    
+          del.innerText = "x";      //삭제버튼에 들어갈 'x'자 문자
+          del.style.fontSize = "20px";
+          del.style.border = "none";
+          del.style.float = "right";
+          del.style.right = "17px";
+          del.style.marginTop = "5px";
+          del.style.cursor = "pointer";
+          del.addEventListener("click", deleteList); //삭제버튼 클릭시 리스트지우기 이벤트 실행
+          del.style.position='relative';
+          
+          /*할일 추가할 때마다 삭제버튼도 같이 추가돼기-이 방법도 가능 */
+          //list.innerHTML+="<button type='button' id ='remove' onclick='removeList()'><i class='xi-trash xi-2x'></span></i></button>";
+          
+          addValue.value = "";                            //할일 입력창 초기화
+          addValue.focus();                               //강제 커서 깜빡임
+          list.addEventListener("click", function(){      //할일 완료 후 클릭시 밑줄로 표시
+              list.style.textDecoration = "line-through";
+              list.style.color = "gray";                  //클릭시 색변환
+          })
+        }
+      }
+      //할일 목록 삭제시
+      function deleteList(e){ //삭제 버튼(x) 클릭시 
+          let removeOne = e.target.parentElement;  //선택한 목록 한개만 지우기(부모 객체를 지운다)
+          removeOne.remove();
+      }
+      // //모두 삭제시
+      function allClearList(e){
+          if(confirm("정말 삭제하시겠습니까?")==true){ //취소메시지가 true(ok)일때
+              if(result.innerText==''){                      //목록칸이 비어있다면
+                  alert("삭제할 목록이 없습니다");            //삭제할 목록이 없다는 경고창뜨기
+              }else{                                         //삭제할 목록이 있다면
+                  result.innerText='';                       //전체 삭제
+              }
+          }else{                                      //취소메시지가 false(no)일때
+              return false;                           //삭제 취소
+          }
+      }
+      //입력값 한개만 나오는 코드
+      // function addTodo(){   //+버튼을 누르면
+          // const addValue = document.getElementById('addValue').value;
+          // document.getElementById("result").innerText = addValue;
+      // }
+
+      //변수지정 방법 : const, let, var
+      //css에는 꾸미는 기능만, js에서 동적으로 처리하는 기능만 넣은 상태
+    </script>
     <!-- 오디오 비주얼라이제이션 
       mp3 파일로 연결됨..? wav 되는지 확인 안해봄
     -->
@@ -958,7 +1045,8 @@
           canvasCtx.fill();
         }
 
-        var canvas,
+        var ctx,
+          canvas,
           canvasCtx,
           audioCtx,
           source,
@@ -1035,6 +1123,7 @@
         reader.readAsArrayBuffer(file);
       }
 
+      console.log("bpm 가져오기 테스트");
       console.log("bpm 가져오기 테스트");
       var outputBPM = getMidiBPM("../static/output/output_midi.mid");
       console.log(outputBPM);
@@ -1246,6 +1335,7 @@
       }
 
       window.addEventListener("load", async () => {
+      //window.addEventListener("load", async () => {
         // Setup Audio Context
         const AudioCtx = new window.AudioContext();
 
@@ -1285,58 +1375,7 @@
           });
         };
 
-        // Draw FFT to canvas
-        // Code taken from https://www.g200kg.com/jp/docs/webaudio/filter.html
         const AnalyserNode = AudioCtx.createAnalyser();
-        const canvas = document.getElementById("graph");
-        const canvasContext = canvas.getContext("2d");
-
-        const analysedata = new Float32Array(1024);
-        const DrawGraph = () => {
-          AnalyserNode.getFloatFrequencyData(analysedata);
-          // Background
-          canvasContext.fillStyle = "#343a40";
-          canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-          // FFT Graph
-          canvasContext.fillStyle = document.getElementById("reverb").checked
-            ? "#17a2b8"
-            : "#28a745";
-          for (let i = 0; i < canvas.width; ++i) {
-            const f = (AudioCtx.sampleRate * i) / (canvas.width * 2);
-            const y = canvas.height / 2 + (analysedata[i] + 48.16) * 2.56;
-            canvasContext.fillRect(i, canvas.height - y, 1, y);
-          }
-
-          // y axis (dB)
-          for (let d = -50; d < 50; d += 10) {
-            const y = (canvas.height / 2 - (d * canvas.height) / 100) | 0;
-            // Line
-            canvasContext.fillStyle = "#6c757d";
-            canvasContext.fillRect(20, y, canvas.width, 1);
-            // Label
-            canvasContext.fillStyle = "#fd7e14";
-            canvasContext.fillText(d + "dB", 5, y);
-          }
-          canvasContext.fillStyle = "#ffc107";
-          canvasContext.fillRect(20, canvas.height / 2, canvas.width, 1);
-
-          // x axis (frequency)
-          for (let f = 2200; f < AudioCtx.sampleRate / 2; f += 2000) {
-            const x = ((f * (canvas.width * 2)) / AudioCtx.sampleRate) | 0;
-            // Line
-            canvasContext.fillStyle = "#6c757d";
-            canvasContext.fillRect(x, 0, 1, canvas.height - 10);
-            // Label
-            if (x % 4 == 0) {
-              canvasContext.fillStyle = "#e83e8c";
-              canvasContext.fillText(
-                f / 1000 + "kHz",
-                x - 10,
-                canvas.height - 1
-              );
-            }
-          }
-        };
 
         // Reverb switch handler
         const setReverb = () => {
@@ -1352,10 +1391,23 @@
           reverb.setNoise("pink");
         };
 
-        const sound = await LoadSample("../static/assets/drum-80-bpm.mp3");
 
-        // Draw FFT
-        setInterval(DrawGraph, 10);
+        let sound = await LoadSample("../static/output/oasis.wav");
+
+        if(document.getElementById("style_num").innerText=='sty_1'){
+          console.log("test===================");
+          sound = await LoadSample("../static/output/1.wav");
+          console.log(sound)
+        }
+        else if(document.getElementById("style_num").innerText=='sty_2') {
+          sound = await LoadSample("../static/output/2.wav");
+          console.log(sound)
+        }
+        else if(document.getElementById("style_num").innerText=='sty_3') {
+          sound = await LoadSample("../static/output/3.wav");
+          console.log(document.getElementById("style_num").innerText);
+          console.log(sound)
+        }
 
         // Play button
         document.getElementById("play").addEventListener(
@@ -1443,7 +1495,7 @@
           .addEventListener("change", (e) => {
             reverb.randomAlgorithm(e.target.value);
             e.target.title = e.target.value;
-          });
+        });
       });
     </script>
   </body>
