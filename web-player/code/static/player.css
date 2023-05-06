@@ -277,31 +277,118 @@ input {
 }
 
 /* 드럼 팝업 */
-.drum_popup_box {
+
+.sample_popup_box {
 position: relative;
 top: 80px;
-left: 170px;
+left: -100px;
 overflow-x: hidden;
 overflow-y: hidden;
-height: 500px;
-width: 500px;
+height: 200px;
+width: 400px;
 transform: translate(-50%, -50%);
-z-index: 1002;
+z-index: 10000000;
 border-radius: 10px;
 box-sizing: border-box;
-background-color: #ffffff;
+background-color: #ff48c2;
 }
 
-.drum-btn-wrap {
+.sample-btn-wrap {
 display: flex;
 justify-content: center;
 }
 
-.drum-btn {
+/* .sample-btn {
 height: 40px;
 width: 40px;
 margin: 0px 10px 0px 0px;
+} */
+
+#radios{
+  position:relative;
+  width:50%;
+  margin:0 auto;
 }
+
+input[type="radio"]{
+  position:absolute;
+  right:1000%;
+}
+label{
+  float:left;
+  width:15%; padding-bottom:15%;
+  margin:0 2.5%;
+  background:rgba(255,255,255,.2);
+  border-radius:50%;
+  cursor:pointer;
+}
+#slider-input{
+  position:absolute;
+  left:0%; top:0;
+  width:10%; padding-bottom:10%;
+  margin:2.5% 0 0 5%;
+  background:#fff;
+  transition:transform 1s;
+  border-radius:50%;
+  animation-timing-function: ease-in-out;
+  animation-duration:.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left .05s ease-in-out;
+}
+#input1:checked  ~ #slider-input{ animation-name: input1; left:0; }
+#input2:checked  ~ #slider-input{ animation-name: input2; left:20%; }
+#input3:checked  ~ #slider-input{ animation-name: input3; left:40%; }
+#input4:checked  ~ #slider-input{ animation-name: input4; left:60%; }
+#input5:checked  ~ #slider-input{ animation-name: input5; left:80%; }
+
+@keyframes input1{ 30%, 70% { transform:scale(0.5); } }
+@keyframes input2{ 30%, 70% { transform:scale(0.5); } }
+@keyframes input3{ 30%, 70% { transform:scale(0.5); } }
+@keyframes input4{ 30%, 70% { transform:scale(0.5); } }
+@keyframes input5{ 30%, 70% { transform:scale(0.5); } }
+
+#radios{
+  position:relative;
+  width:50%;
+  margin:0 auto;
+}
+style[type="radio"]{
+  position:absolute;
+  right:1000%;
+}
+label{
+  float:left;
+  width:15%; padding-bottom:15%;
+  margin:0 2.5%;
+  background:rgba(255,255,255,.2);
+  border-radius:50%;
+  cursor:pointer;
+}
+#slider-style{
+  position:absolute;
+  left:0%; top:0;
+  width:10%; padding-bottom:10%;
+  margin:2.5% 0 0 5%;
+  background:#fff;
+  transition:transform 1s;
+  border-radius:50%;
+  animation-timing-function: ease-in-out;
+  animation-duration:.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left .05s ease-in-out;
+}
+
+#style1:checked  ~ #slider-style{ animation-name: style1; left:0; }
+#style2:checked  ~ #slider-style{ animation-name: style2; left:20%; }
+#style3:checked  ~ #slider-style{ animation-name: style3; left:40%; }
+#style4:checked  ~ #slider-style{ animation-name: style4; left:60%; }
+#style5:checked  ~ #slider-style{ animation-name: style5; left:80%; }
+
+@keyframes style1{ 30%, 70% { transform:scale(0.5); } }
+@keyframes style2{ 30%, 70% { transform:scale(0.5); } }
+@keyframes style3{ 30%, 70% { transform:scale(0.5); } }
+@keyframes style4{ 30%, 70% { transform:scale(0.5); } }
+@keyframes style5{ 30%, 70% { transform:scale(0.5); } }
 
 /* 인풋 팝업 */
 .input_popup_box{
@@ -655,46 +742,3 @@ margin-left: 50px;
   font-size: 13px;
   margin-top: 5px;
 }
-
-
-#radios{
-  position:relative;
-  width:50%;
-  margin:0 auto;
-}
-input[type="radio"]{
-  position:absolute;
-  right:1000%;
-}
-label{
-  float:left;
-  width:15%; padding-bottom:15%;
-  margin:0 2.5%;
-  background:rgba(188, 115, 190, 0.2);
-  border-radius:50%;
-  cursor:pointer;
-}
-#slider{
-  position:absolute;
-  left:0%; top:0;
-  width:10%; padding-bottom:10%;
-  margin:2.5% 0 0 5%;
-  background:#ffabab;
-  transition:transform 1s;
-  border-radius:50%;
-  animation-timing-function: ease-in-out;
-  animation-duration:.3s;
-  animation-fill-mode: forwards;
-  transition: 0.2s left .05s ease-in-out;
-}
-#input1:checked  ~ #slider{ animation-name: input1; left:0; }
-#input2:checked  ~ #slider{ animation-name: input2; left:20%; }
-#input3:checked  ~ #slider{ animation-name: input3; left:40%; }
-#input4:checked  ~ #slider{ animation-name: input4; left:60%; }
-#input5:checked  ~ #slider{ animation-name: input5; left:80%; }
-
-@keyframes input1{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input2{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input3{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input4{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input5{ 30%, 70% { transform:scale(0.5); } }
