@@ -274,25 +274,38 @@
                     action="http://localhost:5000/output/"
                     enctype="multipart/form-data"
                   >
-                  <!--
-                    <input type="file" name="content_input" multiple="" />
-                    <input type="submit" value="submit" />-->
-                    <div class="radios-input">
-                      <input type="radio" name="content_input" value="con_1"/>con_1
-                      <input type="radio" name="content_input" value="con_1"/>con_2
-                      <input type="radio" name="content_input" value="con_1"/>con_3
-                      <input type="radio" name="content_input" value="con_1"/>con_4
-                      <input type="radio" name="content_input" value="con_1"/>con_5
+                    <div class="radios-group">
+                      <div class="inputpop_title">content</div>
+                      <div class="radios-input">
+                        <label for="con_1" class="label-input"></label>
+                        <input type="radio" id="con_1" name="content_input" value="con_1"/>
+                        <label for="con_2" class="label-input"></label>
+                        <input type="radio" id="con_2" name="content_input" value="con_1"/>
+                        <label for="con_3" class="label-input"></label>
+                        <input type="radio" id="con_3" name="content_input" value="con_1"/>
+                        <label for="con_4" class="label-input"></label>
+                        <input type="radio" id="con_4" name="content_input" value="con_1"/>
+                        <label for="con_5" class="label-input"></label>
+                        <input type="radio" id="con_5" name="content_input" value="con_1"/>
+                        <span id="slider-input"></span>
+                      </div>
+                      <div class="inputpop_title">style</div>
+                      <div class="radios-style">
+                        <label for="sty_1" class="label-style"></label>
+                        <input type="radio" id="sty_1" name="style_input" value="sty_1" />
+                        <label for="sty_2" class="label-style"></label>
+                        <input type="radio" id="sty_2" name="style_input" value="sty_2" />
+                        <label for="sty_3" class="label-style"></label>
+                        <input type="radio" id="sty_3" name="style_input" value="sty_3" />
+                        <label for="sty_4" class="label-style"></label>
+                        <input type="radio" id="sty_4" name="style_input" value="sty_3" />
+                        <label for="sty_5" class="label-style"></label>
+                        <input type="radio" id="sty_5" name="style_input" value="sty_3" />
+                        <span id="slider-style"></span>
+                      </div>
+                      <div id="style_num">{{value}}</div>
+                      <input type="submit" name="input_check" id="input_check" value="CONVERT" />
                     </div>
-                    <div class="radios-style">
-                      <input type="radio" name="style_input" value="sty_1" />sty_1
-                      <input type="radio" name="style_input" value="sty_2" />sty_2
-                      <input type="radio" name="style_input" value="sty_3" />sty_3
-                      <input type="radio" name="style_input" value="sty_3" />sty_4
-                      <input type="radio" name="style_input" value="sty_3" />sty_5
-                    </div>
-                    <div id="style_num">{{value}}</div>
-                    <input type="submit" name="input_check" id="input_check" value="CONVERT" />
                   </form>
                 </div>
               </div>

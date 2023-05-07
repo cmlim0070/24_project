@@ -284,7 +284,7 @@ input {
 
 /* 샘플 팝업 */
 
-.sample_popup_box {
+/* .sample_popup_box {
 position: relative;
 top: 20px;
 left: -30px;
@@ -302,25 +302,34 @@ background-color: #ff48c2;
 .sample-btn-wrap {
 display: flex;
 justify-content: center;
-}
-
-/* .sample-btn {
-height: 40px;
-width: 40px;
-margin: 0px 10px 0px 0px;
 } */
 
-/* #radios{
+/* 샘플 라디오 버튼 css */
+
+.radios-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputpop_title{
+  text-align: center;
+  margin: 15px;
+}
+
+.radios-input{
   position:relative;
   width:50%;
+  height: 100%;
   margin:0 auto;
 }
 
 input[type="radio"]{
   position:absolute;
   right:1000%;
-}
-label{
+} 
+
+.label-input{
   float:left;
   width:15%; padding-bottom:15%;
   margin:0 2.5%;
@@ -341,28 +350,30 @@ label{
   animation-fill-mode: forwards;
   transition: 0.2s left .05s ease-in-out;
 }
-#input1:checked  ~ #slider-input{ animation-name: input1; left:0; }
-#input2:checked  ~ #slider-input{ animation-name: input2; left:20%; }
-#input3:checked  ~ #slider-input{ animation-name: input3; left:40%; }
-#input4:checked  ~ #slider-input{ animation-name: input4; left:60%; }
-#input5:checked  ~ #slider-input{ animation-name: input5; left:80%; }
+#con_1:checked  ~ #slider-input{ animation-name: con_1; left:0; }
+#con_2:checked  ~ #slider-input{ animation-name: con_2; left:20%; }
+#con_3:checked  ~ #slider-input{ animation-name: con_3; left:40%; }
+#con_4:checked  ~ #slider-input{ animation-name: con_4; left:60%; }
+#con_5:checked  ~ #slider-input{ animation-name: con_5; left:80%; }
 
-@keyframes input1{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input2{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input3{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input4{ 30%, 70% { transform:scale(0.5); } }
-@keyframes input5{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_1{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_2{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_3{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_4{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_5{ 30%, 70% { transform:scale(0.5); } }
 
-#radios{
+.radios-style{
   position:relative;
   width:50%;
   margin:0 auto;
 }
-style[type="radio"]{
+
+input[type="radio"]{
   position:absolute;
   right:1000%;
-}
-label{
+} 
+
+.label-style{
   float:left;
   width:15%; padding-bottom:15%;
   margin:0 2.5%;
@@ -372,7 +383,7 @@ label{
 }
 #slider-style{
   position:absolute;
-  left:0%; top:0;
+  left:0%; top: 0px;;
   width:10%; padding-bottom:10%;
   margin:2.5% 0 0 5%;
   background:#fff;
@@ -384,17 +395,21 @@ label{
   transition: 0.2s left .05s ease-in-out;
 }
 
-#style1:checked  ~ #slider-style{ animation-name: style1; left:0; }
-#style2:checked  ~ #slider-style{ animation-name: style2; left:20%; }
-#style3:checked  ~ #slider-style{ animation-name: style3; left:40%; }
-#style4:checked  ~ #slider-style{ animation-name: style4; left:60%; }
-#style5:checked  ~ #slider-style{ animation-name: style5; left:80%; }
+#sty_1:checked  ~ #slider-style{ animation-name: sty_1; left:0; }
+#sty_2:checked  ~ #slider-style{ animation-name: sty_2; left:20%; }
+#sty_3:checked  ~ #slider-style{ animation-name: sty_3; left:40%; }
+#sty_4:checked  ~ #slider-style{ animation-name: sty_4; left:60%; }
+#sty_5:checked  ~ #slider-style{ animation-name: sty_5; left:80%; }
 
-@keyframes style1{ 30%, 70% { transform:scale(0.5); } }
-@keyframes style2{ 30%, 70% { transform:scale(0.5); } }
-@keyframes style3{ 30%, 70% { transform:scale(0.5); } }
-@keyframes style4{ 30%, 70% { transform:scale(0.5); } }
-@keyframes style5{ 30%, 70% { transform:scale(0.5); } } */
+@keyframes sty_1{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_2{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_3{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_4{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_5{ 30%, 70% { transform:scale(0.5); } }
+
+#input_check{
+  margin: 25px 0 20px 0;
+}
 
 /* 인풋 팝업 */
 .input_popup_box{
@@ -407,7 +422,7 @@ width: 400px;
 transform: translate(-50%, -50%);
 z-index: 1002;
 box-sizing: border-box;
-background-color: #ffffff;
+background-color: #a889fd;
 }
 
 .filebox .upload-name {
