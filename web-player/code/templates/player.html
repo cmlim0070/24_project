@@ -45,6 +45,7 @@
     <title>캐릭캐릭뮤직체인지</title>
   </head>
   
+  
   <body>
         
 
@@ -90,30 +91,10 @@
       src="../static/assets/drum-100-bpm.mp3"
       type="audio/mpeg"
     ></audio>
-
-
-
-    <!--뽀모도로-->
-    <div class="timer-container">
-
-        <div id="timer" class="timer">
-            <div class="cover1"></div>
-
-            <div id="lines">
-
-            </div>
-
-            <div id="fins">
-
-            </div>
-
-            <div id="num-container">
-
-            </div>
-
-            <div class="cover2"></div>
-        </div>
     </div>
+
+
+
 
     <script>
       const timer = document.getElementById('timer');
@@ -175,7 +156,7 @@
                   const remainFin = document.createElement('div');
                   remainFin.classList.add('fin');
 
-                  const deg = min*6+sec*0.1;
+                  const deg = min*6+sec*1;
                   remainFin.style.transform = `rotate(${-deg}deg)`
                   
                   fins.append(remainFin);
@@ -215,6 +196,17 @@
       }
 
 
+          // remainTime.textContent = `
+          //     ${min<10?`0${min}`:min} : 
+          //     ${sec<10?`0${sec}`:sec}
+          // `;
+      // }
+
+      function paintTime() {
+          renderRemainTime();
+          totalTime.textContent = `(${endTime} : 00)`;
+      }
+
       if (lines) {
           paintLines();
       }
@@ -242,6 +234,7 @@
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
       <!--layer popup area-->
+
       <div class="modal">
         <!-- 입력 팝업 -->
         <div
@@ -251,13 +244,6 @@
         >
           <div class="input_popup_box">
             <div style="float: top">
-              <a href="javascript:closeInputPop();">
-                <img
-                  src="../static/assets/x.jpg"
-                  class="m_header-banner-close"
-                  width="30px"
-                  height="30px"
-              /></a>
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
@@ -265,37 +251,59 @@
                 <div class="container">
                   <form
                     method="post"
-                    action="http://localhost:5000/output"
+                    action="http://localhost:5000/output/"
                     enctype="multipart/form-data"
                   >
-                  <!--
-                    <input type="file" name="content_input" multiple="" />
-                    <input type="submit" value="submit" />-->
-                    <input type="radio" name="content_input" value="con_1"/>con_1
-                    <input type="radio" name="style_input" value="sty_1" />sty_1
-                    <input type="radio" name="style_input" value="sty_2" />sty_2
-                    <input type="radio" name="style_input" value="sty_3" />sty_3
-                    <div id="style_num">{{value}}</div>
-                    <input type="submit" name="input_check" id="input_check" value="CONVERT" />
-                    
+                    <form
+                    method="post"
+                    action="http://localhost:5000/output/"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="radios-group">
+                      <div class="inputpop_title">content</div>
+                      <div class="radios-input">
+                        <label for="con_1" class="label-input"></label>
+                        <input type="radio" id="con_1" name="content_input" value="con_1"/>
+                        <label for="con_2" class="label-input"></label>
+                        <input type="radio" id="con_2" name="content_input" value="con_2"/>
+                        <label for="con_3" class="label-input"></label>
+                        <input type="radio" id="con_3" name="content_input" value="con_3"/>
+                        <label for="con_4" class="label-input"></label>
+                        <input type="radio" id="con_4" name="content_input" value="con_4"/>
+                        <label for="con_5" class="label-input"></label>
+                        <input type="radio" id="con_5" name="content_input" value="con_5"/>
+                        <span id="slider-input"></span>
+                      </div>
+                      <div class="inputpop_title">style</div>
+                      <div class="radios-style">
+                        <label for="sty_1" class="label-style"></label>
+                        <input type="radio" id="sty_1" name="style_input" value="sty_1" />
+                        <label for="sty_2" class="label-style"></label>
+                        <input type="radio" id="sty_2" name="style_input" value="sty_2" />
+                        <label for="sty_3" class="label-style"></label>
+                        <input type="radio" id="sty_3" name="style_input" value="sty_3" />
+                        <label for="sty_4" class="label-style"></label>
+                        <input type="radio" id="sty_4" name="style_input" value="sty_4" />
+                        <label for="sty_5" class="label-style"></label>
+                        <input type="radio" id="sty_5" name="style_input" value="sty_5" />
+                        <span id="slider-style"></span>
+                      </div>
+                      <div id="content_num" style="display:none">{{content}}</div>
+                      <div id="style_num" style="display:none">{{style}}</div>
+                      <input type="submit" name="input_check" id="input_check" value="CONVERT" />
+                    </div>
+                  </form>
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
+  
         <!-- 사운드이펙트 팝업-->
         <div class="popup_layer" id="effect_popup_layer" style="display: none">
           <div class="effect_popup_box">
             <div style="height: 10px; width: 375px; float: top">
-              <a href="javascript:closeEffectPop();"
-                ><img
-                  src="../static/assets/x.jpg"
-                  class="m_header-banner-close"
-                  width="30px"
-                  height="30px"
-              /></a>
             </div>
             <!--layer popup content area-->
             <div class="popup_cont">
@@ -337,7 +345,7 @@
                     onclick="asmr_volume()"
                   />
                 </div>
-
+  
                 <div class="reverb-box">
                     <div class="form-check form-switch">
                       <label class="form-check-label" for="reverb">Reverb</label>
@@ -349,7 +357,7 @@
                       </label>
                       <input type="checkbox" class="form-check-input" id="reverse" />
                     </div>
-
+  
                   <div class="col" style="display: none">
                     <div class="overflow-auto">
                       <canvas id="graph" width="512" height="256"></canvas>
@@ -366,10 +374,10 @@
                       .
                     </p>
                   </div>
-
+  
                 <section class="mb-3">
-
-
+  
+  
                       <label for="time" class="form-label" aria-describedby="time-help">
                         Time
                       </label>
@@ -383,8 +391,8 @@
                         id="time"
                       />
                       <!-- <div id="time-help" class="form-text">Room size</div> -->
-
-
+  
+  
                       <label for="decay" class="form-label">Decay</label>
                       <input
                         type="range"
@@ -398,8 +406,8 @@
                       <!-- <div id="decay-help" class="form-text">
                         Hardness of room wall size
                       </div> -->
-
-
+  
+  
                       <label for="mix" class="form-label">Dry / Wet</label>
                       <input
                         type="range"
@@ -414,34 +422,27 @@
                       <!-- <div id="delay-help" class="form-text">
                         Closer to the original sound or closer to the effector
                       </div> -->
-
-
+  
+  
                 </section>
               </div>  <!-- 리버브 끝 -->
-
+  
               </div>              
             </div>
           </div>
         </div>
-
-
-
+  
+  
+  
         <!-- 샘플 로파이 음악 팝업 -->
         <div
           class="popup_layer"
-          id="drum_popup_layer"
+          id="sample_popup_layer"
           style="height: 100px; width: 200px; display: none"
         >
-
-          <div class="drum_popup_box">
+  
+          <div class="sample_popup_box">
             <div style="float: top">
-              <a href="javascript:closeDrumPop();"
-                ><img
-                  src="../static/assets/x.jpg"
-                  class="m_header-banner-close"
-                  width="30px"
-                  height="30px"
-              /></a>
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
@@ -455,403 +456,503 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>  
-
-      <!--inside of player room-->
-      <div class="player-room">
-        <img class="sample-room" src="../static/assets/sample_room.gif" />
-
-        <!-- button wrap -->
-        <div class="btn-wrap">
-          <!-- audio input btn -->
-          <a href="javascript:openInputPop()">
-            <img
-              src="../static/assets/monitor_btn.png"
-              class="monitor-btn"
-              id="input"
-            />
-          </a>
-
-          <!--ASMR sound btn-->
-          <img
-            src="../static/assets/window1.png"
-            id="window"
-            class="window-btn"
-          />
-
-          <!-- drum btn -->
-          <a href="javascript:openDrumPop()">
-            <img
-              src="../static/assets/piano_btn.png"
-              class="piano-btn"
-              id="drum"
-            />
-          </a>
-
-          <!--audio effect popup btn-->
-          <a href="javascript:openEffectPop()">  
-            <img
-              src="../static/assets/radio_btn.png"
-              class="radio-btn"
-              id="effect"
-            />
-          </a>
-        </div>
-
-        <script>
-          /*input popup open*/
-          function openInputPop() {
-            document.getElementById("input_popup_layer").style.display =
-              "block";
-          }
-          /*input popup closa*/
-          function closeInputPop() {
-            document.getElementById("input_popup_layer").style.display = "none";
-          }
-
-          /*audio effect control popup open*/
-          function openEffectPop() {
-            document.getElementById("effect_popup_layer").style.display =
-              "block";
-          }
-          /*audio effect control popup close*/
-          function closeEffectPop() {
-            document.getElementById("effect_popup_layer").style.display =
-              "none";
-          }
-
-          /*drum popup open*/
-          function openDrumPop() {
-            document.getElementById("drum_popup_layer").style.display = "block";
-          }
-          /*drum popup close*/
-          function closeDrumPop() {
-            document.getElementById("drum_popup_layer").style.display = "none";
-          }
-
-          var target = document.querySelectorAll(".btn_open");
-          var targetID;
-
-          // 팝업 열기
-          for (var i = 0; i < target.length; i++) {
-            target[i].addEventListener("click", function () {
-              targetID = this.getAttribute("href");
-              document.querySelector(targetID).style.display = "block";
-            });
-          }
-
-          // 팝업 닫기
-          for (var j = 0; j < target.length; j++) {
-            btnPopClose[j].addEventListener("click", function () {
-              this.parentNode.parentNode.style.display = "none";
-            });
-          }
-        </script>
-
-        <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script type="text/javascript">
-          // 인풋 팝업 파일명 표시
-          $("#file").on("change", function () {
-            var fileName = $("#file").val();
-            $(".upload-name").val(fileName);
-          });
-
-          /*창문 click 시 창문 그래픽 및 ASMR 음원 변경*/
-          $(function () {
-            let num = 0;
-            let imageName = ["1", "2", "3", "4"];
-            var audio1 = document.getElementById("school");
-            var audio2 = document.getElementById("rain");
-            var audio3 = document.getElementById("wave");
-            $("#window").click(function () {
-              if (num == 0) {
-                audio3.pause();
-                audio2.pause();
-                audio1.play();
-                num++;
-              } else if (num == 1) {
-                audio1.pause();
-                audio3.pause();
-                audio2.play();
-                num++;
-              } else if (num == 2) {
-                audio1.pause();
-                audio2.pause();
-                audio3.play();
-                num++;
-              } else {
-                audio1.pause();
-                audio2.pause();
-                audio3.pause();
-                num = 0;
-              }
-              $(this).attr(
-                "src",
-                "../static/assets/window" + imageName[num] + ".PNG"
-              );
-              audio.puase();
-              audio.play();
-            });
-          });
-
-          /*audio volume control - 일괄 조정 가능하도록 추후 코드 수정*/
-
-          // asmr_volume_init
-            const audio1 = document.getElementById("school");
-            const audio2 = document.getElementById("rain");
-            const audio3 = document.getElementById("wave");
-            audio1.volume = 0.2;
-            audio2.volume = 0.2;
-            audio3.volume = 0.2;
-
-
-          function asmr_volume() {
-            const audio1 = document.getElementById("school");
-            const audio2 = document.getElementById("rain");
-            const audio3 = document.getElementById("wave");
-            const asrmAudioVolume =
-              document.getElementById("asmr-volume-slider");
-            audio1.volume = asrmAudioVolume.value / 100;
-            audio2.volume = asrmAudioVolume.value / 100;
-            audio3.volume = asrmAudioVolume.value / 100;
-          }
-
-          function music_volume() {
-            const audio = document.getElementById("kpop-sample");
-            const musicAudioVolume = document.getElementById(
-              "music-volume-slider"
-            );
-            audio.volume = musicAudioVolume.value / 100;
-          }
-
-          // function drum_volume() {
-          //   const audio = document.getElementById("drum-80-bpm");
-          //   const drumAudioVolume =
-          //     document.getElementById("drum-volume-slider");
-          //   audio.volume = drumAudioVolume.value / 100;
-          // }
-
-        </script>
-
-        <!-- pixel audio visualization-->
-        <div style="margin: 1em">
-          <canvas id="canvas" width="720"></canvas>
-        </div>
-
-      <!--player room outside-->
+              <div class="sample-btn-wrap">
+                <!-- <div id="radios">
+                  <div class="inputs">
+                    <label for="input1"></label>
+                    <input  id="input1" name="radio" type="radio" />
+                    <label for="input2"></label>
+                    <input  id="input2" name="radio" type="radio" />
+                    <label for="input3"></label>
+                    <input  id="input3" name="radio" type="radio" />
+                    <label for="input4"></label>
+                    <input  id="input4" name="radio" type="radio" />
+                    <label for="input5"></label>
+                    <input  id="input5" name="radio" type="radio" />
+                    <span id="slider-input"></span>
+                  </div>
+                  <div class="styles">
+                    <label for="style1"></label>
+                    <input  id="style1" name="radio" type="radio" />
+                    <label for="style2"></label>
+                    <input  id="style2" name="radio" type="radio" />
+                    <label for="style3"></label>
+                    <input  id="style3" name="radio" type="radio" />
+                    <label for="style4"></label>
+                    <input  id="style4" name="radio" type="radio" />
+                    <label for="style5"></label>
+                    <input  id="style5" name="radio" type="radio" />
+                    <span id="slider-style"></span>
+                  </div> -->
+                </div>
+  
+              </div>
       </div>
-      <div class="bottom-wrap">
-        <!--style 선택 dropbox-->
-        <div class="style-dropdown">
-          <button class="style-dropbtn">
-            <span class="style-dropbtn_icon">more_horiz</span>
-            STYLE
-          </button>
-          <div class="style-dropdown-content">
-            <option value="basic"
-            class="stylebtn"
-            onclick="setStyle(this.value)"
-            >basic</a>
-            <option value= "mellow"
-            class="stylebtn"
-            onclick= "setStyle(this.value)"
-            >mellow</a>
-            <option value= "sad"
-            class="stylebtn"
-            onclick="setStyle(this.value)"
-            >sad</a>
-          </div>
-        </div>
 
-        <!--bpm 선택 dropbox-->
-        <div class="style-dropdown">
-          <button class="style-dropbtn">
-            <div class="bpm-text-wrap">
-              <span class="style-dropbtn_icon">more_horiz</span>
-              BPM
-              <span id="bpm">0</span>
+      <!--todolist-->
+      <div class="todo-wrapper" style="display:none">
+        <header>TODO</header>        
+        <div class="inputField">
+            <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
+            <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+        </div>
+        <div>
+            <ul id="addTodo" class="Todolist"> 
+                <li><div id='result'></div></li>
+            </ul>
+        </div>
+      </div>
+
+          <!--뽀모도로-->
+      <div class="timer-container">
+
+        <div id="timer" class="timer">
+            <div class="cover1"></div>
+
+            <div id="lines">
+
             </div>
-          </button>
-          <div class="style-dropdown-content">
-            <option value="60" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">60</option>
-            <option value="80" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">80</option>
-            <option value="100" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">100</option>
-          </div>
+
+            <div id="fins">
+
+            </div>
+
+            <div id="num-container">
+
+            </div>
+
+            <div class="cover2"></div>
         </div>
-        
-        <!-- <tone-content>
-          <tone-play-toggle>
-            <button id="target">start</button>
-          </tone-play-toggle>
-        </tone-content> -->
-
-        <script>
-
-          //초기 설정
-          var drumAudio_60 = document.getElementById("drum-60-bpm");
-          var drumAudio_80 = document.getElementById("drum-80-bpm");
-          var drumAudio_100 = document.getElementById("drum-100-bpm");
-          var asrmAudioVolume = document.getElementById("asmr-volume-slider");  
-          drumAudio_60.volume = 0.2;
-          drumAudio_80.volume = 0.2;
-          drumAudio_100.volume = 0.2;
-
-          setBpm(80);
-
-          // bpm change
-          function setBpm(bpm) {
-            var target_bpm = Number(bpm);
-            Tone.Transport.bpm.value = target_bpm;
-            // var nowbpm = Tone.Transport.bpm.value;
-            document.getElementById("bpm").textContent =
-            target_bpm;
-          }
-
-          // bpm에 맞춰서 drum 바꾸는 함수
-          function changeDrum(bpm) {
-              if (bpm==60) {
-                console.log("드럼 테스트")
-                // drum change
-                drumAudio_80.pause(); // 일시 정지
-                drumAudio_80.currentTime = 0;
-                drumAudio_100.pause(); // 일시 정지
-                drumAudio_100.currentTime = 0;
-                drumAudio_60.play();
-              } else if (bpm==80) {
-                drumAudio_60.pause(); // 일시 정지
-                drumAudio_60.currentTime = 0;
-                drumAudio_100.pause(); // 일시 정지
-                drumAudio_100.currentTime = 0;
-                drumAudio_80.play();
-              } else { //bpm==100
-                drumAudio_60.pause(); // 일시 정지
-                drumAudio_60.currentTime = 0;
-                drumAudio_80.pause(); // 일시 정지
-                drumAudio_80.currentTime = 0;
-                drumAudio_100.play();
-              }
-
-
-          }
-
-          function setStyle(style) {
-            var style = style;
-          }
-        </script>
-
-        <!-- 임시 bpm 조정 -->
-        <!--
-        <script
-        type="text/javascript"
-        src="//www.midijs.net/lib/midi.js"
-        >
-        MIDIjs.play("../static/output/output_midi.mid")
-        </script>
-        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
-        <midi-player
-          src="../static/output/output_midi.mid"
-          sound-font
-          visualizer="#myVisualizer"
-          id="midi-player"
-        >
-        </midi-player>
-        <form
-        onsubmit="fetchMidi(this.url.value); return false;"
-        ></form>
-        <div id="FileDrop">
-        <div id="Text"></div>
-        <input type="file" id="test-file" accept="audio/midi" />
-        </div>
-        <tone-play-toggle disabled></tone-play-toggle>
-        <span><tone-button id="rewind"></tone-button></span>
-        <span id="position">0:0</span>
-        <span id="ticks">Ticks:</span>
-        <button>테스트 버튼</button>
-        <script></script>
-        <!--style transfer output music 재생바-->
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto:100"
-          rel="stylesheet"
-          type="text/css"
-        />
+      </div>
       
-        <div class="mp3-player">
-          <div class="player">
-            <div class="playarea">
-              <button id="play" type="button" class="btn btn-primary btn-lg" disabled>
-                <em class="bi bi-play"></em>
-                Play
-              </button>
+            <!--inside of player room-->
+            <div class="player-room">
+              <img class="sample-room" src="../static/assets/room_gif.gif" style="height:560px; width:560px;"/>
+      
+              <!-- button wrap -->
+              <div class="btn-wrap">
+                <!-- 기타 소품 -->
+                <div class = "sofa">
+                  <img
+                  src="../static/assets/소파.png"
+                  class="room-btn"
+                  style ="height:180px"
+                />
+                </div>
+                <div class = "dog">
+                  <img
+                  src="../static/assets/강아지.gif"
+                  class="room-btn"
+                  style ="height:50px"
+                />
+                </div>
+                <div class = "camera">
+                  <img
+                  src="../static/assets/카메라.png"
+                  class="room-btn"
+                  style ="height:165px"
+                />
+                </div>
+                <div class = "amp">
+                  <img
+                  src="../static/assets/앰프버튼.gif"
+                  class="room-btn"
+                  style ="height:140px"
+                />
+                </div>
 
-              <!--
-              <div class="play" id="play-img" onclick="musicControl()">
-                <script>
-                  var playMode = 0;
-                  /* 재생 */
-                  function play() {
-                    var audio4 = document.getElementById("kpop-sample");
-                    document.getElementById("kpop-sample").volume = 0.1;
-                    audio4.play();
-                    playMode == 1;
+                <!-- audio input btn -->
+                <a href="javascript:controlInputPop()">
+                  <div class = "monitor">
+                    <img
+                    src="../static/assets/모니터버튼.gif"
+                    class="room-btn"
+                    style ="height:100px"
+                  />
+                  </div>
+                </a>
+      
+                <!--ASMR sound btn-->
+                <div class="window-group" id="window-group">
+                  <div class = "window-frame">
+                    <img
+                    src="../static/assets/창틀.png"
+                    style ="height:280px"
+                  />
+                  </div>
+  
+                  <div class = "window">
+                    <img
+                    src="../static/assets/window1.gif"
+                    id="window"
+                    class="room-btn"
+                    style ="height:270px"
+                  />
+                  </div>
+                </div>
+
+      
+                <!-- piano btn -->
+                <a href="javascript:controlSamplePop()">
+                  <div class="piano">
+                    <img
+                    src="../static/assets/피아노버튼.gif"
+                    class="room-btn"
+                    id="drum"
+                    style ="height:138px"
+                  />
+                </div>
+      
+                </a>
+      
+                <!--audio effect popup btn-->
+                <a href="javascript:controlEffectPop()"> 
+                  <div class="radio">
+                    <img
+                    src="../static/assets/라디오버튼.gif"
+                    class="room-btn"
+                    id="effect"
+                    style ="height:80px"
+                  />
+                  </div>
+                </a>
+              </div>
+      
+              <script>
+                /*input popup open*/
+                function controlInputPop() {
+                  var nowState = document.getElementById("input_popup_layer").style.display;
+                  if(nowState === "block"){
+                    document.getElementById("input_popup_layer").style.display = "none";
+                  } else {
+                    document.getElementById("input_popup_layer").style.display =
+                    "block";
                   }
-                  /* 일시정지 */
-                  function pause() {
-                    var audio4 = document.getElementById("kpop-sample");
-                    audio4.pause();
-                    playMode == 0;
+                } 
+      
+                /*audio effect control popup open*/
+                function controlEffectPop() {
+                  var nowState = document.getElementById("effect_popup_layer").style.display;
+                  if(nowState === "block"){
+                    document.getElementById("effect_popup_layer").style.display = "none";
+                  } else {
+                    document.getElementById("effect_popup_layer").style.display =
+                    "block";
                   }
-                  /* music mode change */
-                  function musicControl() {
-                    if (playMode == 0) {
-                      play();
-                      playMode = 1;
+                }
+      
+                /*drum popup open*/
+                function controlSamplePop() {
+                  var nowState = document.getElementById("sample_popup_layer").style.display;
+                  if(nowState === "block"){
+                    document.getElementById("sample_popup_layer").style.display = "none";
+                  } else {
+                    document.getElementById("sample_popup_layer").style.display =
+                    "block";
+                  }
+                }
+      
+              </script>
+      
+              <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+              <script type="text/javascript">
+                // 인풋 팝업 파일명 표시
+                $("#file").on("change", function () {
+                  var fileName = $("#file").val();
+                  $(".upload-name").val(fileName);
+                });
+      
+                /*창문 click 시 창문 그래픽 및 ASMR 음원 변경*/
+                $(function () {
+                  let num = 0;
+                  let imageName = ["1", "2", "3", "4"];
+                  var audio1 = document.getElementById("school");
+                  var audio2 = document.getElementById("rain");
+                  var audio3 = document.getElementById("wave");
+                  var target = document.getElementById("wave");
+                  $("#window-group").click(function () {
+                    if (num == 0) {
+                      audio3.pause();
+                      audio2.pause();
+                      audio1.play();
+                      num++;
+                    } else if (num == 1) {
+                      audio1.pause();
+                      audio3.pause();
+                      audio2.play();
+                      num++;
+                    } else if (num == 2) {
+                      audio1.pause();
+                      audio2.pause();
+                      audio3.play();
+                      num++;
                     } else {
-                      pause();
-                      playMode = 0;
+                      audio1.pause();
+                      audio2.pause();
+                      audio3.pause();
+                      num = 0;
                     }
-                  }
-                  /* 버튼 이미지 변경 */
-                  function imgControl() {
-                    document.getElementById("play-img").src =
-                      "../static/assets/pause.";
-                  }
-                </script>
-              </div>
-              <div class="pause" onclick="pause()"></div>
-              <div class="soundControl" id="volume-Control" display="none">
-                <script>
-                  // volume control 코드 삭제하면 오디오 비주얼라이제이션 안됨 (왜?)
-                  const audio = document.getElementById("kpop-sample");
-                  const audioVolume = document.getElementById("volume-slider");
-                  audioVolume.addEventListener("change", function (e) {
-                    audio.volume = this.value / 100;
+                    $("#window").attr(
+                      "src",
+                      "../static/assets/window" + imageName[num] + ".gif"
+                    );
+                    audio.puase();
+                    audio.play();
                   });
-                  function mute() {}
-                </script>
+                });
+      
+                /*볼륨 조절*/
+      
+                // asmr_volume_init
+                  const audio1 = document.getElementById("school");
+                  const audio2 = document.getElementById("rain");
+                  const audio3 = document.getElementById("wave");
+                  audio1.volume = 0.2;
+                  audio2.volume = 0.2;
+                  audio3.volume = 0.2;
+      
+      
+                function asmr_volume() {
+                  const audio1 = document.getElementById("school");
+                  const audio2 = document.getElementById("rain");
+                  const audio3 = document.getElementById("wave");
+                  const asrmAudioVolume =
+                    document.getElementById("asmr-volume-slider");
+                  audio1.volume = asrmAudioVolume.value / 100;
+                  audio2.volume = asrmAudioVolume.value / 100;
+                  audio3.volume = asrmAudioVolume.value / 100;
+                }
+      
+                function music_volume() {
+                  const audio = document.getElementById("kpop-sample");
+                  const musicAudioVolume = document.getElementById(
+                    "music-volume-slider"
+                  );
+                  audio.volume = musicAudioVolume.value / 100;
+                }
+      
+                // function drum_volume() {
+                //   const audio = document.getElementById("drum-80-bpm");
+                //   const drumAudioVolume =
+                //     document.getElementById("drum-volume-slider");
+                //   audio.volume = drumAudioVolume.value / 100;
+                // }
+      
+              </script>
+      
+              <!-- pixel audio visualization-->
+              <div style="margin: 1em">
+                <canvas id="canvas" width="720"></canvas>
               </div>
-              -->
+      
+            <!--player room outside-->
             </div>
-          </div>
-        </div>
-      </div>
+            <div class="bottom-wrap">
+              <!--style 선택 dropbox-->
+              <div class="style-dropdown">
+                <button class="style-dropbtn">
+                  <span class="style-dropbtn_icon">more_horiz</span>
+                  STYLE
+                </button>
+                <div class="style-dropdown-content">
+                  <option value="basic"
+                  class="stylebtn"
+                  onclick="setStyle(this.value)"
+                  >basic</a>
+                  <option value= "mellow"
+                  class="stylebtn"
+                  onclick= "setStyle(this.value)"
+                  >mellow</a>
+                  <option value= "sad"
+                  class="stylebtn"
+                  onclick="setStyle(this.value)"
+                  >sad</a>
+                </div>
+              </div>
+      
+              <!--bpm 선택 dropbox-->
+              <div class="style-dropdown">
+                <button class="style-dropbtn">
+                  <div class="bpm-text-wrap">
+                    <span class="style-dropbtn_icon">more_horiz</span>
+                    BPM
+                    <span id="bpm">0</span>
+                  </div>
+                </button>
+                <div class="style-dropdown-content">
+                  <option value="60" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">60</option>
+                  <option value="80" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">80</option>
+                  <option value="100" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">100</option>
+                </div>
+              </div>
+              
+              <!-- <tone-content>
+                <tone-play-toggle>
+                  <button id="target">start</button>
+                </tone-play-toggle>
+              </tone-content> -->
+      
+              <script>
+      
+                //초기 설정
+                var drumAudio_60 = document.getElementById("drum-60-bpm");
+                var drumAudio_80 = document.getElementById("drum-80-bpm");
+                var drumAudio_100 = document.getElementById("drum-100-bpm");
+                var asrmAudioVolume = document.getElementById("asmr-volume-slider");  
+                drumAudio_60.volume = 0.2;
+                drumAudio_80.volume = 0.2;
+                drumAudio_100.volume = 0.2;
+      
+                setBpm(80);
+      
+                // bpm change
+                function setBpm(bpm) {
+                  var target_bpm = Number(bpm);
+                  Tone.Transport.bpm.value = target_bpm;
+                  // var nowbpm = Tone.Transport.bpm.value;
+                  document.getElementById("bpm").textContent =
+                  target_bpm;
+                }
+      
+                // bpm에 맞춰서 drum 바꾸는 함수
+                function changeDrum(bpm) {
+                    if (bpm==60) {
+                      console.log("드럼 테스트")
+                      // drum change
+                      drumAudio_80.pause(); // 일시 정지
+                      drumAudio_80.currentTime = 0;
+                      drumAudio_100.pause(); // 일시 정지
+                      drumAudio_100.currentTime = 0;
+                      drumAudio_60.play();
+                    } else if (bpm==80) {
+                      drumAudio_60.pause(); // 일시 정지
+                      drumAudio_60.currentTime = 0;
+                      drumAudio_100.pause(); // 일시 정지
+                      drumAudio_100.currentTime = 0;
+                      drumAudio_80.play();
+                    } else { //bpm==100
+                      drumAudio_60.pause(); // 일시 정지
+                      drumAudio_60.currentTime = 0;
+                      drumAudio_80.pause(); // 일시 정지
+                      drumAudio_80.currentTime = 0;
+                      drumAudio_100.play();
+                    }
+      
+      
+                }
+      
+                function setStyle(style) {
+                  var style = style;
+                }
+              </script>
+      
+              <!-- 임시 bpm 조정 -->
+              <!--
+              <!--
+              <script
+              type="text/javascript"
+              src="//www.midijs.net/lib/midi.js"
+              >
+      
+              MIDIjs.play("../static/output/output_midi.mid")
+              </script>
+              <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+              <midi-player
+                src="../static/output/output_midi.mid"
+                sound-font
+                visualizer="#myVisualizer"
+                id="midi-player"
+              >
+              </midi-player>
+              <form
+              onsubmit="fetchMidi(this.url.value); return false;"
+              ></form>
+              <div id="FileDrop">
+              <div id="Text"></div>
+              <input type="file" id="test-file" accept="audio/midi" />
+              </div>
+              <tone-play-toggle disabled></tone-play-toggle>
+              <span><tone-button id="rewind"></tone-button></span>
+              <span id="position">0:0</span>
+              <span id="ticks">Ticks:</span>
+              <button>테스트 버튼</button>
+              <script></script>
+              <!--style transfer output music 재생바-->
+              <link
+                href="https://fonts.googleapis.com/css?family=Roboto:100"
+                rel="stylesheet"
+                type="text/css"
+              />
+            
+              <div class="mp3-player">
+                <div class="player">
+                  <div class="playarea">
+                    <button id="play" type="button" class="btn btn-primary btn-lg" disabled>
+                      <em class="bi bi-play"></em>
+                      Play
+                    </button>
+      
+                    
+                    <div class="play" id="play-img" onclick="musicControl()">
+                      <script>
+                        var playMode = 0;
+                        /* 재생 */
+                        function play() {
+                          var audio4 = document.getElementById("kpop-sample");
+                          document.getElementById("kpop-sample").volume = 0.1;
+                          audio4.play();
+                          playMode == 1;
+                        }
+                        /* 일시정지 */
+                        function pause() {
+                          var audio4 = document.getElementById("kpop-sample");
+                          audio4.pause();
+                          playMode == 0;
+                        }
+                        /* music mode change */
+                        function musicControl() {
+                          if (playMode == 0) {
+                            play();
+                            playMode = 1;
+                          } else {
+                            pause();
+                            playMode = 0;
+                          }
+                        }
+                        /* 버튼 이미지 변경 */
+                        function imgControl() {
+                          document.getElementById("play-img").src =
+                            "../static/assets/pause.";
+                        }
+                      </script>
+                    </div>
+                    <div class="pause" onclick="pause()"></div>
+                    <div class="soundControl" id="volume-Control" display="none">
+                      <script>
+                        // volume control 코드 삭제하면 오디오 비주얼라이제이션 안됨 (왜?)
+                        const audio = document.getElementById("kpop-sample");
+                        const audioVolume = document.getElementById("volume-slider");
+                        audioVolume.addEventListener("change", function (e) {
+                          audio.volume = this.value / 100;
+                        });
+                        function mute() {}
+                      </script>
+                    </div>
+                    -->
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+    </div>  
+
+
     </div>
     <!-- 오디오 비주얼라이제이션 
       mp3 파일로 연결됨..? wav 되는지 확인 안해봄
     -->
-    <!--todolist-->
-    <div class="todo-wrapper">
-      <header>TODO</header>        
-      <div class="inputField">
-          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
-          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
-      </div>
-      <div>
-          <ul id="addTodo" class="Todolist"> 
-              <li><div id='result'></div></li>
-          </ul>
-      </div>
-    </div>
+
     <script>
       
       const btn = document.getElementById('btn'); //버튼
@@ -915,6 +1016,9 @@
       //변수지정 방법 : const, let, var
       //css에는 꾸미는 기능만, js에서 동적으로 처리하는 기능만 넣은 상태
     </script>
+    <!-- 오디오 비주얼라이제이션 
+      mp3 파일로 연결됨..? wav 되는지 확인 안해봄
+    -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         function getPos(Hz, minHz, maxHz, max) {
@@ -1083,6 +1187,7 @@
         reader.readAsArrayBuffer(file);
       }
 
+      console.log("bpm 가져오기 테스트");
       console.log("bpm 가져오기 테스트");
       var outputBPM = getMidiBPM("../static/output/output_midi.mid");
       console.log(outputBPM);
@@ -1294,168 +1399,177 @@
       }
 
       window.addEventListener("load", async () => {
-      //window.addEventListener("load", async () => {
-        // Setup Audio Context
-        const AudioCtx = new window.AudioContext();
-
-        // Defreeze AudioContext for iOS.
-        document.addEventListener("touchstart", initAudioContext);
-        function initAudioContext() {
-          document.removeEventListener("touchstart", initAudioContext);
-          // wake up AudioContext
-          const emptySource = AudioCtx.createBufferSource();
-          emptySource.start();
-          emptySource.stop();
-        }
-
-        // Setup Reverb Class
-        const reverb = new Reverb(AudioCtx);
-        console.info(
-          `Reverb.js loaded. (version: ${Reverb.version} / build: ${Reverb.build})`
-        );
-        const AudioSrc = AudioCtx.createBufferSource();
-
-        // Load audio file and decode asyncly.
-        const LoadSample = async (url) => {
-          return new Promise((resolve) => {
-            fetch(url)
-              .then((response) => response.arrayBuffer())
-              .then((arraybuf) =>
-                AudioCtx.decodeAudioData(
-                  arraybuf,
-                  (buffer) => {
-                    document.getElementById("play").removeAttribute("disabled");
-                    resolve(buffer);
-                  },
-                  (e) => alert(e)
-                )
-              )
-              .catch((e) => alert(e));
-          });
-        };
-
-        const AnalyserNode = AudioCtx.createAnalyser();
-
-        // Reverb switch handler
-        const setReverb = () => {
-          AudioSrc.disconnect();
-
-          if (document.getElementById("reverb").checked) {
-            // Connect Reverb
-            reverb.connect(AudioSrc).connect(AnalyserNode);
-          } else {
-            reverb.disconnect(AudioSrc).connect(AnalyserNode);
+        //window.addEventListener("load", async () => {
+          // Setup Audio Context
+          const AudioCtx = new window.AudioContext();
+  
+          // Defreeze AudioContext for iOS.
+          document.addEventListener("touchstart", initAudioContext);
+          function initAudioContext() {
+            document.removeEventListener("touchstart", initAudioContext);
+            // wake up AudioContext
+            const emptySource = AudioCtx.createBufferSource();
+            emptySource.start();
+            emptySource.stop();
           }
-          AnalyserNode.connect(AudioCtx.destination);
-          reverb.setNoise("pink");
-        };
-
-
-        let sound = await LoadSample("../static/output/oasis.wav");
-
-        if(document.getElementById("style_num").innerText=='sty_1'){
-          console.log("test===================");
-          sound = await LoadSample("../static/output/1.wav");
-          console.log(sound)
-        }
-        else if(document.getElementById("style_num").innerText=='sty_2') {
-          sound = await LoadSample("../static/output/2.wav");
-          console.log(sound)
-        }
-        else if(document.getElementById("style_num").innerText=='sty_3') {
-          sound = await LoadSample("../static/output/3.wav");
-          console.log(document.getElementById("style_num").innerText);
-          console.log(sound)
-        }
-
-        // Play button
-        document.getElementById("play").addEventListener(
-          "click",
-          (event) => {
-            if (event.target != event.currentTarget) return;
-
-            if (AudioSrc.buffer == null) {
-              AudioSrc.buffer = sound;
-              AudioSrc.loop = true;
-
-              setReverb();
-              AudioSrc.start();
+  
+          // Setup Reverb Class
+          const reverb = new Reverb(AudioCtx);
+          console.info(
+            `Reverb.js loaded. (version: ${Reverb.version} / build: ${Reverb.build})`
+          );
+          const AudioSrc = AudioCtx.createBufferSource();
+  
+          // Load audio file and decode asyncly.
+          const LoadSample = async (url) => {
+            return new Promise((resolve) => {
+              fetch(url)
+                .then((response) => response.arrayBuffer())
+                .then((arraybuf) =>
+                  AudioCtx.decodeAudioData(
+                    arraybuf,
+                    (buffer) => {
+                      document.getElementById("play").removeAttribute("disabled");
+                      resolve(buffer);
+                    },
+                    (e) => alert(e)
+                  )
+                )
+                .catch((e) => alert(e));
+            });
+          };
+  
+          const AnalyserNode = AudioCtx.createAnalyser();
+  
+          // Reverb switch handler
+          const setReverb = () => {
+            AudioSrc.disconnect();
+  
+            if (document.getElementById("reverb").checked) {
+              // Connect Reverb
+              reverb.connect(AudioSrc).connect(AnalyserNode);
+            } else {
+              reverb.disconnect(AudioSrc).connect(AnalyserNode);
             }
-
-            if (AudioCtx.state === "running") {
-              AudioCtx.suspend().then(() => {
-                event.target.innerHTML = '<em class="bi bi-play"></em> Play';
-              });
-            } else if (AudioCtx.state === "suspended") {
-              AudioCtx.resume().then(() => {
-                event.target.innerHTML = '<em class="bi bi-pause"></em> Pause';
-              });
-            }
-          },
-          false
-        );
-
-        // Reverb switch button
-        document.getElementById("reverb").addEventListener("click", setReverb);
-        // Reverse checkbox
-        document
-          .getElementById("reverse")
-          .addEventListener("click", (e) => reverb.reverse(e.target.checked));
-        // Reverb dualation time
-        document.getElementById("time").addEventListener("change", (e) => {
-          reverb.time(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Decay time
-        document.getElementById("decay").addEventListener("change", (e) => {
-          reverb.decay(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Filter select box
-        document.getElementById("filter").addEventListener("change", (e) => {
-          reverb.filterType(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Filter frequency
-        document.getElementById("freq").addEventListener("change", (e) => {
-          reverb.filterFreq(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Filter quality
-        document.getElementById("q").addEventListener("change", (e) => {
-          reverb.filterQ(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Dry/Wet
-        document.getElementById("mix").addEventListener("change", (e) => {
-          reverb.mix(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Noise Type
-        document.querySelectorAll("[name=noise]").forEach((dom) =>
-          dom.addEventListener("click", (e) => {
-            document.getElementById("peaks").disabled =
-              e.target.value === "white";
-            reverb.setNoise(e.target.value);
-          })
-        );
-
-        document.getElementById("peaks").addEventListener("change", (e) => {
-          reverb.peaks(e.target.value);
-          e.target.title = e.target.value;
-        });
-        document.getElementById("scale").addEventListener("change", (e) => {
-          reverb.scale(e.target.value);
-          e.target.title = e.target.value;
-          
-        });
-        document
-          .getElementById("randomAlgorithm")
-          .addEventListener("change", (e) => {
-            reverb.randomAlgorithm(e.target.value);
+            AnalyserNode.connect(AudioCtx.destination);
+            reverb.setNoise("pink");
+          };
+  
+  
+          let sound = await LoadSample("../static/output/output.wav");
+          var style_ip = document.getElementById("style_num").innerText
+          var content_ip = document.getElementById("content_num").innerText
+  
+          if(style_ip=='sty_1' && content_ip=='con_1'){
+            console.log("test===================");
+            sound = await LoadSample("../static/output/1.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_2' && content_ip=='con_1') {
+            sound = await LoadSample("../static/output/2.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_3' && content_ip=='con_1') {
+            sound = await LoadSample("../static/output/1.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_1' && content_ip=='con_2') {
+            sound = await LoadSample("../static/output/3.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_2' && content_ip=='con_2') {
+            sound = await LoadSample("../static/output/2.wav");
+            console.log(sound)
+          }
+  
+          // Play button
+          document.getElementById("play").addEventListener(
+            "click",
+            (event) => {
+              if (event.target != event.currentTarget) return;
+  
+              if (AudioSrc.buffer == null) {
+                AudioSrc.buffer = sound;
+                AudioSrc.loop = true;
+  
+                setReverb();
+                AudioSrc.start();
+              }
+  
+              if (AudioCtx.state === "running") {
+                AudioCtx.suspend().then(() => {
+                  event.target.innerHTML = '<em class="bi bi-play"></em> Play';
+                });
+              } else if (AudioCtx.state === "suspended") {
+                AudioCtx.resume().then(() => {
+                  event.target.innerHTML = '<em class="bi bi-pause"></em> Pause';
+                });
+              }
+            },
+            false
+          );
+  
+          // Reverb switch button
+          document.getElementById("reverb").addEventListener("click", setReverb);
+          // Reverse checkbox
+          document
+            .getElementById("reverse")
+            .addEventListener("click", (e) => reverb.reverse(e.target.checked));
+          // Reverb dualation time
+          document.getElementById("time").addEventListener("change", (e) => {
+            reverb.time(e.target.value);
             e.target.title = e.target.value;
+          });
+          // Decay time
+          document.getElementById("decay").addEventListener("change", (e) => {
+            reverb.decay(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Filter select box
+          document.getElementById("filter").addEventListener("change", (e) => {
+            reverb.filterType(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Filter frequency
+          document.getElementById("freq").addEventListener("change", (e) => {
+            reverb.filterFreq(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Filter quality
+          document.getElementById("q").addEventListener("change", (e) => {
+            reverb.filterQ(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Dry/Wet
+          document.getElementById("mix").addEventListener("change", (e) => {
+            reverb.mix(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Noise Type
+          document.querySelectorAll("[name=noise]").forEach((dom) =>
+            dom.addEventListener("click", (e) => {
+              document.getElementById("peaks").disabled =
+                e.target.value === "white";
+              reverb.setNoise(e.target.value);
+            })
+          );
+  
+          document.getElementById("peaks").addEventListener("change", (e) => {
+            reverb.peaks(e.target.value);
+            e.target.title = e.target.value;
+          });
+          document.getElementById("scale").addEventListener("change", (e) => {
+            reverb.scale(e.target.value);
+            e.target.title = e.target.value;
+            
+          });
+          document
+            .getElementById("randomAlgorithm")
+            .addEventListener("change", (e) => {
+              reverb.randomAlgorithm(e.target.value);
+              e.target.title = e.target.value;
+          });
         });
-      });
     </script>
   </body>
 </html>

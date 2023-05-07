@@ -12,10 +12,13 @@ overflow: hidden;
 /* 중앙정렬 */
 align-items: center;
 justify-content: center;
+flex-direction: column
 }
 
 .center-box {
 justify-content: center;
+display: flex;
+flex-direction: column
 }
 
 .player-room{
@@ -30,39 +33,97 @@ display: flex;
 }
 
 .btn-wrap{
-position: absolute;
-display: block;
-z-index: 10000;
+  /* width: auto;
+  height: auto; */
+  position: absolute;
+  /* display: block; */
+  z-index: 10000;
 }
 
-.window-btn {
-  margin-top: 200px;
-  height: 100px;
-  width: 100px;
-  }
-
-.monitor-btn {
-/* margin-top: 200px; */
-height: 100px;
-width: 100px;
+.sofa{
+  position: absolute;
+  top: 250px;
+  left: -270px;
+  z-index: 10004;
 }
 
-.radio-btn {
-  /* margin-top: 200px; */
-  height: 100px;
-  width: 100px;
+.dog{
+  position: absolute;
+  top: 282px;
+  left: -199px;
+  z-index: 10005;
 }
 
-.piano-btn {
-  /* margin-top: 183px;
-  margin-right: 178px; */
-  height: 135px;
-  width: 135px;
+.amp{
+  position: absolute;
+  top: 273px;
+  left: 182px;
+  z-index: 10005;
 }
 
-.piano-btn :hover {
-transform:scale(1.3); 
-transition: 0.5s;
+.camera {
+  position: absolute;
+  top: 212px;
+  left: 122px;
+  z-index: 10001;
+}
+
+.window-group{
+  position: absolute;
+  top: 35px;
+  left: 20px;
+}
+
+.window-frame {
+  position: absolute;
+  z-index: 10000;
+}
+
+.window {
+  position: absolute;
+  z-index: 9999;
+}
+
+.window-group :hover{
+  transform:scale(1.05); 
+  transition: 0.5s;
+}
+
+.monitor {
+  position: absolute;
+  top: 345px;
+  left: 40px;
+  z-index: 10001;
+}
+
+.monitor :hover{
+  transform:scale(1.15); 
+  transition: 0.5s;
+}
+
+.radio {
+  position: absolute;
+  top: 203px;
+  left: 80px;
+  z-index: 10006;
+}
+
+.radio :hover {
+  transform:scale(1.15); 
+  transition: 0.5s;
+}
+
+.piano {
+  position: absolute;
+  top: 179px;
+  left: -106px;
+  z-index: 10001;
+
+}
+
+.piano :hover {
+  transform:scale(1.15); 
+  transition: 0.5s;
 }
 
 #input {
@@ -71,11 +132,7 @@ left: 350px;
 top: 120px;
 }
 
-#window {
-  position : relative;
-  top: -90px;
-  left: 230px;
-}
+
 
 #effect {
 position : relative;
@@ -91,7 +148,9 @@ z-index: 5000;
 
 /* 팝업들 위치 고정 */
 .modal {
-position: absolute;
+position: relative;
+width: 100%;
+height: 100%
 }
 
 #input_popup_layer{
@@ -107,7 +166,8 @@ position: absolute;
 }
 
 .popup_layer {
-  z-index: 10005;
+  position: absolute;
+  z-index: 999999999;
   width: 100%;
   height: 100%;
 }
@@ -116,7 +176,7 @@ position: absolute;
 .effect_popup_box {
   position: relative;
   top: 230px;
-  left: 900px;
+  left: 785px;
   overflow-x: hidden;
   overflow-y: hidden;
   width: 300px;
@@ -262,45 +322,147 @@ input {
   flex-direction: column;
 }
 
-/* 드럼 팝업 */
-.drum_popup_box {
+/* 샘플 팝업 */
+
+/* .sample_popup_box {
 position: relative;
-top: 80px;
-left: 170px;
+top: 20px;
+left: -30px;
 overflow-x: hidden;
 overflow-y: hidden;
-height: 100px;
-width: 300px;
+height: 200px;
+width: 400px;
 transform: translate(-50%, -50%);
-z-index: 1002;
+z-index: 10000000;
 border-radius: 10px;
 box-sizing: border-box;
-background-color: #ffffff;
+background-color: #ff48c2;
 }
 
-.drum-btn-wrap {
+.sample-btn-wrap {
 display: flex;
 justify-content: center;
+} */
+
+/* 샘플 라디오 버튼 css */
+
+.radios-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.drum-btn {
-height: 40px;
-width: 40px;
-margin: 0px 10px 0px 0px;
+.inputpop_title{
+  text-align: center;
+  margin: 15px;
+}
+
+.radios-input{
+  position:relative;
+  width:50%;
+  height: 100%;
+  margin:0 auto;
+}
+
+input[type="radio"]{
+  position:absolute;
+  right:1000%;
+} 
+
+.label-input{
+  float:left;
+  width:15%; padding-bottom:15%;
+  margin:0 2.5%;
+  background:rgba(255,255,255,.2);
+  border-radius:50%;
+  cursor:pointer;
+}
+#slider-input{
+  position:absolute;
+  left:0%; top:0;
+  width:10%; padding-bottom:10%;
+  margin:2.5% 0 0 5%;
+  background:#fff;
+  transition:transform 1s;
+  border-radius:50%;
+  animation-timing-function: ease-in-out;
+  animation-duration:.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left .05s ease-in-out;
+}
+#con_1:checked  ~ #slider-input{ animation-name: con_1; left:0; }
+#con_2:checked  ~ #slider-input{ animation-name: con_2; left:20%; }
+#con_3:checked  ~ #slider-input{ animation-name: con_3; left:40%; }
+#con_4:checked  ~ #slider-input{ animation-name: con_4; left:60%; }
+#con_5:checked  ~ #slider-input{ animation-name: con_5; left:80%; }
+
+@keyframes con_1{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_2{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_3{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_4{ 30%, 70% { transform:scale(0.5); } }
+@keyframes con_5{ 30%, 70% { transform:scale(0.5); } }
+
+.radios-style{
+  position:relative;
+  width:50%;
+  margin:0 auto;
+}
+
+input[type="radio"]{
+  position:absolute;
+  right:1000%;
+} 
+
+.label-style{
+  float:left;
+  width:15%; padding-bottom:15%;
+  margin:0 2.5%;
+  background:rgba(255,255,255,.2);
+  border-radius:50%;
+  cursor:pointer;
+}
+#slider-style{
+  position:absolute;
+  left:0%; top: 0px;;
+  width:10%; padding-bottom:10%;
+  margin:2.5% 0 0 5%;
+  background:#fff;
+  transition:transform 1s;
+  border-radius:50%;
+  animation-timing-function: ease-in-out;
+  animation-duration:.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left .05s ease-in-out;
+}
+
+#sty_1:checked  ~ #slider-style{ animation-name: sty_1; left:0; }
+#sty_2:checked  ~ #slider-style{ animation-name: sty_2; left:20%; }
+#sty_3:checked  ~ #slider-style{ animation-name: sty_3; left:40%; }
+#sty_4:checked  ~ #slider-style{ animation-name: sty_4; left:60%; }
+#sty_5:checked  ~ #slider-style{ animation-name: sty_5; left:80%; }
+
+@keyframes sty_1{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_2{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_3{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_4{ 30%, 70% { transform:scale(0.5); } }
+@keyframes sty_5{ 30%, 70% { transform:scale(0.5); } }
+
+#input_check{
+  margin: 25px 0 20px 0;
 }
 
 /* 인풋 팝업 */
 .input_popup_box{
 position: relative;
-top: 500px;
-left: 600px;
+top: 450px;
+left: 150px;
 overflow-x: hidden;
 overflow-y: hidden;
 width: 400px;
 transform: translate(-50%, -50%);
 z-index: 1002;
 box-sizing: border-box;
-background-color: #ffffff;
+background-color: #a889fd;
 }
 
 .filebox .upload-name {
@@ -412,7 +574,8 @@ display: block;
 
 .bottom-wrap {
 display: flex;
-align-items: center
+align-items: center;
+margin-top: -10px;
 }
 
 /*style & bpm 선택 dropbox*/
@@ -527,6 +690,7 @@ margin-left: 50px;
 
 /*뽀모도로*/
 .timer-container {
+  position: absolute;
   color: rgba(255, 255, 255, 0);
   font-family: 'Roboto', sans-serif;
   display: inline-block;
@@ -644,6 +808,9 @@ margin-left: 50px;
 
 /*todolist*/
 .todo-wrapper{
+  position: absolute;
+  /* top:10px;
+  left:10px; */
   margin: 30px;
   max-width: 300px;
   width: 300px;
