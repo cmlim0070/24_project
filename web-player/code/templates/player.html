@@ -94,27 +94,7 @@
     </div>
 
 
-    <!--뽀모도로-->
-    <div class="timer-container">
 
-        <div id="timer" class="timer">
-            <div class="cover1"></div>
-
-            <div id="lines">
-
-            </div>
-
-            <div id="fins">
-
-            </div>
-
-            <div id="num-container">
-
-            </div>
-
-            <div class="cover2"></div>
-        </div>
-    </div>
 
     <script>
       const timer = document.getElementById('timer');
@@ -534,17 +514,84 @@
   
               </div>
       </div>
+
+      <!--todolist-->
+      <div class="todo-wrapper">
+        <header>TODO</header>        
+        <div class="inputField">
+            <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
+            <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+        </div>
+        <div>
+            <ul id="addTodo" class="Todolist"> 
+                <li><div id='result'></div></li>
+            </ul>
+        </div>
+      </div>
+
+          <!--뽀모도로-->
+      <div class="timer-container">
+
+        <div id="timer" class="timer">
+            <div class="cover1"></div>
+
+            <div id="lines">
+
+            </div>
+
+            <div id="fins">
+
+            </div>
+
+            <div id="num-container">
+
+            </div>
+
+            <div class="cover2"></div>
+        </div>
+      </div>
+      
             <!--inside of player room-->
             <div class="player-room">
-              <img class="sample-room" src="../static/assets/sample_room.gif" />
+              <img class="sample-room" src="../static/assets/room_gif.gif" style="height:560px; width:560px;"/>
       
               <!-- button wrap -->
               <div class="btn-wrap">
+                <!-- 기타 소품 -->
+                <div class = "sofa">
+                  <img
+                  src="../static/assets/소파.png"
+                  class="room-btn"
+                  style ="height:180px"
+                />
+                </div>
+                <div class = "dog">
+                  <img
+                  src="../static/assets/강아지.gif"
+                  class="room-btn"
+                  style ="height:50px"
+                />
+                </div>
+                <div class = "camera">
+                  <img
+                  src="../static/assets/카메라.png"
+                  class="room-btn"
+                  style ="height:165px"
+                />
+                </div>
+                <div class = "amp">
+                  <img
+                  src="../static/assets/앰프버튼.gif"
+                  class="room-btn"
+                  style ="height:140px"
+                />
+                </div>
+
                 <!-- audio input btn -->
                 <a href="javascript:controlInputPop()">
                   <div class = "monitor">
                     <img
-                    src="../static/assets/모니터_버튼.png"
+                    src="../static/assets/모니터버튼.gif"
                     class="room-btn"
                     style ="height:100px"
                   />
@@ -552,20 +599,30 @@
                 </a>
       
                 <!--ASMR sound btn-->
-                <div class = "window">
-                  <img
-                  src="../static/assets/window1.png"
-                  id="window"
-                  class="room-btn"
-                  style ="height:100px"
-                />
+                <div class="window-group" id="window-group">
+                  <div class = "window-frame">
+                    <img
+                    src="../static/assets/창틀.png"
+                    style ="height:280px"
+                  />
+                  </div>
+  
+                  <div class = "window">
+                    <img
+                    src="../static/assets/window1.gif"
+                    id="window"
+                    class="room-btn"
+                    style ="height:270px"
+                  />
+                  </div>
                 </div>
+
       
                 <!-- piano btn -->
                 <a href="javascript:controlSamplePop()">
                   <div class="piano">
                     <img
-                    src="../static/assets/피아노_버튼.png"
+                    src="../static/assets/피아노버튼.gif"
                     class="room-btn"
                     id="drum"
                     style ="height:138px"
@@ -578,7 +635,7 @@
                 <a href="javascript:controlEffectPop()"> 
                   <div class="radio">
                     <img
-                    src="../static/assets/라디오_버튼.png"
+                    src="../static/assets/라디오버튼.gif"
                     class="room-btn"
                     id="effect"
                     style ="height:80px"
@@ -638,7 +695,8 @@
                   var audio1 = document.getElementById("school");
                   var audio2 = document.getElementById("rain");
                   var audio3 = document.getElementById("wave");
-                  $("#window").click(function () {
+                  var target = document.getElementById("wave");
+                  $("#window-group").click(function () {
                     if (num == 0) {
                       audio3.pause();
                       audio2.pause();
@@ -660,9 +718,9 @@
                       audio3.pause();
                       num = 0;
                     }
-                    $(this).attr(
+                    $("#window").attr(
                       "src",
-                      "../static/assets/window" + imageName[num] + ".PNG"
+                      "../static/assets/window" + imageName[num] + ".gif"
                     );
                     audio.puase();
                     audio.play();
@@ -920,19 +978,7 @@
     <!-- 오디오 비주얼라이제이션 
       mp3 파일로 연결됨..? wav 되는지 확인 안해봄
     -->
-    <!--todolist-->
-    <div class="todo-wrapper">
-      <header>TODO</header>        
-      <div class="inputField">
-          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
-          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
-      </div>
-      <div>
-          <ul id="addTodo" class="Todolist"> 
-              <li><div id='result'></div></li>
-          </ul>
-      </div>
-    </div>
+
     <script>
       
       const btn = document.getElementById('btn'); //버튼
@@ -1436,7 +1482,7 @@
         };
 
 
-        let sound = await LoadSample("../static/output/oasis.wav");
+        let sound = await LoadSample("../static/output/output.wav");
 
         if(document.getElementById("style_num").innerText=='sty_1'){
           console.log("test===================");

@@ -40,15 +40,52 @@ display: flex;
   z-index: 10000;
 }
 
-.window {
+.sofa{
   position: absolute;
-  top: 50px;
-  left: 50px;
-  
+  top: 250px;
+  left: -270px;
+  z-index: 10004;
 }
 
-.window :hover{
-  transform:scale(1.15); 
+.dog{
+  position: absolute;
+  top: 282px;
+  left: -199px;
+  z-index: 10005;
+}
+
+.amp{
+  position: absolute;
+  top: 273px;
+  left: 182px;
+  z-index: 10005;
+}
+
+.camera {
+  position: absolute;
+  top: 212px;
+  left: 122px;
+  z-index: 10001;
+}
+
+.window-group{
+  position: absolute;
+  top: 35px;
+  left: 20px;
+}
+
+.window-frame {
+  position: absolute;
+  z-index: 10000;
+}
+
+.window {
+  position: absolute;
+  z-index: 9999;
+}
+
+.window-group :hover{
+  transform:scale(1.05); 
   transition: 0.5s;
 }
 
@@ -56,6 +93,7 @@ display: flex;
   position: absolute;
   top: 345px;
   left: 40px;
+  z-index: 10001;
 }
 
 .monitor :hover{
@@ -67,6 +105,7 @@ display: flex;
   position: absolute;
   top: 203px;
   left: 80px;
+  z-index: 10006;
 }
 
 .radio :hover {
@@ -78,6 +117,7 @@ display: flex;
   position: absolute;
   top: 179px;
   left: -106px;
+  z-index: 10001;
 
 }
 
@@ -650,6 +690,7 @@ margin-left: 50px;
 
 /*뽀모도로*/
 .timer-container {
+  position: absolute;
   color: rgba(255, 255, 255, 0);
   font-family: 'Roboto', sans-serif;
   display: inline-block;
@@ -768,6 +809,8 @@ margin-left: 50px;
 /*todolist*/
 .todo-wrapper{
   position: absolute;
+  /* top:10px;
+  left:10px; */
   margin: 30px;
   max-width: 300px;
   width: 300px;
