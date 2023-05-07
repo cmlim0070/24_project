@@ -129,9 +129,9 @@ def run_model():
         # os.system(
         #     "sox static/output/temp.wav -r 8k static/output/120_output.wav tempo " + bpm_120 + " trim 0 120 fade 5 -0 8.5 vol 8")
         value = request.form['style_input']
-        value = str(value)
         print(value)
-        return render_template('player.html', value=value)
+        style_value = str(value)
+        return render_template('player.html',style_value=style_value)
     except Exception as e:
         print(e)
         pass

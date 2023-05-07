@@ -303,8 +303,40 @@
                         <input type="radio" id="sty_5" name="style_input" value="sty_5" />
                         <span id="slider-style"></span>
                       </div>
-                      <div id="content_num">{{value}}</div>
-                      <div id="style_num">{{value}}</div>
+                      <div id="content_num">{{content_value}}</div>
+                      <div id="style_num">{{style_value}}</div>
+                      <button onclick='sample_test()'>확인</button>
+                      <div id='result_content'></div>
+                      <div id='result_style'></div>
+                      <div id='result_bpm'></div>
+
+                      <!-- 테스트... -->
+                      <script>
+                        function sample_test() {
+                    
+                          const sampleContent
+                          = document.getElementsByName('content_input');
+                          const sampleStyle
+                          = document.getElementsByName('style_input');
+
+                          sampleContent.forEach((node) => {
+                            if(node.checked)  {
+                              document.getElementById('result_content').innerText
+                                = node.value;
+                            }
+                          }) 
+
+                          sampleStyle.forEach((node) => {
+                            if(node.checked)  {
+                              document.getElementById('result_style').innerText
+                                = node.value;
+                            }
+                          }) 
+
+                        }
+
+                      </script>
+
                       <input type="submit" name="input_check" id="input_check" value="CONVERT" />
                     </div>
                   </form>
