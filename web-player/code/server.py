@@ -44,7 +44,7 @@ import subprocess
 # from groove2groove.io import NoteSequencePipeline
 # from groove2groove.models import roll2seq_style_transfer
 
-from flask import Flask, request, url_for, render_template
+from flask import Flask, jsonify, request, url_for, render_template
 from werkzeug.utils import secure_filename
 import os
 # import time
@@ -131,11 +131,13 @@ def run_model():
 
         content = request.form['content_input']
         style = request.form['style_input']
+        bpm = request.form['bpm_input']
         style = str(style)
         content = str(content)
+        bpm = str(bpm)
         print(style)
         print(content)
-        return render_template('player.html', content=content, style=style)
+        return render_template('player.html', content=content, style=style, bpm=bpm)
     except Exception as e:
         print(e)
         pass
