@@ -324,25 +324,19 @@ input {
 
 /* 샘플 팝업 */
 
-/* .sample_popup_box {
+.sample_popup_box {
 position: relative;
 top: 20px;
 left: -30px;
 overflow-x: hidden;
 overflow-y: hidden;
-height: 200px;
 width: 400px;
 transform: translate(-50%, -50%);
 z-index: 10000000;
 border-radius: 10px;
 box-sizing: border-box;
-background-color: #ff48c2;
+background-color: #f5a8ff;
 }
-
-.sample-btn-wrap {
-display: flex;
-justify-content: center;
-} */
 
 /* 샘플 라디오 버튼 css */
 
@@ -408,11 +402,6 @@ input[type="radio"]{
   margin:0 auto;
 }
 
-input[type="radio"]{
-  position:absolute;
-  right:1000%;
-} 
-
 .label-style{
   float:left;
   width:15%; padding-bottom:15%;
@@ -447,6 +436,46 @@ input[type="radio"]{
 @keyframes sty_4{ 30%, 70% { transform:scale(0.5); } }
 @keyframes sty_5{ 30%, 70% { transform:scale(0.5); } }
 
+.radios-bpm{
+  position:relative;
+  width:50%;
+  margin:0 auto;
+}
+
+.label-bpm{
+  float:left;
+  width:15%; padding-bottom:15%;
+  margin:0 2.5%;
+  background:rgba(255,255,255,.2);
+  border-radius:50%;
+  cursor:pointer;
+}
+#slider-bpm{
+  position:absolute;
+  left:0%; top: 0px;;
+  width:10%; padding-bottom:10%;
+  margin:2.5% 0 0 5%;
+  background:#fff;
+  transition:transform 1s;
+  border-radius:50%;
+  animation-timing-function: ease-in-out;
+  animation-duration:.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left .05s ease-in-out;
+}
+
+#bpm_60:checked  ~ #slider-bpm{ animation-name: bpm_60; left:0; }
+#bpm_80:checked  ~ #slider-bpm{ animation-name: bpm_80; left:20%; }
+#bpm_100:checked  ~ #slider-bpm{ animation-name: bpm_100; left:40%; }
+#bpm_120:checked  ~ #slider-bpm{ animation-name: bpm_120; left:60%; }
+#bpm_140:checked  ~ #slider-bpm{ animation-name: bpm_140; left:80%; }
+
+@keyframes bpm_60{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_80{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_100{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_120{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_140{ 30%, 70% { transform:scale(0.5); } }
+
 #input_check{
   margin: 25px 0 20px 0;
 }
@@ -454,15 +483,16 @@ input[type="radio"]{
 /* 인풋 팝업 */
 .input_popup_box{
 position: relative;
-top: 450px;
-left: 150px;
+top: 361px;
+left: 824px;
 overflow-x: hidden;
 overflow-y: hidden;
+height: 800px;
 width: 400px;
 transform: translate(-50%, -50%);
 z-index: 1002;
 box-sizing: border-box;
-background-color: #a889fd;
+/* background-color: #a889fd; */
 }
 
 .filebox .upload-name {
@@ -692,11 +722,15 @@ margin-left: 50px;
 .timer-container {
   position: absolute;
   color: rgba(255, 255, 255, 0);
+  top: 310px;
+  left: 144px;
   font-family: 'Roboto', sans-serif;
   display: inline-block;
   padding:10px;
   border-radius: 20%;
   border: 2px solid rgb(255, 255, 255);
+  transform:skew(0deg, -27deg);
+  z-index: 10000;
 }
 
 .timer { 

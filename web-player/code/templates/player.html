@@ -236,7 +236,7 @@
       <!--layer popup area-->
 
       <div class="modal">
-        <!-- 입력 팝업 -->
+        <!-- 모니터(투두) 팝업 -->
         <div
           class="popup_layer"
           id="input_popup_layer"
@@ -247,79 +247,17 @@
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
-              <div class="filebox">
-                <div class="container">
-                  <form
-                    method="post"
-                    action="http://localhost:5000/output/"
-                    enctype="multipart/form-data"
-                  >
-                    <div class="radios-group">
-                      <div class="inputpop_title">content</div>
-                      <div class="radios-input">
-                        <label for="con_1" class="label-input"></label>
-                        <input type="radio" id="con_1" name="content_input" value="con_1"/>
-                        <label for="con_2" class="label-input"></label>
-                        <input type="radio" id="con_2" name="content_input" value="con_2"/>
-                        <label for="con_3" class="label-input"></label>
-                        <input type="radio" id="con_3" name="content_input" value="con_3"/>
-                        <label for="con_4" class="label-input"></label>
-                        <input type="radio" id="con_4" name="content_input" value="con_4"/>
-                        <label for="con_5" class="label-input"></label>
-                        <input type="radio" id="con_5" name="content_input" value="con_5"/>
-                        <span id="slider-input"></span>
-                      </div>
-                      <div class="inputpop_title">style</div>
-                      <div class="radios-style">
-                        <label for="sty_1" class="label-style"></label>
-                        <input type="radio" id="sty_1" name="style_input" value="sty_1" />
-                        <label for="sty_2" class="label-style"></label>
-                        <input type="radio" id="sty_2" name="style_input" value="sty_2" />
-                        <label for="sty_3" class="label-style"></label>
-                        <input type="radio" id="sty_3" name="style_input" value="sty_3" />
-                        <label for="sty_4" class="label-style"></label>
-                        <input type="radio" id="sty_4" name="style_input" value="sty_4" />
-                        <label for="sty_5" class="label-style"></label>
-                        <input type="radio" id="sty_5" name="style_input" value="sty_5" />
-                        <span id="slider-style"></span>
-                      </div>
-                      <div id="content_num">{{content_value}}</div>
-                      <div id="style_num">{{style_value}}</div>
-                      <button onclick='sample_test()'>확인</button>
-                      <div id='result_content'></div>
-                      <div id='result_style'></div>
-                      <div id='result_bpm'></div>
-
-                      <!-- 테스트... -->
-                      <script>
-                        function sample_test() {
-                    
-                          const sampleContent
-                          = document.getElementsByName('content_input');
-                          const sampleStyle
-                          = document.getElementsByName('style_input');
-
-                          sampleContent.forEach((node) => {
-                            if(node.checked)  {
-                              document.getElementById('result_content').innerText
-                                = node.value;
-                            }
-                          }) 
-
-                          sampleStyle.forEach((node) => {
-                            if(node.checked)  {
-                              document.getElementById('result_style').innerText
-                                = node.value;
-                            }
-                          }) 
-
-                        }
-
-                      </script>
-
-                      <input type="submit" name="input_check" id="input_check" value="CONVERT" />
-                    </div>
-                  </form>
+              <!--todolist-->
+              <div class="todo-wrapper">
+                <header>TODO</header>        
+                <div class="inputField">
+                    <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
+                    <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+                </div>
+                <div>
+                    <ul id="addTodo" class="Todolist"> 
+                        <li><div id='result'></div></li>
+                    </ul>
                 </div>
               </div>
             </div>
@@ -472,13 +410,93 @@
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
-              sample
-              <div class="drum-btn-wrap">
-                <button class="drum-btn">1</button>
-                <button class="drum-btn">2</button>
-                <button class="drum-btn">3</button>
-                <button class="drum-btn">4</button>
-                <button class="drum-btn">5</button>
+              <div class="container">
+                <form
+                  method="post"
+                  action="http://localhost:5000/output/"
+                  enctype="multipart/form-data"
+                >
+                  <div class="radios-group">
+                    <div class="inputpop_title">content</div>
+                    <div class="radios-input">
+                      <label for="con_1" class="label-input"></label>
+                      <input type="radio" id="con_1" name="content_input" value="con_1"/>
+                      <label for="con_2" class="label-input"></label>
+                      <input type="radio" id="con_2" name="content_input" value="con_2"/>
+                      <label for="con_3" class="label-input"></label>
+                      <input type="radio" id="con_3" name="content_input" value="con_3"/>
+                      <label for="con_4" class="label-input"></label>
+                      <input type="radio" id="con_4" name="content_input" value="con_4"/>
+                      <label for="con_5" class="label-input"></label>
+                      <input type="radio" id="con_5" name="content_input" value="con_5"/>
+                      <span id="slider-input"></span>
+                    </div>
+                    <div class="inputpop_title">style</div>
+                    <div class="radios-style">
+                      <label for="sty_1" class="label-style"></label>
+                      <input type="radio" id="sty_1" name="style_input" value="sty_1" />
+                      <label for="sty_2" class="label-style"></label>
+                      <input type="radio" id="sty_2" name="style_input" value="sty_2" />
+                      <label for="sty_3" class="label-style"></label>
+                      <input type="radio" id="sty_3" name="style_input" value="sty_3" />
+                      <label for="sty_4" class="label-style"></label>
+                      <input type="radio" id="sty_4" name="style_input" value="sty_4" />
+                      <label for="sty_5" class="label-style"></label>
+                      <input type="radio" id="sty_5" name="style_input" value="sty_5" />
+                      <span id="slider-style"></span>
+                    </div>
+                    <div class="inputpop_title">BPM</div>
+                    <div class="radios-bpm">
+                      <label for="bpm_60" class="label-bpm"></label>
+                      <input type="radio" id="bpm_60" name="bpm_input" value="bpm_60" />
+                      <label for="bpm_80" class="label-bpm"></label>
+                      <input type="radio" id="bpm_80" name="bpm_input" value="bpm_80" />
+                      <label for="bpm_100" class="label-bpm"></label>
+                      <input type="radio" id="bpm_100" name="bpm_input" value="bpm_100" />
+                      <label for="bpm_120" class="label-bpm"></label>
+                      <input type="radio" id="bpm_120" name="bpm_input" value="bpm_120" />
+                      <label for="bpm_140" class="label-bpm"></label>
+                      <input type="radio" id="bpm_140" name="bpm_input" value="bpm_140" />
+                      <span id="slider-bpm"></span>
+                    </div>
+                    <div id="content_num">{{content_value}}</div>
+                    <div id="style_num">{{style_value}}</div>
+                    <div id="style_num">{{bpm_value}}</div>
+                    <!-- <button onclick='sample_test()'>확인</button>
+                    <div id='result_content'></div>
+                    <div id='result_style'></div>
+                    <div id='result_bpm'></div> -->
+
+                    <!-- 테스트... -->
+                    <script>
+                      function sample_test() {
+                  
+                        const sampleContent
+                        = document.getElementsByName('content_input');
+                        const sampleStyle
+                        = document.getElementsByName('style_input');
+
+                        sampleContent.forEach((node) => {
+                          if(node.checked)  {
+                            document.getElementById('result_content').innerText
+                              = node.value;
+                          }
+                        }) 
+
+                        sampleStyle.forEach((node) => {
+                          if(node.checked)  {
+                            document.getElementById('result_style').innerText
+                              = node.value;
+                          }
+                        }) 
+
+                      }
+
+                    </script>
+
+                    <input type="submit" name="input_check" id="input_check" value="CONVERT" />
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -512,25 +530,11 @@
                   </div> -->
                 </div>
   
-              </div>
-      </div>
-
-      <!--todolist-->
-      <div class="todo-wrapper">
-        <header>TODO</header>        
-        <div class="inputField">
-            <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/>
-            <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
-        </div>
-        <div>
-            <ul id="addTodo" class="Todolist"> 
-                <li><div id='result'></div></li>
-            </ul>
         </div>
       </div>
 
           <!--뽀모도로-->
-      <div class="timer-container">
+      <!-- <div class="timer-container">
 
         <div id="timer" class="timer">
             <div class="cover1"></div>
@@ -549,7 +553,7 @@
 
             <div class="cover2"></div>
         </div>
-      </div>
+      </div> -->
       
             <!--inside of player room-->
             <div class="player-room">
@@ -628,7 +632,7 @@
                     style ="height:138px"
                   />
                 </div>
-      
+
                 </a>
       
                 <!--audio effect popup btn-->
@@ -775,7 +779,7 @@
             </div>
             <div class="bottom-wrap">
               <!--style 선택 dropbox-->
-              <div class="style-dropdown">
+              <!-- <div class="style-dropdown">
                 <button class="style-dropbtn">
                   <span class="style-dropbtn_icon">more_horiz</span>
                   STYLE
@@ -794,10 +798,10 @@
                   onclick="setStyle(this.value)"
                   >sad</a>
                 </div>
-              </div>
+              </div> -->
       
               <!--bpm 선택 dropbox-->
-              <div class="style-dropdown">
+              <!-- <div class="style-dropdown">
                 <button class="style-dropbtn">
                   <div class="bpm-text-wrap">
                     <span class="style-dropbtn_icon">more_horiz</span>
@@ -810,7 +814,7 @@
                   <option value="80" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">80</option>
                   <option value="100" class="bpmbtn" onclick="setBpm(this.value); changeDrum(this.value)">100</option>
                 </div>
-              </div>
+              </div> -->
               
               <!-- <tone-content>
                 <tone-play-toggle>
@@ -873,9 +877,7 @@
               </script>
       
               <!-- 임시 bpm 조정 -->
-              <!--
-              <!--
-              <script
+              <!-- <script
               type="text/javascript"
               src="//www.midijs.net/lib/midi.js"
               >
@@ -902,7 +904,8 @@
               <span id="position">0:0</span>
               <span id="ticks">Ticks:</span>
               <button>테스트 버튼</button>
-              <script></script>
+              <script></script> -->
+
               <!--style transfer output music 재생바-->
               <link
                 href="https://fonts.googleapis.com/css?family=Roboto:100"
@@ -919,7 +922,7 @@
                     </button>
       
                     
-                    <div class="play" id="play-img" onclick="musicControl()">
+                    <!-- <div class="play" id="play-img" onclick="musicControl()">
                       <script>
                         var playMode = 0;
                         /* 재생 */
@@ -963,8 +966,8 @@
                         });
                         function mute() {}
                       </script>
-                    </div>
-                    -->
+                    </div> -->
+                    
                    
                   </div>
                 </div>
