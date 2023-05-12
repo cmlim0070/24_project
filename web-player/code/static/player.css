@@ -61,6 +61,11 @@ display: flex;
   z-index: 10005;
 }
 
+.amp :hover{
+  transform:scale(1.15); 
+  transition: 0.5s;
+}
+
 .camera {
   position: absolute;
   top: 212px;
@@ -165,6 +170,10 @@ height: 100%
   position: absolute;
 }
 
+#reverb_popup_layer{
+  position: absolute;
+}
+
 .popup_layer {
   position: absolute;
   z-index: 999999999;
@@ -175,8 +184,8 @@ height: 100%
 /*사운드이펙트 팝업*/
 .effect_popup_box {
   position: relative;
-  top: 230px;
-  left: 785px;
+  top: 280px;
+  left: 800px;
   overflow-x: hidden;
   overflow-y: hidden;
   width: 300px;
@@ -184,9 +193,9 @@ height: 100%
   z-index: 1002;
   border-radius: 10px;
   box-sizing: border-box;
-  background-color: #482a5b;
+  background-color: #dbdbdb36;
   box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
-  -webkit-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
 }
 
@@ -243,6 +252,7 @@ height: 100%
 .popup_cont h5 {
   text-align: center;
   font-size: 23px;
+  color: #ffffff;
 }
 .effect_popup_box .popup_btn a:after {
   content: "";
@@ -266,16 +276,6 @@ height: 100%
 .effect_popup_box .popup_btn a.close_day:after {
   display: none;
 }
-/*popup overlay background*/
-.popup_overlay {
-  position: fixed;
-  top: 0px;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 1001;
-  background: rgb(7, 10, 35);
-}
 
 /*popup layer panel*/
 .control_panel_layer {
@@ -289,12 +289,18 @@ height: 100%
 }
 .control_div {
   text-align: center;
+  margin-bottom: 20px;
 }
 .control_div label,
 input {
   display: inline-block;
-  margin: 10px;
+  margin: 7px;
   width: 200px;
+}
+
+.control_div label {
+  margin-bottom: 5px;
+  color: white;
 }
 
 .control_div input {
@@ -302,7 +308,7 @@ input {
   width: 80%; /* 슬라이더 길이 */
   height: 7px; /* 슬라이더 두께 */
   border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
-  background:rgb(115, 211, 255); /* 슬라이더 색상 */
+  background:rgba(255, 255, 255, 0.904); /* 슬라이더 색상 */
   outline: none; /* 슬라이더 테두리 없이 */
 }
 
@@ -312,7 +318,7 @@ input {
     width: 15px; /* 슬라이더 핸들 길이 */
     height: 15px; /* 슬라이더 핸들 높이 */
     border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
-    background: rgb(255, 152, 238); /* 슬라이더 핸들 색상 */
+    background: rgb(129, 236, 255); /* 슬라이더 핸들 색상 */
     cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
 }
 
@@ -321,6 +327,55 @@ input {
   display: flex;
   flex-direction: column;
 }
+
+.form-check-label {
+  display:inline-block;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.form-check-input {
+  cursor:pointer;
+  accent-color: rgb(129, 236, 255);
+}
+
+.reverb_control_div {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.reverb_control_div label,
+input {
+  display: inline-block;
+  margin: 7px;
+  width: 200px;
+}
+
+.reverb_control_div label {
+  display:inline-block;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.reverb_control_div input {
+  -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+  width: 80%; /* 슬라이더 길이 */
+  height: 7px; /* 슬라이더 두께 */
+  border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
+  background:rgba(255, 255, 255, 0.904); /* 슬라이더 색상 */
+  outline: none; /* 슬라이더 테두리 없이 */
+}
+
+.reverb_control_div input::-webkit-slider-thumb {
+    -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    width: 15px; /* 슬라이더 핸들 길이 */
+    height: 15px; /* 슬라이더 핸들 높이 */
+    border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
+    background: rgb(129, 236, 255); /* 슬라이더 핸들 색상 */
+    cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
+}
+
+
 
 /* 샘플 팝업 */
 
@@ -355,13 +410,16 @@ justify-content: center;
 .inputpop_title{
   text-align: center;
   margin: 15px;
+  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.755);
 }
 
 .radios-input{
   position:relative;
-  width:50%;
+  width:60%;
   height: 100%;
   margin:0 auto;
+  margin-bottom: 5px;
 }
 
 input[type="radio"]{
@@ -382,7 +440,7 @@ input[type="radio"]{
   left:0%; top:0;
   width:10%; padding-bottom:10%;
   margin:2.5% 0 0 5%;
-  background:#fff;
+  background:rgb(129, 236, 255);
   transition:transform 1s;
   border-radius:50%;
   animation-timing-function: ease-in-out;
@@ -404,7 +462,7 @@ input[type="radio"]{
 
 .radios-style{
   position:relative;
-  width:50%;
+  width:60%;
   margin:0 auto;
 }
 
@@ -426,7 +484,7 @@ input[type="radio"]{
   left:0%; top: 0px;;
   width:10%; padding-bottom:10%;
   margin:2.5% 0 0 5%;
-  background:#fff;
+  background:rgb(129, 236, 255);
   transition:transform 1s;
   border-radius:50%;
   animation-timing-function: ease-in-out;
@@ -448,21 +506,38 @@ input[type="radio"]{
 @keyframes sty_5{ 30%, 70% { transform:scale(0.5); } }
 
 #input_check{
-  margin: 25px 0 20px 0;
+  margin: 30px 0 28px 0;
+  width: 30%;
+  padding: 5px;
+  border: 2px solid white;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  color:white;
+  cursor: pointer;
+}
+
+#input_check:hover{
+  margin: 30px 0 28px 0;
+  width: 30%;
+  border: 2px solid rgb(129, 236, 255);
+  background-color: rgb(129, 236, 255);
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 /* 인풋 팝업 */
 .input_popup_box{
 position: relative;
 top: 450px;
-left: 150px;
+left: 820px;
 overflow-x: hidden;
 overflow-y: hidden;
 width: 400px;
 transform: translate(-50%, -50%);
 z-index: 1002;
 box-sizing: border-box;
-background-color: #a889fd;
+background-color: #dbdbdb36;
+border-radius: 10px;
 }
 
 .filebox .upload-name {
