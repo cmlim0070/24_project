@@ -161,161 +161,161 @@
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
       <!--뽀모도로-->
-    <div class="timer-container">
+      <div class="timer-container">
 
-      <div id="timer" class="timer">
-          <div class="cover1"></div>
+        <div id="timer" class="timer">
+            <div class="cover1"></div>
 
-          <div id="lines">
+            <div id="lines">
 
-          </div>
+            </div>
 
-          <div id="fins">
+            <div id="fins">
 
-          </div>
+            </div>
 
-          <div id="num-container">
+            <div id="num-container">
 
-          </div>
+            </div>
 
-          <div class="cover2"></div>
+            <div class="cover2"></div>
+        </div>
       </div>
-    </div>
 
-    <script>
-      const timer = document.getElementById('timer');
-      const lines = timer.querySelector('#lines');
-      const fins = timer.querySelector('#fins');
-      const nums = timer.querySelector('#num-container');
-      const control = document.querySelector('.button-container #control');
-      const remainTime = document.querySelector('.time-container #remain-time');
-      const totalTime = document.querySelector('.time-container #total-time');
+      <script>
+        const timer = document.getElementById('timer');
+        const lines = timer.querySelector('#lines');
+        const fins = timer.querySelector('#fins');
+        const nums = timer.querySelector('#num-container');
+        const control = document.querySelector('.button-container #control');
+        const remainTime = document.querySelector('.time-container #remain-time');
+        const totalTime = document.querySelector('.time-container #total-time');
 
-      const endTime = 40
+        const endTime = 40
 
-      let intervalID = null;
-      let progressTimeSec = 0;
+        let intervalID = null;
+        let progressTimeSec = 0;
 
-      let isPlay = true;
+        let isPlay = true;
 
-      function paintLines() {
-          for(let i=0; i<30; i++) {
-              const line = document.createElement('div');
-              line.classList.add('line');
-              line.style.transform = `rotate(${i*6}deg)`;
+        function paintLines() {
+            for(let i=0; i<30; i++) {
+                const line = document.createElement('div');
+                line.classList.add('line');
+                line.style.transform = `rotate(${i*6}deg)`;
 
-              if (i%5 == 0) {
-                  line.classList.add('thick')
-              }
+                if (i%5 == 0) {
+                    line.classList.add('thick')
+                }
 
-              lines.append(line);
-          }
-      }
+                lines.append(line);
+            }
+        }
 
-      function paintNumber() {
-          let left = 15;
-          let right = 45;
+        function paintNumber() {
+            let left = 15;
+            let right = 45;
 
-          for (let i=0; i<6; i++) {
-              const numBox = document.createElement('div');
-              numBox.classList.add('num-box');
-              numBox.style.transform = `rotate(${i*30}deg)`;
+            for (let i=0; i<6; i++) {
+                const numBox = document.createElement('div');
+                numBox.classList.add('num-box');
+                numBox.style.transform = `rotate(${i*30}deg)`;
 
-              const spanLeft = document.createElement('span');
-              const spanRight = document.createElement('span');
+                const spanLeft = document.createElement('span');
+                const spanRight = document.createElement('span');
 
-              const leftText = left - 5*i;
-              spanLeft.textContent = leftText<0 ? 60+ leftText : leftText;
-              spanRight.textContent = right - (5 * i);
+                const leftText = left - 5*i;
+                spanLeft.textContent = leftText<0 ? 60+ leftText : leftText;
+                spanRight.textContent = right - (5 * i);
 
-              spanLeft.style.transform = `rotate(${-30*i}deg)`;
-              spanRight.style.transform = `rotate(${-30*i}deg)`;
+                spanLeft.style.transform = `rotate(${-30*i}deg)`;
+                spanRight.style.transform = `rotate(${-30*i}deg)`;
 
-              numBox.append(spanLeft,spanRight);
-              nums.append(numBox);
-          }
-      }
+                numBox.append(spanLeft,spanRight);
+                nums.append(numBox);
+            }
+        }
 
-      function paintRemainTime() {
-          for (let min=0; min<endTime; min++) {
-              for (let sec=0; sec<60; sec++) {
-                  const remainFin = document.createElement('div');
-                  remainFin.classList.add('fin');
+        function paintRemainTime() {
+            for (let min=0; min<endTime; min++) {
+                for (let sec=0; sec<60; sec++) {
+                    const remainFin = document.createElement('div');
+                    remainFin.classList.add('fin');
 
-                  const deg = min*6+sec*1;
-                  remainFin.style.transform = `rotate(${-deg}deg)`
-                  
-                  fins.append(remainFin);
-              }
-          }
-      }
+                    const deg = min*6+sec*1;
+                    remainFin.style.transform = `rotate(${-deg}deg)`
+                    
+                    fins.append(remainFin);
+                }
+            }
+        }
 
-      function tickSec() {
-          progressTimeSec++;
-          if(progressTimeSec >= endTime * 60) pause();
+        function tickSec() {
+            progressTimeSec++;
+            if(progressTimeSec >= endTime * 60) pause();
 
-          const lastFin = fins.lastChild;
+            const lastFin = fins.lastChild;
 
-          if (lastFin) {
-              lastFin.remove();
-          }
+            if (lastFin) {
+                lastFin.remove();
+            }
 
-      }
+        }
 
-      function play() {
-          intervalID = setInterval(tickSec,100)
-          isPlay = true;
-      }
+        function play() {
+            intervalID = setInterval(tickSec,100)
+            isPlay = true;
+        }
 
-      function pause() {
-          clearInterval(intervalID);
-          isPlay = false;
-      }
+        function pause() {
+            clearInterval(intervalID);
+            isPlay = false;
+        }
 
-      function onClickControl() {
-          if (isPlay) {
-              pause();
-              
-          } else {
-              play();
-          }
-      }
+        function onClickControl() {
+            if (isPlay) {
+                pause();
+                
+            } else {
+                play();
+            }
+        }
 
 
-          // remainTime.textContent = `
-          //     ${min<10?`0${min}`:min} : 
-          //     ${sec<10?`0${sec}`:sec}
-          // `;
-      // }
+            // remainTime.textContent = `
+            //     ${min<10?`0${min}`:min} : 
+            //     ${sec<10?`0${sec}`:sec}
+            // `;
+        // }
 
-      function paintTime() {
-          renderRemainTime();
-          totalTime.textContent = `(${endTime} : 00)`;
-      }
+        function paintTime() {
+            renderRemainTime();
+            totalTime.textContent = `(${endTime} : 00)`;
+        }
 
-      if (lines) {
-          paintLines();
-      }
+        if (lines) {
+            paintLines();
+        }
 
-      if (nums) {
-          paintNumber();
-      }
+        if (nums) {
+            paintNumber();
+        }
 
-      if (fins) {
-          paintRemainTime();
-      }
+        if (fins) {
+            paintRemainTime();
+        }
 
-      if(control) {
-          control.addEventListener('click', onClickControl);
-      }
+        if(control) {
+            control.addEventListener('click', onClickControl);
+        }
 
-      if(remainTime && totalTime) {
-          paintTime();
-      }
+        if(remainTime && totalTime) {
+            paintTime();
+        }
 
-      play();
-      
-    </script> 
+        play();
+        
+      </script> 
 
       <!--layer popup area-->
 
@@ -439,16 +439,18 @@
               <h5>REVERB CONTROL</h5>
               <div class="control_panel_layer">
                 <div class="reverb-box">
-                    <div class="form-check form-switch">
-                      <label class="form-check-label" for="reverb"><span>Reverb<span></label>
-                      <input id="reverb" type="checkbox" class="form-check-input" />
-                    </div>
-                    <div class="form-check form-switch">
-                      <label class="form-check-label" for="reverse">
-                        Custom Reverb
-                      </label>
+                  <div class="form-check form-switch" id="reverb_check">
+                    <label class="form-check-label" for="reverb">
+                      <span>REVERB&nbsp; </span>
+                      <input id="reverb" role="swith" type="checkbox" class="form-check-input" />
+                    </label>
+                  </div>
+                  <div class="form-check form-switch" id="reverb_check">
+                    <label class="form-check-label" for="reverse">
+                      <span>CUSTOM</span>
                       <input type="checkbox" class="form-check-input" id="reverse" />
-                    </div>
+                    </label>
+                  </div>
 
                   <div class="col" style="display: none">
                     <div class="overflow-auto">
@@ -456,10 +458,6 @@
                     </div>
                     <p class="text-right">
                       The sound uses the drum part of
-                      <a
-                        href="https://soundcloud.com/logue256/autumn-wind"
-                        target="_blank"
-                      >
                         <em class="bi bi-soundwave"></em>
                         Autmun Wind
                       </a>
