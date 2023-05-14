@@ -168,24 +168,27 @@
   
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
-      <!--뽀모도로-->
-      <div class="timer-container" style="display:none">
+           <!--뽀모도로-->
+           <div class="timer-container" style="display:none">
 
-        <div id="timer" class="timer">
-            <div class="cover1"></div>
-
-            <div id="lines">
-
+            <div id="timer" class="timer">
+                <div class="cover1"></div>
+    
+                <div id="lines">
+    
+                </div>
+    
+                <div id="fins">
+    
+                </div>
+    
+                <div id="num-container">
+    
+                </div>
+    
+                <div class="cover2"></div>
             </div>
-
-
-
-
-            </div>
-
-            <div class="cover2"></div>
-        </div>
-      </div>
+          </div>
 
       <script>
         const timer = document.getElementById('timer');
@@ -405,93 +408,93 @@
           </div>
         </div>
 
-        <!-- reverb 팝업 -->
-        <div class="popup_layer" id="reverb_popup_layer" style="display: none">
-          <div class="effect_popup_box">
-            <div style="height: 10px; width: 375px; float: top">
+ <!-- reverb 팝업 -->
+ <div class="popup_layer" id="reverb_popup_layer" style="display: none">
+  <div class="effect_popup_box">
+    <div style="height: 10px; width: 375px; float: top">
+    </div>
+    <!--layer popup content area-->
+    <div class="popup_cont"> 
+      <h5>REVERB CONTROL</h5>
+      <div class="control_panel_layer">
+        <div class="reverb-box">
+          <div class="form-check form-switch" id="reverb_check">
+            <label class="form-check-label" for="reverb">
+              <span>REVERB&nbsp; </span>
+              <input id="reverb" role="swith" type="checkbox" class="form-check-input" />
+            </label>
+          </div>
+          <div class="form-check form-switch" id="reverb_check">
+            <label class="form-check-label" for="reverse">
+              <span>CUSTOM</span>
+              <input type="checkbox" class="form-check-input" id="reverse" />
+            </label>
+          </div>
+
+          <div class="col" style="display: none">
+            <div class="overflow-auto">
+              <canvas id="graph" width="512" height="256"></canvas>
             </div>
-            <!--layer popup content area-->
-            <div class="popup_cont"> 
-              <h5>REVERB CONTROL</h5>
-              <div class="control_panel_layer">
-                <div class="reverb-box">
-                  <div class="form-check form-switch" id="reverb_check">
-                    <label class="form-check-label" for="reverb">
-                      <span>REVERB&nbsp; </span>
-                      <input id="reverb" role="swith" type="checkbox" class="form-check-input" />
-                    </label>
-                  </div>
-                  <div class="form-check form-switch" id="reverb_check">
-                    <label class="form-check-label" for="reverse">
-                      <span>CUSTOM</span>
-                      <input type="checkbox" class="form-check-input" id="reverse" />
-                    </label>
-                  </div>
+            <p class="text-right">
+              The sound uses the drum part of
+                <em class="bi bi-soundwave"></em>
+                Autmun Wind
+              </a>
+              .
+            </p>
+          </div>
 
-                  <div class="col" style="display: none">
-                    <div class="overflow-auto">
-                      <canvas id="graph" width="512" height="256"></canvas>
-                    </div>
-                    <p class="text-right">
-                      The sound uses the drum part of
-                        <em class="bi bi-soundwave"></em>
-                        Autmun Wind
-                      </a>
-                      .
-                    </p>
-                  </div>
-
-                  <section class="mb-3">
-                    <div class="reverb_control_div">
-                      <label for="time" class="form-label" aria-describedby="time-help">
-                        Time
-                      </label>
-                      <input
-                        type="range"
-                        class="form-range"
-                        title="1.1"
-                        value="2"
-                        min="0"
-                        max="50"
-                        id="time"
-                      />
-                      <!-- <div id="time-help" class="form-text">Room size</div> -->
-  
-  
-                      <label for="decay" class="form-label">Decay</label>
-                      <input
-                        type="range"
-                        class="form-range"
-                        title="2"
-                        value="2"
-                        min="0"
-                        max="100"
-                        id="decay"
-                      />
-                      <!-- <div id="decay-help" class="form-text">
-                        Hardness of room wall size
-                      </div> -->
-  
-  
-                      <label for="mix" class="form-label">Dry / Wet</label>
-                      <input
-                        type="range"
-                        id="mix"
-                        class="form-range"
-                        min="0"
-                        max="1"
-                        step="0.05"
-                        value="0.5"
-                        title="0.5"
-                      />
-                      <!-- <div id="delay-help" class="form-text">
-                        Closer to the original sound or closer to the effector
-                      </div> -->
-                    </div>
+          <section class="mb-3">
+            <div class="reverb_control_div">
+              <label for="time" class="form-label" aria-describedby="time-help">
+                Time
+              </label>
+              <input
+                type="range"
+                class="form-range"
+                title="1.1"
+                value="2"
+                min="0"
+                max="50"
+                id="time"
+              />
+              <!-- <div id="time-help" class="form-text">Room size</div> -->
 
 
-                  </section>
-                </div>  <!-- 리버브 끝 -->    
+              <label for="decay" class="form-label">Decay</label>
+              <input
+                type="range"
+                class="form-range"
+                title="2"
+                value="2"
+                min="0"
+                max="100"
+                id="decay"
+              />
+              <!-- <div id="decay-help" class="form-text">
+                Hardness of room wall size
+              </div> -->
+
+
+              <label for="mix" class="form-label">Dry / Wet</label>
+              <input
+                type="range"
+                id="mix"
+                class="form-range"
+                min="0"
+                max="1"
+                step="0.05"
+                value="0.5"
+                title="0.5"
+              />
+              <!-- <div id="delay-help" class="form-text">
+                Closer to the original sound or closer to the effector
+              </div> -->
+            </div>
+
+
+          </section>
+        </div>  <!-- 리버브 끝 -->        
               </div>         
             </div>
           </div>
@@ -602,12 +605,8 @@
         <div
           class="popup_layer"
           id="sample_popup_layer"
-          id="sample_popup_layer"
           style="height: 100px; width: 200px; display: none"
         >
-  
-          <div class="sample_popup_box">
-  
           <div class="sample_popup_box">
             <div style="float: top">
             </div>
@@ -772,13 +771,15 @@
                   style ="height:180px"
                 />
                 </div>
-                <div class = "dog">
-                  <img
-                  src="../static/assets/강아지.gif"
-                  class="room-btn"
-                  style ="height:50px"
-                />
-                </div>
+                <a href="javascript:pomodoroPop()">
+                  <div class = "dog">
+                    <img
+                    src="../static/assets/강아지.gif"
+                    class="room-btn"
+                    style ="height:50px"
+                  />
+                  </div>
+                </a>
                 <div class = "camera">
                   <img
                   src="../static/assets/카메라.png"
@@ -786,6 +787,7 @@
                   style ="height:165px"
                 />
                 </div>
+                <a href="javascript:controlAmpPop()">
                 <div class = "amp">
                   <img
                   src="../static/assets/앰프버튼.gif"
@@ -793,6 +795,7 @@
                   style ="height:140px"
                 />
                 </div>
+                </a>
 
                 <!-- audio input btn -->
                 <a href="javascript:controlInputPop()">
@@ -874,13 +877,46 @@
                   }
                 }
       
-                /*drum popup open*/
+                /*샘플 팝업 컨트롤*/
                 function controlSamplePop() {
                   var nowState = document.getElementById("sample_popup_layer").style.display;
                   if(nowState === "block"){
                     document.getElementById("sample_popup_layer").style.display = "none";
                   } else {
                     document.getElementById("sample_popup_layer").style.display =
+                    "block";
+                  }
+                }
+
+                  /*drum popup open*/
+                  function controlAmpPop() {
+                  var nowState = document.getElementById("reverb_popup_layer").style.display;
+                  if(nowState === "block"){
+                    document.getElementById("reverb_popup_layer").style.display = "none";
+                  } else {
+                    document.getElementById("reverb_popup_layer").style.display =
+                    "block";
+                  }
+                }
+
+                /*drum popup open*/
+                function controlAmpPop() {
+                  var nowState = document.getElementById("reverb_popup_layer").style.display;
+                  if(nowState === "block"){
+                    document.getElementById("reverb_popup_layer").style.display = "none";
+                  } else {
+                    document.getElementById("reverb_popup_layer").style.display =
+                    "block";
+                  }
+                }
+
+                /*pomodoro popup open*/
+                function pomodoroPop() {
+                  var nowState = document.getElementById("pomodoro_popup_layer").style.display;
+                  if(nowState === "block"){
+                    document.getElementById("pomodoro_popup_layer").style.display = "none";
+                  } else {
+                    document.getElementById("pomodoro_popup_layer").style.display =
                     "block";
                   }
                 }
