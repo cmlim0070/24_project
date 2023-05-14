@@ -46,6 +46,7 @@
   </head>
   
   
+  
   <body>
         
     <audio
@@ -78,7 +79,72 @@
       src="../static/assets/wave.mp3"
       type="audio/mpeg"
     ></audio>
+
+    <!-- content sample -->
+    <audio
+      id="content_1"
+      loop
+      src="../static/assets/content_sample/content_1.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="content_2"
+      loop
+      src="../static/assets/content_sample/content_2.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="content_3"
+      loop
+      src="../static/assets/content_sample/content_3.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="content_4"
+      loop
+      src="../static/assets/content_sample/content_4.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="content_5"
+      loop
+      src="../static/assets/content_sample/content_5.wav"
+      type="audio/mpeg"
+    ></audio>
+
+    <!-- style sample -->
+    <audio
+      id="style_1"
+      loop
+      src="../static/assets/style_sample/style_1.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="style_2"
+      loop
+      src="../static/assets/style_sample/style_2.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="style_3"
+      loop
+      src="../static/assets/style_sample/style_3.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="style_4"
+      loop
+      src="../static/assets/style_sample/style_4.wav"
+      type="audio/mpeg"
+    ></audio>
+    <audio
+      id="style_5"
+      loop
+      src="../static/assets/style_sample/style_5.wav"
+      type="audio/mpeg"
+    ></audio>
     
+
     <!-- drum preset -->
     <audio
       id="drum-60-bpm"
@@ -99,148 +165,165 @@
       type="audio/mpeg"
     ></audio>
     </div>
-
-
-
-
-    <script>
-      const timer = document.getElementById('timer');
-      const lines = timer.querySelector('#lines');
-      const fins = timer.querySelector('#fins');
-      const nums = timer.querySelector('#num-container');
-      const control = document.querySelector('.button-container #control');
-      const remainTime = document.querySelector('.time-container #remain-time');
-      const totalTime = document.querySelector('.time-container #total-time');
-
-      const endTime = 40
-
-      let intervalID = null;
-      let progressTimeSec = 0;
-
-      let isPlay = true;
-
-      function paintLines() {
-          for(let i=0; i<30; i++) {
-              const line = document.createElement('div');
-              line.classList.add('line');
-              line.style.transform = `rotate(${i*6}deg)`;
-
-              if (i%5 == 0) {
-                  line.classList.add('thick')
-              }
-
-              lines.append(line);
-          }
-      }
-
-      function paintNumber() {
-          let left = 15;
-          let right = 45;
-
-          for (let i=0; i<6; i++) {
-              const numBox = document.createElement('div');
-              numBox.classList.add('num-box');
-              numBox.style.transform = `rotate(${i*30}deg)`;
-
-              const spanLeft = document.createElement('span');
-              const spanRight = document.createElement('span');
-
-              const leftText = left - 5*i;
-              spanLeft.textContent = leftText<0 ? 60+ leftText : leftText;
-              spanRight.textContent = right - (5 * i);
-
-              spanLeft.style.transform = `rotate(${-30*i}deg)`;
-              spanRight.style.transform = `rotate(${-30*i}deg)`;
-
-              numBox.append(spanLeft,spanRight);
-              nums.append(numBox);
-          }
-      }
-
-      function paintRemainTime() {
-          for (let min=0; min<endTime; min++) {
-              for (let sec=0; sec<60; sec++) {
-                  const remainFin = document.createElement('div');
-                  remainFin.classList.add('fin');
-
-                  const deg = min*6+sec*1;
-                  remainFin.style.transform = `rotate(${-deg}deg)`
-                  
-                  fins.append(remainFin);
-              }
-          }
-      }
-
-      function tickSec() {
-          progressTimeSec++;
-          if(progressTimeSec >= endTime * 60) pause();
-
-          const lastFin = fins.lastChild;
-
-          if (lastFin) {
-              lastFin.remove();
-          }
-
-      }
-
-      function play() {
-          intervalID = setInterval(tickSec,100)
-          isPlay = true;
-      }
-
-      function pause() {
-          clearInterval(intervalID);
-          isPlay = false;
-      }
-
-      function onClickControl() {
-          if (isPlay) {
-              pause();
-              
-          } else {
-              play();
-          }
-      }
-
-
-          // remainTime.textContent = `
-          //     ${min<10?`0${min}`:min} : 
-          //     ${sec<10?`0${sec}`:sec}
-          // `;
-      // }
-
-      function paintTime() {
-          renderRemainTime();
-          totalTime.textContent = `(${endTime} : 00)`;
-      }
-
-      if (lines) {
-          paintLines();
-      }
-
-      if (nums) {
-          paintNumber();
-      }
-
-      if (fins) {
-          paintRemainTime();
-      }
-
-      if(control) {
-          control.addEventListener('click', onClickControl);
-      }
-
-      if(remainTime && totalTime) {
-          paintTime();
-      }
-
-      play();
-      
-    </script> 
   
     <!-- 중앙 정렬용 박스 -->
     <div class="center-box">
+      <!--뽀모도로-->
+      <div class="timer-container" style="display:none">
+
+        <div id="timer" class="timer">
+            <div class="cover1"></div>
+
+            <div id="lines">
+
+            </div>
+
+
+
+
+            </div>
+
+            <div class="cover2"></div>
+        </div>
+      </div>
+
+      <script>
+        const timer = document.getElementById('timer');
+        const lines = timer.querySelector('#lines');
+        const fins = timer.querySelector('#fins');
+        const nums = timer.querySelector('#num-container');
+        const control = document.querySelector('.button-container #control');
+        const remainTime = document.querySelector('.time-container #remain-time');
+        const totalTime = document.querySelector('.time-container #total-time');
+
+        const endTime = 40
+
+        let intervalID = null;
+        let progressTimeSec = 0;
+
+        let isPlay = true;
+
+        function paintLines() {
+            for(let i=0; i<30; i++) {
+                const line = document.createElement('div');
+                line.classList.add('line');
+                line.style.transform = `rotate(${i*6}deg)`;
+
+                if (i%5 == 0) {
+                    line.classList.add('thick')
+                }
+
+                lines.append(line);
+            }
+        }
+
+        function paintNumber() {
+            let left = 15;
+            let right = 45;
+
+            for (let i=0; i<6; i++) {
+                const numBox = document.createElement('div');
+                numBox.classList.add('num-box');
+                numBox.style.transform = `rotate(${i*30}deg)`;
+
+                const spanLeft = document.createElement('span');
+                const spanRight = document.createElement('span');
+
+                const leftText = left - 5*i;
+                spanLeft.textContent = leftText<0 ? 60+ leftText : leftText;
+                spanRight.textContent = right - (5 * i);
+
+                spanLeft.style.transform = `rotate(${-30*i}deg)`;
+                spanRight.style.transform = `rotate(${-30*i}deg)`;
+
+                numBox.append(spanLeft,spanRight);
+                nums.append(numBox);
+            }
+        }
+
+        function paintRemainTime() {
+            for (let min=0; min<endTime; min++) {
+                for (let sec=0; sec<60; sec++) {
+                    const remainFin = document.createElement('div');
+                    remainFin.classList.add('fin');
+
+                    const deg = min*6+sec*1;
+                    remainFin.style.transform = `rotate(${-deg}deg)`
+                    
+                    fins.append(remainFin);
+                }
+            }
+        }
+
+        function tickSec() {
+            progressTimeSec++;
+            if(progressTimeSec >= endTime * 60) pause();
+
+            const lastFin = fins.lastChild;
+
+            if (lastFin) {
+                lastFin.remove();
+            }
+
+        }
+
+        function play() {
+            intervalID = setInterval(tickSec,100)
+            isPlay = true;
+        }
+
+        function pause() {
+            clearInterval(intervalID);
+            isPlay = false;
+        }
+
+        function onClickControl() {
+            if (isPlay) {
+                pause();
+                
+            } else {
+                play();
+            }
+        }
+
+
+            // remainTime.textContent = `
+            //     ${min<10?`0${min}`:min} : 
+            //     ${sec<10?`0${sec}`:sec}
+            // `;
+        // }
+
+        function paintTime() {
+            renderRemainTime();
+            totalTime.textContent = `(${endTime} : 00)`;
+        }
+
+        if (lines) {
+            paintLines();
+        }
+
+        if (nums) {
+            paintNumber();
+        }
+
+        if (fins) {
+            paintRemainTime();
+        }
+
+        if(control) {
+            control.addEventListener('click', onClickControl);
+        }
+
+        if(remainTime && totalTime) {
+            paintTime();
+        }
+
+        play();
+        
+      </script> 
+
       <!--layer popup area-->
+
 
       <div class="modal">
         <!-- 모니터(투두) 팝업 -->
@@ -270,6 +353,7 @@
             </div>
           </div>
         </div>
+  
   
         <!-- 사운드이펙트 팝업-->
         <div class="popup_layer" id="effect_popup_layer" style="display: none">
@@ -316,39 +400,49 @@
                     onclick="asmr_volume()"
                   />
                 </div>
-  
+              </div>              
+            </div>
+          </div>
+        </div>
+
+        <!-- reverb 팝업 -->
+        <div class="popup_layer" id="reverb_popup_layer" style="display: none">
+          <div class="effect_popup_box">
+            <div style="height: 10px; width: 375px; float: top">
+            </div>
+            <!--layer popup content area-->
+            <div class="popup_cont"> 
+              <h5>REVERB CONTROL</h5>
+              <div class="control_panel_layer">
                 <div class="reverb-box">
-                    <div class="form-check form-switch">
-                      <label class="form-check-label" for="reverb">Reverb</label>
-                      <input id="reverb" type="checkbox" class="form-check-input" />
-                    </div>
-                    <div class="form-check form-switch">
-                      <label class="form-check-label" for="reverse">
-                        Reverse Inpulse Response
-                      </label>
+                  <div class="form-check form-switch" id="reverb_check">
+                    <label class="form-check-label" for="reverb">
+                      <span>REVERB&nbsp; </span>
+                      <input id="reverb" role="swith" type="checkbox" class="form-check-input" />
+                    </label>
+                  </div>
+                  <div class="form-check form-switch" id="reverb_check">
+                    <label class="form-check-label" for="reverse">
+                      <span>CUSTOM</span>
                       <input type="checkbox" class="form-check-input" id="reverse" />
-                    </div>
-  
+                    </label>
+                  </div>
+
                   <div class="col" style="display: none">
                     <div class="overflow-auto">
                       <canvas id="graph" width="512" height="256"></canvas>
                     </div>
                     <p class="text-right">
                       The sound uses the drum part of
-                      <a
-                        href="https://soundcloud.com/logue256/autumn-wind"
-                        target="_blank"
-                      >
                         <em class="bi bi-soundwave"></em>
                         Autmun Wind
                       </a>
                       .
                     </p>
                   </div>
-  
-                <section class="mb-3">
-  
-  
+
+                  <section class="mb-3">
+                    <div class="reverb_control_div">
                       <label for="time" class="form-label" aria-describedby="time-help">
                         Time
                       </label>
@@ -393,24 +487,126 @@
                       <!-- <div id="delay-help" class="form-text">
                         Closer to the original sound or closer to the effector
                       </div> -->
-  
-  
-                </section>
-              </div>  <!-- 리버브 끝 -->
-  
-              </div>              
+                    </div>
+
+
+                  </section>
+                </div>  <!-- 리버브 끝 -->    
+              </div>         
             </div>
           </div>
         </div>
-  
-  
+
+        <!-- 뽀모도로 팝업 -->
+        <div class="popup_layer" id="pomodoro_popup_layer" style="display: none">
+          <div class="pomodoro_popup_box">
+            <div style="height: 10px; width: 375px; float: top">
+            </div>
+            <!--layer popup content area-->
+            <div class="popup_cont"> 
+              <h5>POMODORO</h5>
+              <div class="pomodoro_panel_layer">
+                <div class="pomodoro-box">
+                  <div class="arrow top"></div>
+                  <div class="timer">
+                      <div class="title"></div> 
+                      <div class="clock" id="minuts">25</div>
+                      <div class="clock">:</div>
+                      <div class="clock" id="seconds">00</div>
+                  </div>
+                  <div class="arrow bottom"></div>
+      
+                  <div class="buttons">
+                      <div class="pomodoro_btn left" id="start">START</div>
+                      <div class="pomodoro_btn right" id="reset">RESET</div>
+                  </div>
+                </div>  <!-- 리버브 끝 -->    
+              </div>         
+            </div>
+          </div>
+        </div>
+        <script>
+          const $title = document.querySelector(".title")
+          const $minuts = document.querySelector(".clock#minuts")
+          const $seconds = document.querySelector(".clock#seconds")
+          const $incrementTimer = document.querySelector(".arrow.top")
+          const $decrementTimer = document.querySelector(".arrow.bottom")
+          const $start = document.querySelector(".pomodoro_btn#start")
+          const $reset = document.querySelector(".pomodoro_btn#reset")
+
+          let isStarted = false
+          $minuts.textContent = (window.localStorage.getItem("minuts") === null || window.localStorage.getItem("minuts") === "" ? 25 : window.localStorage.getItem("minuts"))
+
+          $incrementTimer.addEventListener("click", () => {
+              let minuts = Number($minuts.textContent)
+              $minuts.textContent = minuts > 8 ? minuts + 1 : "0" + (minuts + 1)
+              window.localStorage.setItem("minuts", $minuts.textContent)
+          })
+
+          $decrementTimer.addEventListener("click", () => {
+              let minuts = Number($minuts.textContent)
+              if (minuts > 0) {
+                  $minuts.textContent = minuts > 10 ? minuts - 1 : "0" + (minuts - 1)
+                  window.localStorage.setItem("minuts", $minuts.textContent)
+              }
+          })
+
+          $start.addEventListener("click", start)
+          let interval
+
+          function start() {
+              if (!isStarted) {
+                  $start.textContent = "PAUSE"
+                  isFirst = false
+                  isStarted = true
+                  $title.textContent = ""
+                  interval = setInterval(timing, 1000)
+              } else {
+                  end()
+              }
+          }
+
+          function timing() {
+              let seconds = Number($minuts.textContent) * 60 + Number($seconds.textContent)
+              if (seconds === 0) {
+                  $minuts.textContent = (window.localStorage.getItem("minuts") === null || window.localStorage.getItem("minuts") === "" ? 25 : window.localStorage.getItem("minuts"))
+                  $seconds.textContent = "00"
+                  end()
+                  return
+              }
+              seconds -= 1
+              let minut = ((seconds - seconds % 60) / 60)
+              $minuts.textContent = minut > 9 ? minut : "0" + minut
+              $seconds.textContent = seconds % 60 > 9 ? seconds % 60 : "0" + (seconds % 60)
+
+          }
+
+          function end() {
+              isStarted = false
+              $title.textContent = ""
+              clearInterval(interval)
+              $start.textContent = "START"
+              const minuts = window.localStorage.getItem("minuts")
+            $minuts.textContent = (minuts === null || minuts === "" || minuts === "00" ? 25 : minuts)
+          }
+
+          $reset.addEventListener("click", () => {
+              end()
+              window.localStorage.setItem("minuts", "25")
+              $minuts.textContent = "25"
+              $seconds.textContent = "00"
+          })
+        </script>
   
         <!-- 샘플 로파이 음악 팝업 -->
         <div
           class="popup_layer"
           id="sample_popup_layer"
+          id="sample_popup_layer"
           style="height: 100px; width: 200px; display: none"
         >
+  
+          <div class="sample_popup_box">
   
           <div class="sample_popup_box">
             <div style="float: top">
@@ -1432,168 +1628,464 @@
       }
 
       window.addEventListener("load", async () => {
-      //window.addEventListener("load", async () => {
-        // Setup Audio Context
-        const AudioCtx = new window.AudioContext();
-
-        // Defreeze AudioContext for iOS.
-        document.addEventListener("touchstart", initAudioContext);
-        function initAudioContext() {
-          document.removeEventListener("touchstart", initAudioContext);
-          // wake up AudioContext
-          const emptySource = AudioCtx.createBufferSource();
-          emptySource.start();
-          emptySource.stop();
-        }
-
-        // Setup Reverb Class
-        const reverb = new Reverb(AudioCtx);
-        console.info(
-          `Reverb.js loaded. (version: ${Reverb.version} / build: ${Reverb.build})`
-        );
-        const AudioSrc = AudioCtx.createBufferSource();
-
-        // Load audio file and decode asyncly.
-        const LoadSample = async (url) => {
-          return new Promise((resolve) => {
-            fetch(url)
-              .then((response) => response.arrayBuffer())
-              .then((arraybuf) =>
-                AudioCtx.decodeAudioData(
-                  arraybuf,
-                  (buffer) => {
-                    document.getElementById("play").removeAttribute("disabled");
-                    resolve(buffer);
-                  },
-                  (e) => alert(e)
-                )
-              )
-              .catch((e) => alert(e));
-          });
-        };
-
-        const AnalyserNode = AudioCtx.createAnalyser();
-
-        // Reverb switch handler
-        const setReverb = () => {
-          AudioSrc.disconnect();
-
-          if (document.getElementById("reverb").checked) {
-            // Connect Reverb
-            reverb.connect(AudioSrc).connect(AnalyserNode);
-          } else {
-            reverb.disconnect(AudioSrc).connect(AnalyserNode);
+        //window.addEventListener("load", async () => {
+          // Setup Audio Context
+          const AudioCtx = new window.AudioContext();
+  
+          // Defreeze AudioContext for iOS.
+          document.addEventListener("touchstart", initAudioContext);
+          function initAudioContext() {
+            document.removeEventListener("touchstart", initAudioContext);
+            // wake up AudioContext
+            const emptySource = AudioCtx.createBufferSource();
+            emptySource.start();
+            emptySource.stop();
           }
-          AnalyserNode.connect(AudioCtx.destination);
-          reverb.setNoise("pink");
-        };
-
-
-        let sound = await LoadSample("../static/output/output.wav");
-
-        if(document.getElementById("style_num").innerText=='sty_1'){
-          console.log("test===================");
-          sound = await LoadSample("../static/output/1.wav");
-          console.log(sound)
-        }
-        else if(document.getElementById("style_num").innerText=='sty_2') {
-          sound = await LoadSample("../static/output/2.wav");
-          console.log(sound)
-        }
-        else if(document.getElementById("style_num").innerText=='sty_3') {
-          sound = await LoadSample("../static/output/3.wav");
-          console.log(document.getElementById("style_num").innerText);
-          console.log(sound)
-        }
-
-        // Play button
-        document.getElementById("play").addEventListener(
-          "click",
-          (event) => {
-            if (event.target != event.currentTarget) return;
-
-            if (AudioSrc.buffer == null) {
-              AudioSrc.buffer = sound;
-              AudioSrc.loop = true;
-
-              setReverb();
-              AudioSrc.start();
+  
+          // Setup Reverb Class
+          const reverb = new Reverb(AudioCtx);
+          console.info(
+            `Reverb.js loaded. (version: ${Reverb.version} / build: ${Reverb.build})`
+          );
+          const AudioSrc = AudioCtx.createBufferSource();
+  
+          // Load audio file and decode asyncly.
+          const LoadSample = async (url) => {
+            return new Promise((resolve) => {
+              fetch(url)
+                .then((response) => response.arrayBuffer())
+                .then((arraybuf) =>
+                  AudioCtx.decodeAudioData(
+                    arraybuf,
+                    (buffer) => {
+                      document.getElementById("play").removeAttribute("disabled");
+                      resolve(buffer);
+                    },
+                    (e) => alert(e)
+                  )
+                )
+                .catch((e) => alert(e));
+            });
+          };
+  
+          const AnalyserNode = AudioCtx.createAnalyser();
+  
+          // Reverb switch handler
+          const setReverb = () => {
+            AudioSrc.disconnect();
+  
+            if (document.getElementById("reverb").checked) {
+              // Connect Reverb
+              reverb.connect(AudioSrc).connect(AnalyserNode);
+            } else {
+              reverb.disconnect(AudioSrc).connect(AnalyserNode);
             }
-
-            if (AudioCtx.state === "running") {
-              AudioCtx.suspend().then(() => {
-                event.target.innerHTML = '<em class="bi bi-play"></em> Play';
-              });
-            } else if (AudioCtx.state === "suspended") {
-              AudioCtx.resume().then(() => {
-                event.target.innerHTML = '<em class="bi bi-pause"></em> Pause';
-              });
-            }
-          },
-          false
-        );
-
-        // Reverb switch button
-        document.getElementById("reverb").addEventListener("click", setReverb);
-        // Reverse checkbox
-        document
-          .getElementById("reverse")
-          .addEventListener("click", (e) => reverb.reverse(e.target.checked));
-        // Reverb dualation time
-        document.getElementById("time").addEventListener("change", (e) => {
-          reverb.time(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Decay time
-        document.getElementById("decay").addEventListener("change", (e) => {
-          reverb.decay(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Filter select box
-        document.getElementById("filter").addEventListener("change", (e) => {
-          reverb.filterType(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Filter frequency
-        document.getElementById("freq").addEventListener("change", (e) => {
-          reverb.filterFreq(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Filter quality
-        document.getElementById("q").addEventListener("change", (e) => {
-          reverb.filterQ(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Dry/Wet
-        document.getElementById("mix").addEventListener("change", (e) => {
-          reverb.mix(e.target.value);
-          e.target.title = e.target.value;
-        });
-        // Noise Type
-        document.querySelectorAll("[name=noise]").forEach((dom) =>
-          dom.addEventListener("click", (e) => {
-            document.getElementById("peaks").disabled =
-              e.target.value === "white";
-            reverb.setNoise(e.target.value);
-          })
-        );
-
-        document.getElementById("peaks").addEventListener("change", (e) => {
-          reverb.peaks(e.target.value);
-          e.target.title = e.target.value;
-        });
-        document.getElementById("scale").addEventListener("change", (e) => {
-          reverb.scale(e.target.value);
-          e.target.title = e.target.value;
-          
-        });
-        document
-          .getElementById("randomAlgorithm")
-          .addEventListener("change", (e) => {
-            reverb.randomAlgorithm(e.target.value);
+            AnalyserNode.connect(AudioCtx.destination);
+            reverb.setNoise("pink");
+          };
+  
+  
+          let sound = await LoadSample("../static/output/output.wav");
+          var style_ip = document.getElementById("style_num").innerText
+          var content_ip = document.getElementById("content_num").innerText
+  
+          if(style_ip=='sty_1' && content_ip=='con_1'){
+            console.log("test===================");
+            sound = await LoadSample("../static/output/1.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_2' && content_ip=='con_1') {
+            sound = await LoadSample("../static/output/2.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_3' && content_ip=='con_1') {
+            sound = await LoadSample("../static/output/1.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_1' && content_ip=='con_2') {
+            sound = await LoadSample("../static/output/3.wav");
+            console.log(sound)
+          }
+          else if(style_ip=='sty_2' && content_ip=='con_2') {
+            sound = await LoadSample("../static/output/2.wav");
+            console.log(sound)
+          }
+  
+          // Play button
+          document.getElementById("play").addEventListener(
+            "click",
+            (event) => {
+              if (event.target != event.currentTarget) return;
+  
+              if (AudioSrc.buffer == null) {
+                AudioSrc.buffer = sound;
+                AudioSrc.loop = true;
+  
+                setReverb();
+                AudioSrc.start();
+              }
+  
+              if (AudioCtx.state === "running") {
+                AudioCtx.suspend().then(() => {
+                  event.target.innerHTML = '<em class="bi bi-play"></em> Play';
+                });
+              } else if (AudioCtx.state === "suspended") {
+                AudioCtx.resume().then(() => {
+                  event.target.innerHTML = '<em class="bi bi-pause"></em> Pause';
+                });
+              }
+            },
+            false
+          );
+  
+          // Reverb switch button
+          document.getElementById("reverb").addEventListener("click", setReverb);
+          // Reverse checkbox
+          document
+            .getElementById("reverse")
+            .addEventListener("click", (e) => reverb.reverse(e.target.checked));
+          // Reverb dualation time
+          document.getElementById("time").addEventListener("change", (e) => {
+            reverb.time(e.target.value);
             e.target.title = e.target.value;
+          });
+          // Decay time
+          document.getElementById("decay").addEventListener("change", (e) => {
+            reverb.decay(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Filter select box
+          document.getElementById("filter").addEventListener("change", (e) => {
+            reverb.filterType(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Filter frequency
+          document.getElementById("freq").addEventListener("change", (e) => {
+            reverb.filterFreq(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Filter quality
+          document.getElementById("q").addEventListener("change", (e) => {
+            reverb.filterQ(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Dry/Wet
+          document.getElementById("mix").addEventListener("change", (e) => {
+            reverb.mix(e.target.value);
+            e.target.title = e.target.value;
+          });
+          // Noise Type
+          document.querySelectorAll("[name=noise]").forEach((dom) =>
+            dom.addEventListener("click", (e) => {
+              document.getElementById("peaks").disabled =
+                e.target.value === "white";
+              reverb.setNoise(e.target.value);
+            })
+          );
+  
+          document.getElementById("peaks").addEventListener("change", (e) => {
+            reverb.peaks(e.target.value);
+            e.target.title = e.target.value;
+          });
+          document.getElementById("scale").addEventListener("change", (e) => {
+            reverb.scale(e.target.value);
+            e.target.title = e.target.value;
+            
+          });
+          document
+            .getElementById("randomAlgorithm")
+            .addEventListener("change", (e) => {
+              reverb.randomAlgorithm(e.target.value);
+              e.target.title = e.target.value;
+          });
         });
-      });
+    </script>
+
+    <!-- 새로운 뽀모도로 js -->
+    <script>
+      import React from "https://cdn.skypack.dev/react@17.0.1";
+      import ReactDOM from "https://cdn.skypack.dev/react-dom@17.0.1";
+
+      const SESSION = "Session";
+      const BREAK = "Break";
+      const SESSIONLEN = 25;
+      const BREAKLEN = 5;
+
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            breakLen: BREAKLEN, // min
+            sessionLen: SESSIONLEN, // min
+            timeLeft: SESSIONLEN * 60, // sec
+            timerType: SESSION,
+            isTimerRunning: false,
+            intervalId: ""
+          };
+          this.changeTimerType = this.changeTimerType.bind(this);
+          this.handleDecrementBreak = this.handleDecrementBreak.bind(this);
+          this.handleIncrementBreak = this.handleIncrementBreak.bind(this);
+          this.handleDecrementSession = this.handleDecrementSession.bind(this);
+          this.handleIncrementSession = this.handleIncrementSession.bind(this);
+          this.resetTimer = this.resetTimer.bind(this);
+          this.toggleStartStopTimer = this.toggleStartStopTimer.bind(this);
+        }
+
+        changeTimerType() {
+          this.setState(
+            {
+              timerType: this.state.timerType === SESSION ? BREAK : SESSION,
+              timeLeft:
+                this.state.timerType === SESSION
+                  ? this.state.breakLen * 60
+                  : this.state.sessionLen * 60
+            },
+            () => {
+              this.runTimer();
+            }
+          );
+        }
+
+        handleDecrementBreak() {
+          if (!this.state.isTimerRunning && this.state.breakLen > 1) {
+            this.setState({
+              breakLen: this.state.breakLen - 1,
+              timeLeft:
+                this.state.timerType === BREAK
+                  ? (this.state.breakLen - 1) * 60
+                  : this.state.timeLeft
+            });
+          }
+        }
+
+        handleIncrementBreak() {
+          if (!this.state.isTimerRunning && this.state.breakLen < 60) {
+            this.setState({
+              breakLen: this.state.breakLen + 1,
+              timeLeft:
+                this.state.timerType === BREAK
+                  ? (this.state.breakLen + 1) * 60
+                  : this.state.timeLeft
+            });
+          }
+        }
+
+        handleDecrementSession() {
+          if (!this.state.isTimerRunning && this.state.sessionLen > 1) {
+            this.setState({
+              sessionLen: this.state.sessionLen - 1,
+              timeLeft:
+                this.state.timerType === SESSION
+                  ? (this.state.sessionLen - 1) * 60
+                  : this.state.timeLeft
+            });
+          }
+        }
+
+        handleIncrementSession() {
+          if (!this.state.isTimerRunning && this.state.sessionLen < 60) {
+            this.setState({
+              sessionLen: this.state.sessionLen + 1,
+              timeLeft:
+                this.state.timerType === SESSION
+                  ? (this.state.sessionLen + 1) * 60
+                  : this.state.timeLeft
+            });
+          }
+        }
+
+        resetTimer() {
+          clearInterval(this.state.intervalId);
+          this.setState({
+            breakLen: BREAKLEN, // min
+            sessionLen: SESSIONLEN, // min
+            timeLeft: SESSIONLEN * 60, // sec
+            timerType: SESSION,
+            isTimerRunning: false,
+            intervalId: ""
+          });
+          this.beepSound.pause();
+          this.beepSound.currentTime = 0;
+        }
+
+        runTimer() {
+          let intervalId = setInterval(() => {
+            this.setState(
+              {
+                timeLeft: this.state.timeLeft - 1
+              },
+              () => {
+                if (this.state.timeLeft === 0) {
+                  this.beepSound.play();
+                }
+                if (this.state.timeLeft < 0) {
+                  if (this.state.intervalId) clearInterval(this.state.intervalId);
+                  this.changeTimerType();
+                }
+              }
+            );
+          }, 1000);
+          this.setState({
+            intervalId
+          });
+        }
+
+        toggleStartStopTimer() {
+          if (!this.state.isTimerRunning) {
+            this.runTimer();
+            this.setState({ isTimerRunning: true });
+          } else {
+            clearInterval(this.state.intervalId);
+            this.setState({
+              isTimerRunning: false,
+              intervalId: ""
+            });
+          }
+        }
+
+        clockify() {
+          let minutes = Math.floor(this.state.timeLeft / 60);
+          let seconds = this.state.timeLeft - minutes * 60;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          return minutes + ":" + seconds;
+        }
+
+        render() {
+          let stopStartTimer = this.state.isTimerRunning
+            ? "fa fa-pause"
+            : "fa fa-play";
+
+          return (
+            <div className="clock-container">
+              <Timer
+                timeLeft={this.clockify()}
+                timerType={this.state.timerType}
+                resetTimer={this.resetTimer}
+                stopStartTimer={stopStartTimer}
+                toggleStartStopTimer={this.toggleStartStopTimer}
+              />
+              <div className="length-container">
+                <div className="break-container">
+                  <SetTimerLength
+                    timerLabelId="break-label"
+                    timerLabel="Break Length"
+                    timerLen={this.state.breakLen}
+                    timerLenId="break-length"
+                    decTimerId="break-decrement"
+                    handleDecrementTimer={this.handleDecrementBreak}
+                    incTimerId="break-increment"
+                    handleIncrementTimer={this.handleIncrementBreak}
+                  />
+                </div>
+                <div className="session-container">
+                  <SetTimerLength
+                    timerLabelId="session-label"
+                    timerLabel="Session Length"
+                    timerLen={this.state.sessionLen}
+                    timerLenId="session-length"
+                    decTimerId="session-decrement"
+                    handleDecrementTimer={this.handleDecrementSession}
+                    incTimerId="session-increment"
+                    handleIncrementTimer={this.handleIncrementSession}
+                  />
+                </div>
+              </div>
+              <audio
+                id="beep"
+                load="auto"
+                ref={(audio) => {
+                  this.beepSound = audio;
+                }}
+                src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+              ></audio>
+            </div>
+          );
+        }
+      }
+
+      class SetTimerLength extends React.Component {
+        constructor(props) {
+          super(props);
+          this.buttonRefInc = React.createRef();
+          this.buttonRefDec = React.createRef();
+        }
+
+        render() {
+          return (
+            <div>
+              <div id={this.props.timerLabelId}>{this.props.timerLabel}</div>
+              <span id={this.props.timerLenId} className="timer-length">
+                {this.props.timerLen}
+              </span>
+              <div className="inc-dec-btn-container">
+                <button
+                  ref={this.buttonRefInc}
+                  className="inc-arrow"
+                  onClick={() => {
+                    this.props.handleIncrementTimer();
+                    this.buttonRefInc.current.blur();
+                  }}
+                >
+                  <i id={this.props.incTimerId} className="fa fa-arrow-up"></i>
+                </button>
+                <button
+                  ref={this.buttonRefDec}
+                  onClick={() => {
+                    this.props.handleDecrementTimer();
+                    this.buttonRefDec.current.blur();
+                  }}
+                >
+                  <i id={this.props.decTimerId} className="fa fa-arrow-down"></i>
+                </button>
+              </div>
+            </div>
+          );
+        }
+      }
+
+      class Timer extends React.Component {
+        constructor(props) {
+          super(props);
+          this.buttonRefStartStop = React.createRef();
+          this.buttonRefReset = React.createRef();
+        }
+
+        render() {
+          return (
+            <div>
+              <div id="time-left">{this.props.timeLeft}</div>
+              <div id="display-controls">
+                <div id="timer-label">{this.props.timerType}</div>
+                <div id="timer-ssr">
+                  <button
+                    ref={this.buttonRefStartStop}
+                    id="start-stop"
+                    onClick={() => {
+                      this.props.toggleStartStopTimer();
+                      this.buttonRefStartStop.current.blur();
+                    }}
+                  >
+                    <i className={this.props.stopStartTimer} aria-hidden="true"></i>
+                  </button>
+                  <button
+                    ref={this.buttonRefReset}
+                    id="reset"
+                    onClick={() => {
+                      this.props.resetTimer();
+                      this.buttonRefReset.current.blur();
+                    }}
+                  >
+                    <i className="fa fa-refresh" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("pomodoro"));
     </script>
   </body>
 </html>
