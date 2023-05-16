@@ -12,13 +12,16 @@ overflow: hidden;
 /* 중앙정렬 */
 align-items: center;
 justify-content: center;
-flex-direction: column
+flex-direction: column;
+flex-direction: column;
 }
 
 .center-box {
 justify-content: center;
 display: flex;
-flex-direction: column
+flex-direction: column;
+display: flex;
+flex-direction: column;
 }
 
 .player-room{
@@ -38,8 +41,19 @@ display: flex;
   position: absolute;
   /* display: block; */
   z-index: 10000;
+  /* width: auto;
+  height: auto; */
+  position: absolute;
+  /* display: block; */
+  z-index: 10000;
 }
 
+.sofa{
+  position: absolute;
+  top: 250px;
+  left: -270px;
+  z-index: 10004;
+}
 .sofa{
   position: absolute;
   top: 250px;
@@ -57,6 +71,13 @@ display: flex;
 .dog :hover{
   transform:scale(1.15); 
   transition: 0.5s;
+}
+
+.camera {
+  position: absolute;
+  top: 212px;
+  left: 122px;
+  z-index: 10001;
 }
 
 .amp{
@@ -144,6 +165,7 @@ top: 120px;
 
 
 
+
 #effect {
 position : relative;
 top: 20px;
@@ -158,6 +180,9 @@ z-index: 5000;
 
 /* 팝업들 위치 고정 */
 .modal {
+position: relative;
+width: 100%;
+height: 100%;
 position: relative;
 width: 100%;
 height: 100%
@@ -180,15 +205,16 @@ height: 100%
 }
 
 #pomodoro
-_popup_layer{
+.pomodoro_popup_layer{
   position: absolute;
 }
+
 
 .popup_layer {
   position: absolute;
   z-index: 999999999;
-  width: 100%;
-  height: 100%;
+  width: 0;
+  height: 0;
 }
 
 /*사운드이펙트 팝업*/
@@ -452,25 +478,22 @@ input {
 
 /* 샘플 팝업 */
 
-/* .sample_popup_box {
-position: relative;
-top: 20px;
-left: -30px;
-overflow-x: hidden;
-overflow-y: hidden;
-height: 200px;
-width: 400px;
-transform: translate(-50%, -50%);
-z-index: 10000000;
-border-radius: 10px;
-box-sizing: border-box;
-background-color: #ff48c2;
-}
-
-.sample-btn-wrap {
-display: flex;
-justify-content: center;
-} */
+.sample_popup_box {
+  position: relative;
+  top: 230px;
+  left: -160px;
+  border-radius: 10px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 300px;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  box-sizing: border-box;
+  background-color: #dbdbdb36;
+  box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 2px 5px 10px 0px rgba(0, 0, 0, 0.35);
+  }
 
 /* 샘플 라디오 버튼 css */
 
@@ -578,6 +601,51 @@ input[type="radio"]{
 @keyframes sty_4{ 30%, 70% { transform:scale(0.5); } }
 @keyframes sty_5{ 30%, 70% { transform:scale(0.5); } }
 
+.radios-bpm{
+  position:relative;
+  width:60%;
+  margin:0 auto;
+}
+
+.label-bpm{
+  float:left;
+  width:15%; padding-bottom:15%;
+  margin:0 2.5%;
+  background:rgba(255,255,255,.2);
+  border-radius:50%;
+  cursor:pointer;
+}
+#slider-bpm{
+  position:absolute;
+  left:0%; top:0;
+  width:10%; padding-bottom:10%;
+  margin:2.5% 0 0 5%;
+  background: linear-gradient(135deg,#6cebd6 40%,#fcffc7 100%);
+  transition:transform 1s;
+  border-radius:50%;
+  animation-timing-function: ease-in-out;
+  animation-duration:.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left .05s ease-in-out;
+}
+
+#bpm_60:checked  ~ #slider-bpm{ animation-name: bpm_60; left:0; }
+#bpm_80:checked  ~ #slider-bpm{ animation-name: bpm_80; left:20%; }
+#bpm_100:checked  ~ #slider-bpm{ animation-name: bpm_100; left:40%; }
+#bpm_120:checked  ~ #slider-bpm{ animation-name: bpm_120; left:60%; }
+#bpm_140:checked  ~ #slider-bpm{ animation-name: bpm_140; left:80%; }
+
+@keyframes bpm_60{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_80{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_100{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_120{ 30%, 70% { transform:scale(0.5); } }
+@keyframes bpm_140{ 30%, 70% { transform:scale(0.5); } }
+
+#input_check{
+  margin: 25px 0 20px 0;
+}
+
+
 #input_check{
   margin: 30px 0 28px 0;
   width: 30%;
@@ -632,6 +700,7 @@ top: 450px;
 left: 820px;
 overflow-x: hidden;
 overflow-y: hidden;
+height: 800px;
 width: 400px;
 transform: translate(-50%, -50%);
 z-index: 1002;
@@ -749,6 +818,8 @@ display: block;
 
 .bottom-wrap {
 display: flex;
+align-items: center;
+margin-top: -10px;
 align-items: center;
 margin-top: -10px;
 }
