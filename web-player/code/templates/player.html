@@ -612,54 +612,57 @@
             </div>
             <!--layer input popup content area-->
             <div class="popup_cont">
-              <div class="container">
-                <form
-                  method="post"
-                  action="http://localhost:5000/output/"
-                  enctype="multipart/form-data"
-                >
-                  <div class="radios-group">
-                    <div class="inputpop_title">content</div>
-                    <div class="radios-input">
-                      <label for="con_1" class="label-input"></label>
-                      <input type="radio" id="con_1" name="content_input" value="con_1"/>
-                      <label for="con_2" class="label-input"></label>
-                      <input type="radio" id="con_2" name="content_input" value="con_2"/>
-                      <label for="con_3" class="label-input"></label>
-                      <input type="radio" id="con_3" name="content_input" value="con_3"/>
-                      <label for="con_4" class="label-input"></label>
-                      <input type="radio" id="con_4" name="content_input" value="con_4"/>
-                      <label for="con_5" class="label-input"></label>
-                      <input type="radio" id="con_5" name="content_input" value="con_5"/>
-                      <span id="slider-input"></span>
-                    </div>
-                    <div class="inputpop_title">style</div>
-                    <div class="radios-style">
-                      <label for="sty_1" class="label-style"></label>
-                      <input type="radio" id="sty_1" name="style_input" value="sty_1" />
-                      <label for="sty_2" class="label-style"></label>
-                      <input type="radio" id="sty_2" name="style_input" value="sty_2" />
-                      <label for="sty_3" class="label-style"></label>
-                      <input type="radio" id="sty_3" name="style_input" value="sty_3" />
-                      <label for="sty_4" class="label-style"></label>
-                      <input type="radio" id="sty_4" name="style_input" value="sty_4" />
-                      <label for="sty_5" class="label-style"></label>
-                      <input type="radio" id="sty_5" name="style_input" value="sty_5" />
-                      <span id="slider-style"></span>
-                    </div>
-                    <div class="inputpop_title">BPM</div>
-                    <div class="radios-bpm">
-                      <label for="bpm_60" class="label-bpm"></label>
-                      <input type="radio" id="bpm_60" name="bpm_input" value="bpm_60" />
-                      <label for="bpm_80" class="label-bpm"></label>
-                      <input type="radio" id="bpm_80" name="bpm_input" value="bpm_80" />
-                      <label for="bpm_100" class="label-bpm"></label>
-                      <input type="radio" id="bpm_100" name="bpm_input" value="bpm_100" />
-                      <label for="bpm_120" class="label-bpm"></label>
-                      <input type="radio" id="bpm_120" name="bpm_input" value="bpm_120" />
-                      <label for="bpm_140" class="label-bpm"></label>
-                      <input type="radio" id="bpm_140" name="bpm_input" value="bpm_140" />
-                      <span id="slider-bpm"></span>
+              <h5>SAMPLE</h5>
+              <div class="sample_panel_layer">
+                <div class="sample-box">
+                  <form
+                    method="post"
+                    action="http://localhost:5000/output/"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="radios-group">
+                      <div class="inputpop_title">CONTENT</div>
+                      <div class="radios-input">
+                        <label for="con_1" class="label-input"></label>
+                        <input type="radio" id="con_1" name="content_input" value="con_1"/>
+                        <label for="con_2" class="label-input"></label>
+                        <input type="radio" id="con_2" name="content_input" value="con_2"/>
+                        <label for="con_3" class="label-input"></label>
+                        <input type="radio" id="con_3" name="content_input" value="con_3"/>
+                        <label for="con_4" class="label-input"></label>
+                        <input type="radio" id="con_4" name="content_input" value="con_4"/>
+                        <label for="con_5" class="label-input"></label>
+                        <input type="radio" id="con_5" name="content_input" value="con_5"/>
+                        <span id="slider-input"></span>
+                      </div>
+                      <div class="inputpop_title">STYLE</div>
+                      <div class="radios-style">
+                        <label for="sty_1" class="label-style"></label>
+                        <input type="radio" id="sty_1" name="style_input" value="sty_1" />
+                        <label for="sty_2" class="label-style"></label>
+                        <input type="radio" id="sty_2" name="style_input" value="sty_2" />
+                        <label for="sty_3" class="label-style"></label>
+                        <input type="radio" id="sty_3" name="style_input" value="sty_3" />
+                        <label for="sty_4" class="label-style"></label>
+                        <input type="radio" id="sty_4" name="style_input" value="sty_4" />
+                        <label for="sty_5" class="label-style"></label>
+                        <input type="radio" id="sty_5" name="style_input" value="sty_5" />
+                        <span id="slider-style"></span>
+                      </div>
+                      <div class="inputpop_title">BPM</div>
+                      <div class="radios-bpm">
+                        <label for="bpm_60" class="label-bpm"></label>
+                        <input type="radio" id="bpm_60" name="bpm_input" value="bpm_60" />
+                        <label for="bpm_80" class="label-bpm"></label>
+                        <input type="radio" id="bpm_80" name="bpm_input" value="bpm_80" />
+                        <label for="bpm_100" class="label-bpm"></label>
+                        <input type="radio" id="bpm_100" name="bpm_input" value="bpm_100" />
+                        <label for="bpm_120" class="label-bpm"></label>
+                        <input type="radio" id="bpm_120" name="bpm_input" value="bpm_120" />
+                        <label for="bpm_140" class="label-bpm"></label>
+                        <input type="radio" id="bpm_140" name="bpm_input" value="bpm_140" />
+                        <span id="slider-bpm"></span>
+                      </div>
                     </div>
                     <div id="content_num">{{content_value}}</div>
                     <div id="style_num">{{style_value}}</div>
@@ -697,8 +700,8 @@
                     </script>
 
                     <input type="submit" name="input_check" id="input_check" value="CONVERT" />
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
