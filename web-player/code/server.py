@@ -167,11 +167,14 @@ def run_model():
 
         content = request.form['content_input']
         style = request.form['style_input']
+        bpm = request.form['bpm_input']
         style = str(style)
         content = str(content)
+        bpm = str(bpm)
         print(style)
         print(content)
-        return render_template('player.html', content=content, style=style)
+        print(bpm)
+        return render_template('player.html', content=content, style=style, bpm=bpm)
     except Exception as e:
         print(e)
         pass

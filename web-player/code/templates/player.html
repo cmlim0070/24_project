@@ -664,9 +664,9 @@
                         <span id="slider-bpm"></span>
                       </div>
                     </div>
-                    <div id="content_num">{{content_value}}</div>
-                    <div id="style_num">{{style_value}}</div>
-                    <div id="style_num">{{bpm_value}}</div>
+                    <div id="content_num" style="display:none">{{content}}</div>
+                    <div id="style_num" style="display:none">{{style}}</div>
+                    <div id="bpm_num" style="display:none">{{bpm}}</div>
                     <!-- <button onclick='sample_test()'>확인</button>
                     <div id='result_content'></div>
                     <div id='result_style'></div>
@@ -1317,7 +1317,7 @@
                     </button>
       
                     
-                    <div class="play" id="play-img" onclick="musicControl()">
+                    <div class="play" id="play-img" onclick="musicControl()" style="display:none">
                       <script>
                         var playMode = 0;
                         /* 재생 */
@@ -1351,7 +1351,7 @@
                       </script>
                     </div>
                     <div class="pause" onclick="pause()"></div>
-                    <div class="soundControl" id="volume-Control" display="none">
+                    <div class="soundControl" id="volume-Control" style="display:none">
                       <script>
                         // volume control 코드 삭제하면 오디오 비주얼라이제이션 안됨 (왜?)
                         const audio = document.getElementById("kpop-sample");
@@ -1880,8 +1880,9 @@
           let sound = await LoadSample("../static/output/output.wav");
           var style_ip = document.getElementById("style_num").innerText
           var content_ip = document.getElementById("content_num").innerText
+          var bpm_ip = document.getElementById("bpm_num").innerText
   
-          if(style_ip=='sty_1' && content_ip=='con_1'){
+          if(style_ip=='sty_1' && content_ip=='con_1' && bpm_ip=='bpm_100'){
             console.log("test===================");
             sound = await LoadSample("../static/output/1.wav");
             console.log(sound)
