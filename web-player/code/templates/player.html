@@ -628,7 +628,7 @@
                         <label for="con_2" class="label-input"></label>
                         <input type="radio" id="con_2" name="content_input" value="con_2"/>
                         <label for="con_3" class="label-input"></label>
-                        <input type="radio" id="con_3" name="content_input" value="con_3"/>
+                        <input type="radio" id="con_3" name="content_input" value="con_3" checked/>
                         <label for="con_4" class="label-input"></label>
                         <input type="radio" id="con_4" name="content_input" value="con_4"/>
                         <label for="con_5" class="label-input"></label>
@@ -642,7 +642,7 @@
                         <label for="sty_2" class="label-style"></label>
                         <input type="radio" id="sty_2" name="style_input" value="sty_2" />
                         <label for="sty_3" class="label-style"></label>
-                        <input type="radio" id="sty_3" name="style_input" value="sty_3" />
+                        <input type="radio" id="sty_3" name="style_input" value="sty_3" checked/>
                         <label for="sty_4" class="label-style"></label>
                         <input type="radio" id="sty_4" name="style_input" value="sty_4" />
                         <label for="sty_5" class="label-style"></label>
@@ -656,7 +656,7 @@
                         <label for="bpm_80" class="label-bpm"></label>
                         <input type="radio" id="bpm_80" name="bpm_input" value="bpm_80" />
                         <label for="bpm_100" class="label-bpm"></label>
-                        <input type="radio" id="bpm_100" name="bpm_input" value="bpm_100" />
+                        <input type="radio" id="bpm_100" name="bpm_input" value="bpm_100" checked />
                         <label for="bpm_120" class="label-bpm"></label>
                         <input type="radio" id="bpm_120" name="bpm_input" value="bpm_120" />
                         <label for="bpm_140" class="label-bpm"></label>
@@ -1065,6 +1065,159 @@
               </tone-content> -->
       
               <script>
+
+                var content_1 = document.getElementById("content_1");
+                var content_2 = document.getElementById("content_2");
+                var content_3 = document.getElementById("content_3");
+                var content_4 = document.getElementById("content_4");
+                var content_5 = document.getElementById("content_5");
+                var style_1 = document.getElementById("style_1"); 
+                var style_2 = document.getElementById("style_2");
+                var style_3 = document.getElementById("style_3"); 
+                var style_4 = document.getElementById("style_4");
+                var style_5 = document.getElementById("style_5");
+
+                style_1.volume = 1.0;
+
+                $(document).ready(function() {
+                  //content sample 재생
+                  $("input[name='content_input']:radio").change(function(){
+                    if(this.value=='con_1'){
+                      content_1.play();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                    }
+
+                    if(this.value=='con_2'){
+                      content_1.pause();
+                      content_2.play();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                    }
+
+                    if(this.value=='con_3'){
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.play();
+                      content_4.pause();
+                      content_5.pause();
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                    }
+
+                    if(this.value=='con_4'){
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.play();
+                      content_5.pause();
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                    }
+
+                    if(this.value=='con_5'){
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.play();
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                    }
+                  });
+
+                  // style sample 재생
+                  $("input[name='style_input']:radio").change(function(){
+
+                    if(this.value=='sty_1'){
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                      style_1.play();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                    }
+
+                    if(this.value=='sty_2'){
+                      style_1.pause();
+                      style_2.play();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.pause();
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                    }
+
+                    if(this.value=='sty_3'){
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.play();
+                      style_4.pause();
+                      style_5.pause();
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                    }
+
+                    if(this.value=='sty_4'){
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.play();
+                      style_5.pause();
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                    }
+
+                    if(this.value=='sty_5'){
+                      style_1.pause();
+                      style_2.pause();
+                      style_3.pause();
+                      style_4.pause();
+                      style_5.play();
+                      content_1.pause();
+                      content_2.pause();
+                      content_3.pause();
+                      content_4.pause();
+                      content_5.pause();
+                    }
+                  });
+
+                }); 
       
                 //초기 설정
                 var drumAudio_60 = document.getElementById("drum-60-bpm");
