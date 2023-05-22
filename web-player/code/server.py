@@ -174,7 +174,7 @@ def run_model():
         print(style)
         print(content)
         print(bpm)
-        return render_template('player.html', content=content, style=style, bpm=bpm)
+        return render_template('player.html', content=content, style=style)
     except Exception as e:
         print(e)
         pass
