@@ -1,6 +1,6 @@
 # 그로쓰 24팀 캐릭캐릭뮤직체인지
 
-
+![룸](https://github.com/cmlim0070/24_project/assets/87525734/400a5cf3-84f0-4763-8c5f-b6242d5bc509)
 
 ### 딥러닝 기반 음악 스타일 트랜스퍼 - User Interactive Lo-Fi Player
 #### 이화여자대학교 캡스톤디자인(졸업프로젝트) 깃허브 레포지토리입니다.
